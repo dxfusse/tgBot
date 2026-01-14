@@ -35,14 +35,10 @@ html, body {
 }
 .кнопка-меню {
   position: relative;
-  height: 120px;
-  width: 500px;
-  background: rgb(49, 49, 49); 
-  color: white;
-  border: 1px solid rgb(255, 166, 0);
-  font-size: 30px;
-  margin-bottom: 50px;
-  transition: all 0.4s ease;
+  cursor: pointer;
+  background-color: var(--tg-theme-bg-color);
+  border-radius: 30px;
+  
 }
 
 button:active {
