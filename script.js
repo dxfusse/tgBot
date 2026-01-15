@@ -27,4 +27,7 @@ document.getElementById('global_top').onclick = () => {
 document.getElementById('helper').onclick = () => {
   location.href = 'global_top.html';
 };
+document.getElementById('profile').onclick = () => {
+  tg.sendData(JSON.stringify({ action: 'open' }));
+};
 
