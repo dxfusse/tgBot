@@ -13,6 +13,8 @@ if (!tg.isExpanded) {
 onResize();
 tg.onEvent('viewportChanged', onResize);
 
+tg.sendData(JSON.stringify({ action: 'open' }));
+
 document.getElementById('profile').onclick = () => {
   location.href = 'profile.html';
 };
@@ -25,4 +27,3 @@ document.getElementById('global_top').onclick = () => {
 document.getElementById('helper').onclick = () => {
   location.href = 'global_top.html';
 };
-
