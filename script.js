@@ -3,8 +3,15 @@ const tg = window.Telegram.WebApp;
 tg.ready();
 tg.expand();
 
-tg.sendData(JSON.stringify({ action: 'open' }));
+const userInfo = tg.initDataUnsafe.user
 
+fetch('/entering', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({user : userInfo})
+})
 document.getElementById('profile').onclick = () => {
   location.href = 'profile.html';
 };
@@ -17,7 +24,3 @@ document.getElementById('global_top').onclick = () => {
 document.getElementById('helper').onclick = () => {
   location.href = 'global_top.html';
 };
-document.getElementById('data').onclick = () => {
-  tg.sendData(JSON.stringify({ action: 'open' }));
-};
-
