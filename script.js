@@ -7,11 +7,22 @@ function onResize() {
   );
 }
 tg.ready();
-
 if (!tg.isExpanded) {
   tg.expand();
 }
-
 onResize();
-
 tg.onEvent('viewportChanged', onResize);
+
+document.getElementById('profile').onclick = () => {
+  location.href = 'profile.html';
+};
+document.getElementById('prognoz').onclick = () => {
+  location.href = 'prognoz.html';
+};
+document.getElementById('global_top').onclick = () => {
+  location.href = 'global_top.html';
+};
+document.getElementById('helper').onclick = () => {
+  location.href = 'global_top.html';
+};
+
