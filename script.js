@@ -16,7 +16,7 @@ tg.onEvent('viewportChanged', onResize);
 tg.sendData(JSON.stringify({ action: 'open' }));
 
 document.getElementById('profile').onclick = () => {
-  tg.sendData(JSON.stringify({ action: 'open' }));
+  location.href = 'profile.html';
 };
 document.getElementById('prognoz').onclick = () => {
   location.href = 'prognoz.html';
