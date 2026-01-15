@@ -54,6 +54,11 @@ body {
   transform: scale(1.1);
   background-color: rgb(0, 225, 255)
 }
+.текст-меню {
+  color: white;
+  font-size: 20px;
+  font-family: "dop";
+}
 @font-face {
     font-family: 'dop';
     src: url('dopText.ttf') format('truetype');
