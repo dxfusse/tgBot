@@ -1,17 +1,7 @@
-const tg = Telegram.WebApp;
+const tg = window.Telegram.WebApp;
 
-function onResize() {
-  document.documentElement.style.setProperty(
-    '--app-height',
-    tg.viewportHeight + 'px'
-  );
-}
 tg.ready();
-if (!tg.isExpanded) {
-  tg.expand();
-}
-onResize();
-tg.onEvent('viewportChanged', onResize);
+tg.expand();
 
 tg.sendData(JSON.stringify({ action: 'open' }));
 
@@ -27,7 +17,7 @@ document.getElementById('global_top').onclick = () => {
 document.getElementById('helper').onclick = () => {
   location.href = 'global_top.html';
 };
-document.getElementById('profile').onclick = () => {
+document.getElementById('data').onclick = () => {
   tg.sendData(JSON.stringify({ action: 'open' }));
 };
 
