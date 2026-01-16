@@ -92,7 +92,7 @@ initDatabase();
 //Вход пользователя + проверка на регистрацию
 app.post('/entering', (req, res) => {
   console.log('Заход нового пользователя');
-  const info = req.body;
+  const info = req.body.user;
   console.log('Получены данные: ' + info)
 
 //  const exists = database.users.some(u => u.id === uid);
@@ -127,6 +127,7 @@ app.listen(PORT, () => {
   console.log(`Сервер запущен на порту: ${PORT}`);
   console.log(`Mini App доступен на /`);
 });
+
 
 
 
