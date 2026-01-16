@@ -42,11 +42,14 @@ function ProfilePage() {
   render(`
     <img src="f1_logo.png" class="f1_logo">
     <p class="меню-текст">Твой профиль</p>
-    <div class="меню">
+    <div class="profile-menu">
+      <img class="pfp">
+      <div class="меню">
         <p class="текст-меню" id="id">Загрузка...</p>
         <p class="текст-меню" id="username">Загрузка...</p>
         <p class="текст-меню" id="name">Загрузка...</p>
         <p class="текст-меню" id="score">Загрузка...</p>
+      </div>
     </div>
     <p></p>
     <button class="кнопка-меню" data-page="main">Назад</button>
