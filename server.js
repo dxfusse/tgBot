@@ -136,7 +136,7 @@ app.post('/entering', (req, res) => {
 app.post('/getUserInfo', (req, res) =>{
     const user = req.body.user;
     console.log('Загрузка данных пользователя: ', user.username)
-    console.log('Данные отправлены')
+    console.log('Данные отправлены: ' + database.users[database.users.find(item => item.id == user.id)].score)
     res.json({score : database.users[database.users.find(item => item.id == user.id)].score});
 
 })
