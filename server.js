@@ -98,8 +98,6 @@ app.post('/entering', (req, res) => {
   if (!exists) {
     const new_user = {
       id: user.id,
-      first_name:  user.first_name,
-      last_name:  user.last_name,
       language: user.language_code,
       username: user.username,
       photo : user.photo_url,
@@ -111,22 +109,11 @@ app.post('/entering', (req, res) => {
   }else{
     console.log('Пользователь  ' + user.username + ' уже есть в базе данных');
     const bd_user = database.users[database.users.find(item => item.id == user.id)];
-    let edited = false;
-    if (bd_user.first_name != user.first_name){
-      database.users[database.users.find(item => item.id == user.id)].first_name = user.first_name;
-      edited = true;
-    }
-    if (bd_user.last_name != user.last_name ){
-      database.users[database.users.find(item => item.id == user.id)].last_name = user.last_name;
-      edited = true;
-    }
+    
     if (bd_user.username != user.username){
       database.users[database.users.find(item => item.id == user.id)].username = user.username;
-      edited = true;
-    }
-    if(edited){
       fs.writeFileSync('database.json', JSON.stringify(database, null, 2));
-       console.log('Данные пользователя были перезаписаны в базу данных')
+      console.log('Данные пользователя были перезаписаны в базу данных')
     }
   }
   res.json({ ok: true });
