@@ -92,22 +92,43 @@ initDatabase();
 //Вход пользователя + проверка на регистрацию
 app.post('/entering', (req, res) => {
   console.log('Заход пользователя');
-  const info = req.body.user;
-  console.log('Получены данные: ', info)
+  const user = req.body.user;
 
-//  const exists = database.users.some(u => u.id === uid);
-//  if (!exists) {
-//    const new_user = {
-//      id: uid,
-//      username: user.username,
-//      score: 0
-//    };
-//    console.log('В базу данных добавлен новый пользователь: ' + user.username);
-//    database.users.push(new_user);
-//    fs.writeFileSync('database.json', JSON.stringify(database, null, 2));
-//  }else{
-//    console.log('Пользователь  ' + user.username + ' зашёл и уже есть в БД');
-//  }
+  const exists = database.users.some(u => u.id === user.id);
+  if (!exists) {
+    const new_user = {
+      id: user.id,
+      first_name:  user.first_name,
+      last_name:  user.last_name,
+      language: user.language_code,
+      username: user.username,
+      photo : user.photo_url,
+      score: 0
+    };
+    console.log('В базу данных добавлен новый пользователь: ' + user.username);
+    database.users.push(new_user);
+    fs.writeFileSync('database.json', JSON.stringify(database, null, 2));
+  }else{
+    console.log('Пользователь  ' + user.username + ' уже есть в базе данных');
+    const bd_user = database.users[database.users.find(item => item.id == user.id)];
+    let edited = false;
+    if (bd_user.first_name != user.first_name){
+      database.users[database.users.find(item => item.id == user.id)].first_name = user.first_name;
+      edited = true;
+    }
+    if (bd_user.last_name != user.last_name ){
+      database.users[database.users.find(item => item.id == user.id)].last_name = user.last_name;
+      edited = true;
+    }
+    if (bd_user.username != user.username){
+      database.users[database.users.find(item => item.id == user.id)].username = user.username;
+      edited = true;
+    }
+    if(edited){
+      fs.writeFileSync('database.json', JSON.stringify(database, null, 2));
+       console.log('Данные пользователя были перезаписаны в базу данных')
+    }
+  }
   res.json({ ok: true });
 });
 
@@ -115,6 +136,8 @@ app.post('/entering', (req, res) => {
 app.post('/getUserInfo', (req, res) =>{
     const userid = req.body.userid;
     const data = {
+      first_name: database.users[database.users.find(item => item.id == userid)].first_name,
+      last_name: database.users[database.users.find(item => item.id == userid)].last_name,
       username : database.users[database.users.find(item => item.id == userid)].username,
       score : database.users[database.users.find(item => item.id == userid)].score
     }
@@ -127,10 +150,3 @@ app.listen(PORT, () => {
   console.log(`Сервер запущен на порту: ${PORT}`);
   console.log(`Mini App доступен на /`);
 });
-
-
-
-
-
-
-
