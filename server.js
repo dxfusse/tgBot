@@ -110,18 +110,18 @@ app.post('/entering', (req, res) => {
     fs.writeFileSync('database.json', JSON.stringify(database, null, 2));
   }else{
     console.log('Пользователь  ' + user.username + ' уже есть в базе данных');
-    const bd_user = database.users[database.users.find(item => item.id == user.id)];
+    const bd_user = database.users[database.users.findIndex(item => item.id == user.id)];
     let edited = false;
     if (bd_user.first_name != user.first_name){
-      database.users[database.users.find(item => item.id == user.id)].first_name = user.first_name;
+      database.users[database.users.findIndex(item => item.id == user.id)].first_name = user.first_name;
       edited = true;
     }
     if (bd_user.last_name != user.last_name ){
-      database.users[database.users.find(item => item.id == user.id)].last_name = user.last_name;
+      database.users[database.users.findIndex(item => item.id == user.id)].last_name = user.last_name;
       edited = true;
     }
     if (bd_user.username != user.username){
-      database.users[database.users.find(item => item.id == user.id)].username = user.username;
+      database.users[database.users.findIndex(item => item.id == user.id)].username = user.username;
       edited = true;
     }
     if(edited){
@@ -136,8 +136,8 @@ app.post('/entering', (req, res) => {
 app.post('/getUserInfo', (req, res) =>{
     const user = req.body.user;
     console.log('Загрузка данных пользователя: ', user.username)
-    console.log('Данные отправлены: ' + database.users[database.users.find(item => item.id == user.id)].score)
-    res.json({score : database.users[database.users.find(item => item.id == user.id)].score});
+    console.log('Данные отправлены: ' + database.users[database.users.findIndex(item => item.id == user.id)].score)
+    res.json({score : database.users[database.users.findIndex(item => item.id == user.id)].score});
 
 })
 
