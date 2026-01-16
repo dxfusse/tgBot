@@ -18,7 +18,7 @@ function MainPage() {
   fetch('https://tgbot-eiq1.onrender.com/entering', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ user })
+    body: JSON.stringify({ user : user })
   });
 
   return `
@@ -58,6 +58,7 @@ function ProfilePage() {
   })
   .then(res => res.json())
   .then(data => {
+    alert(data)
     document.getElementById('id').innerText = "ID: " + user.id;
     document.getElementById('name').innerText = "Имя: " + user.first_name + ' ' + user.last_name;
     document.getElementById('username').innerText = "Ник: " + user.username;
@@ -96,3 +97,5 @@ function bindEvents() {
 
 // Старт приложения
 go('main');
+
+
