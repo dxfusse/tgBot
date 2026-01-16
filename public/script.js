@@ -14,7 +14,7 @@ function render(html) {
 // Main Page
 function MainPage() {
   const user = tg.initDataUnsafe.user;
-  alert(user);
+  
   fetch('https://tgbot-eiq1.onrender.com/entering', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -95,5 +95,6 @@ function bindEvents() {
 
 // Старт приложения
 go('main');
+
 
 
