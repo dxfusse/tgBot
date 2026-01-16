@@ -14,39 +14,21 @@ function render(html) {
 // Main Page
 function MainPage() {
   const user = tg.initDataUnsafe.user;
-  
+
   fetch('https://tgbot-eiq1.onrender.com/entering', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ user : user })
-  })
-  .then(res => res.json())
-  .then(data => console.log('Сервер ответил:', data))
-  .catch(err => console.error('Ошибка fetch:', err));
-  alert('Рендер страницы');
-  render( `
+    body: JSON.stringify({ user })
+  });
+
+  return `
     <img src="f1_logo.png" class="f1_logo">
-    <p class="текст-мэйн">Привет! Я твой помощник в составлении <br>прогнозов на каждую гонку в Формуле 1. Если ты угадаешь топ-10, то получишь баллы!</p>
-    <p class="меню-текст">Доступные действия</p>
+    <p class="текст-мэйн">Привет! Я твой помощник...</p>
     <div class="меню">
       <button data-page="profile" class="кнопка-меню">Профиль</button>
-      <button data-page="prognoz" class="кнопка-меню">Сделать прогноз</button>
-      <button data-page="global_top" class="кнопка-меню">Глобальный топ</button>
-      <button data-page="helper" class="кнопка-меню" id="helper">Помощник</button>
+      <button class="кнопка-меню" id="helper">Помощник</button>
     </div>
-  `);
-  document.getElementById('helper').addEventListener('click', () => {
-    fetch('https://tgbot-eiq1.onrender.com/getDB', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ userid : user })
-    })
-    .then(res => res.json())
-    .then(data => {
-      alert(data)
-    })
-    .catch(err => console.error('Ошибка fetch:', err));
-  })
+  `;
 }
 
 
@@ -91,11 +73,24 @@ function bindEvents() {
   document.querySelectorAll('[data-page]').forEach(btn => {
     btn.onclick = () => go(btn.dataset.page);
   });
+
+  const helper = document.getElementById('helper');
+  if (helper) {
+    helper.onclick = () => {
+      const user = tg.initDataUnsafe.user;
+      fetch('https://tgbot-eiq1.onrender.com/getDB', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userid: user.id })
+      })
+      .then(res => res.json())
+      .then(data => alert(JSON.stringify(data, null, 2)));
+    };
+  }
 }
+
 
 // Старт приложения
 go('main');
-
-
 
 
