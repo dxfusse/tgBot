@@ -3,27 +3,27 @@ const fs = require('fs');
 const express = require('express');
 const app = express();
 const cors = require('cors');
+const path = require('path');
 
-app.use(cors({
-  origin: '*',
-}));
+//бот
+const BOT_TOKEN = '8179159056:AAFp_2akr_bkTcq1t6bXnxoUT6xV0EhBvf4';
+const WEB_APP_URL = 'https://dxfusse.github.io/tgBot/';
+const bot = new Telegraf(process.env.BOT_TOKEN);
 
+//cors и express
+app.use(cors({ origin: '*' }));
 app.use(express.json());
-app.use(bot.webhookCallback('/dxfusse-sercet-path'));
-bot.telegram.setWebhook(`https://https://tgbot-eiq1.onrender.com/dxfusse-sercet-path'`);
+
+//вебхуки
+const secretPath = '/dxfusse-secret-path';
+app.use(bot.webhookCallback(secretPath));
+bot.telegram.setWebhook(`https://tgbot-eiq1.onrender.com${secretPath}`);
+
+//статика
 app.use(express.static(path.join(__dirname, 'public')));
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Сервер запущен на порту: ${PORT}`);
-});
-
-const BOT_TOKEN = '8179159056:AAFp_2akr_bkTcq1t6bXnxoUT6xV0EhBvf4';
-const WEB_APP_URL = 'https://dxfusse.github.io/tgBot/';
-
-const bot = new Telegraf(process.env.BOT_TOKEN);
 
 bot.start((ctx) => {
   ctx.reply(
@@ -38,7 +38,6 @@ bot.start((ctx) => {
     }
   );
 });
-bot.launch();
 console.log('Бот запущен');
 
 let database = null;
@@ -120,4 +119,11 @@ app.post('/getUserInfo', (req, res) =>{
       score : database.users[database.users.find(item => item.id == userid)].score
     }
     res.json(data);
+
 })
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Сервер запущен на порту: ${PORT}`);
+  console.log(`Mini App доступен на /`);
+});
