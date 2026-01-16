@@ -23,7 +23,7 @@ function MainPage() {
   .then(res => res.json())
   .then(data => console.log('Сервер ответил:', data))
   .catch(err => console.error('Ошибка fetch:', err));
-
+  alert('Рендер страницы');
   render( `
     <img src="f1_logo.png" class="f1_logo">
     <p class="текст-мэйн">Привет! Я твой помощник в составлении <br>прогнозов на каждую гонку в Формуле 1. Если ты угадаешь топ-10, то получишь баллы!</p>
@@ -95,6 +95,7 @@ function bindEvents() {
 
 // Старт приложения
 go('main');
+
 
 
 
