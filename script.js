@@ -3,14 +3,12 @@ const tg = window.Telegram.WebApp;
 tg.ready();
 tg.expand();
 
-const userInfo = tg.initDataUnsafe.user
-
-fetch('/entering', {
+fetch('http://localhost:3000/entering', {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json'
   },
-  body: JSON.stringify({user : userInfo})
+  body: JSON.stringify({user : tg.initDataUnsafe.user})
 })
 
 document.getElementById('app_profile').style.opacity = 0;
@@ -50,7 +48,7 @@ document.getElementById('helper').onclick = () => {
 //Раздел для profile
 const userid = tg.initDataUnsafe.user.id;
 
-fetch('/getUserInfo', {
+fetch('http://localhost:3000/getUserInfo', {
     method: 'POST',
     headers: {
         'Content-Type': 'application/json'
