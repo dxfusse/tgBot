@@ -145,6 +145,12 @@ app.post('/getUserInfo', (req, res) =>{
 
 })
 
+app.post('/getDB', (req, res) =>{
+    const userid = req.body.userid;
+    res.json(database);
+
+})
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Сервер запущен на порту: ${PORT}`);
