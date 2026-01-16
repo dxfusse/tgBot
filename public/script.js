@@ -1,21 +1,32 @@
 const tg = window.Telegram.WebApp;
-
 tg.ready();
 tg.expand();
 
 const app = document.getElementById('app');
 
-//Рендер страниц
+// Общий рендер страниц
 function render(html) {
   app.innerHTML = html;
-  bindEvents();
+  bindEvents(); // после вставки HTML привязываем события
 }
 
-//Страницы
+
+// Main Page
 function MainPage() {
+  const user = tg.initDataUnsafe.user;
+
+  fetch('https://tgbot-eiq1.onrender.com/entering', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ user })
+  })
+  .then(res => res.json())
+  .then(data => console.log('Сервер ответил:', data))
+  .catch(err => console.error('Ошибка fetch:', err));
+
   return `
     <img src="f1_logo.png" class="f1_logo">
-    <p class="текст-мэйн"> Привет! Я твой помощник в составлении <br>прогнозов на каждую гонку в Формуле 1. Если ты угадаешь топ-10, то получишь баллы!</p>
+    <p class="текст-мэйн">Привет! Я твой помощник в составлении <br>прогнозов на каждую гонку в Формуле 1. Если ты угадаешь топ-10, то получишь баллы!</p>
     <p class="меню-текст">Доступные действия</p>
     <div class="меню">
       <button data-page="profile" class="кнопка-меню">Профиль</button>
@@ -26,41 +37,48 @@ function MainPage() {
   `;
 }
 
+
+// Profile Page
 function ProfilePage() {
   const user = tg.initDataUnsafe.user;
 
-  fetch('http://localhost:3000/entering', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({user : tg.initDataUnsafe.user})
-  })
-
-  return `
+  render(`
     <img src="f1_logo.png" class="f1_logo">
     <p class="меню-текст">Твой профиль</p>
     <div class="меню">
-        <p class="текст-меню" id="id"></p>
-        <p class="текст-меню" id="name"></p>
-        <p class="текст-меню" id="score"></p>
+        <p class="текст-меню" id="id">Загрузка...</p>
+        <p class="текст-меню" id="name">Загрузка...</p>
+        <p class="текст-меню" id="score">Загрузка...</p>
     </div>
     <button class="кнопка-меню" data-page="main">Назад</button>
-  `;
+  `);
+
+  fetch('https://tgbot-eiq1.onrender.com/getUserInfo', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ user })
+  })
+  .then(res => res.json())
+  .then(data => {
+    document.getElementById('id').innerText = user.id;
+    document.getElementById('name').innerText = data.username;
+    document.getElementById('score').innerText = data.score;
+  })
+  .catch(err => console.error('Ошибка fetch:', err));
 }
 
-//Маршрутизаци
+// SPA Маршрутизация
 function go(page) {
   if (page === 'main') render(MainPage());
-  if (page === 'profile') render(ProfilePage());
+  if (page === 'profile') ProfilePage();
 }
 
-//Обработчик кнопок
+// Привязка событий к кнопкам
 function bindEvents() {
   document.querySelectorAll('[data-page]').forEach(btn => {
     btn.onclick = () => go(btn.dataset.page);
   });
 }
 
+// Старт приложения
 go('main');
-
