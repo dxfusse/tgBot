@@ -23,10 +23,13 @@ function MainPage() {
 
   return `
     <img src="f1_logo.png" class="f1_logo">
-    <p class="текст-мэйн">Привет! Я твой помощник...</p>
+    <p class="текст-мэйн">Привет! Я твой помощник в составлении <br>прогнозов на каждую гонку в Формуле 1. Если ты угадаешь топ-10, то получишь баллы!</p>
+    <p class="меню-текст">Доступные действия</p>
     <div class="меню">
       <button data-page="profile" class="кнопка-меню">Профиль</button>
-      <button class="кнопка-меню" id="helper">Помощник</button>
+      <button data-page="prognoz" class="кнопка-меню">Сделать прогноз</button>
+      <button data-page="global_top" class="кнопка-меню">Глобальный топ</button>
+      <button data-page="helper" class="кнопка-меню" id="helper">Помощник</button>
     </div>
   `;
 }
@@ -92,5 +95,6 @@ function bindEvents() {
 
 // Старт приложения
 go('main');
+
 
 
