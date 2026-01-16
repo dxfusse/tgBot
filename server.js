@@ -135,15 +135,9 @@ app.post('/entering', (req, res) => {
 //Получение инфы о пользователе
 app.post('/getUserInfo', (req, res) =>{
     const user = req.body.user;
-    console.log('Загрузка данных пользователя: ', user.name)
-    const data = {
-      first_name: database.users[database.users.find(item => item.id == user)].first_name,
-      last_name: database.users[database.users.find(item => item.id == user)].last_name,
-      username : database.users[database.users.find(item => item.id == user)].username,
-      score : database.users[database.users.find(item => item.id == user)].score
-    }
+    console.log('Загрузка данных пользователя: ', user.username)
     console.log('Данные отправлены')
-    res.json(data);
+    res.json({score : database.users[database.users.find(item => item.id == user.id)].score});
 
 })
 
