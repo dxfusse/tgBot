@@ -136,8 +136,12 @@ app.post('/entering', (req, res) => {
 app.post('/getUserInfo', (req, res) =>{
     const user = req.body.user;
     console.log('Загрузка данных пользователя: ', user.username)
-    console.log('Данные отправлены: ' + database.users[database.users.findIndex(item => item.id == user.id)].score)
-    res.json({score : database.users[database.users.findIndex(item => item.id == user.id)].score});
+    const data = {
+      score : database.users[database.users.findIndex(item => item.id == user.id)].score,
+      photo: database.users[database.users.findIndex(item => item.id == user.id)].photo
+    }
+    console.log('Данные отправлены пользователю');
+    res.json(data);
 
 })
 
