@@ -7,7 +7,7 @@ const path = require('path');
 
 //бот
 const BOT_TOKEN = '8179159056:AAFp_2akr_bkTcq1t6bXnxoUT6xV0EhBvf4';
-const WEB_APP_URL = 'https://dxfusse.github.io/tgBot/';
+const WEB_APP_URL = https://dxfusse.github.io/tgBot/public/';
 const bot = new Telegraf(BOT_TOKEN);
 
 //cors и express
@@ -127,4 +127,5 @@ app.listen(PORT, () => {
   console.log(`Сервер запущен на порту: ${PORT}`);
   console.log(`Mini App доступен на /`);
 });
+
 
