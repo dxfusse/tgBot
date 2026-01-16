@@ -48,6 +48,7 @@ function ProfilePage() {
         <p class="текст-меню" id="name">Загрузка...</p>
         <p class="текст-меню" id="score">Загрузка...</p>
     </div>
+    <p></p>
     <button class="кнопка-меню" data-page="main">Назад</button>
   `);
 
@@ -58,7 +59,6 @@ function ProfilePage() {
   })
   .then(res => res.json())
   .then(data => {
-    alert(data)
     document.getElementById('id').innerText = "ID: " + user.id;
     document.getElementById('name').innerText = "Имя: " + user.first_name + ' ' + user.last_name;
     document.getElementById('username').innerText = "Ник: " + user.username;
