@@ -44,6 +44,7 @@ function ProfilePage() {
     <p class="меню-текст">Твой профиль</p>
     <div class="меню">
         <p class="текст-меню" id="id">Загрузка...</p>
+        <p class="текст-меню" id="username">Загрузка...</p>
         <p class="текст-меню" id="name">Загрузка...</p>
         <p class="текст-меню" id="score">Загрузка...</p>
     </div>
@@ -57,10 +58,10 @@ function ProfilePage() {
   })
   .then(res => res.json())
   .then(data => {
-    alert(data)
-    document.getElementById('id').innerText = user.id;
-    document.getElementById('name').innerText = data.username;
-    document.getElementById('score').innerText = data.score;
+    document.getElementById('id').innerText = "ID: " + user.id;
+    document.getElementById('name').innerText = "Имя: " + user.first_name + ' ' + user.last_name;
+    document.getElementById('username').innerText = "Ник: " + user.username;
+    document.getElementById('score').innerText = "Ваш баланс: " + data.score;
   })
   .catch(err => console.error('Ошибка fetch:', err));
 }
@@ -95,5 +96,3 @@ function bindEvents() {
 
 // Старт приложения
 go('main');
-
-
