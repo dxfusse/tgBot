@@ -53,7 +53,7 @@ function ProfilePage() {
   fetch('https://tgbot-eiq1.onrender.com/getUserInfo', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ userid : user })
+    body: JSON.stringify({ user : user })
   })
   .then(res => res.json())
   .then(data => {
@@ -95,6 +95,5 @@ function bindEvents() {
 
 // Старт приложения
 go('main');
-
 
 
