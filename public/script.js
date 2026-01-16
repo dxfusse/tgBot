@@ -43,7 +43,7 @@ function ProfilePage() {
     <img src="f1_logo.png" class="f1_logo">
     <p class="меню-текст">Твой профиль</p>
     <div class="profile-menu">
-      <img class="pfp">
+      <img class="pfp" id="pfp">
       <div class="меню">
         <p class="текст-меню" id="id">Загрузка...</p>
         <p class="текст-меню" id="username">Загрузка...</p>
@@ -66,6 +66,7 @@ function ProfilePage() {
     document.getElementById('name').innerText = "Имя: " + user.first_name + ' ' + user.last_name;
     document.getElementById('username').innerText = "Ник: " + user.username;
     document.getElementById('score').innerText = "Ваш баланс: " + data.score;
+    document.getElementById('pfp').src = data.photo;
   })
   .catch(err => console.error('Ошибка fetch:', err));
 }
