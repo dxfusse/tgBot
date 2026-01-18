@@ -22,7 +22,7 @@ function MainPage() {
   });
 
   render( `
-    <img src="/images/other/f1_logo.png" class="f1_logo">
+    <img src="../images/other/f1_logo.png" class="f1_logo">
     <p class="текст-мэйн">Привет! Я твой помощник в составлении <br>прогнозов на каждую гонку в Формуле 1. Если ты угадаешь топ-10, то получишь баллы!</p>
     <p class="меню-текст">Доступные действия</p>
     <div class="меню">
@@ -131,23 +131,23 @@ function TeamPage() {
   .then(res => res.json())
   .then(data => {
     alert(data)
-    document.getElementById('racer1_photo').src = data.racer1.photo
+    document.getElementById('racer1_photo').src = ".." + data.racer1.photo
     document.getElementById('racer1_name').innerText = data.racer1.name
     document.getElementById('racer1_cost').innerText = data.racer1.cost
 
-    document.getElementById('racer2_photo').src = data.racer2.photo
+    document.getElementById('racer2_photo').src = ".." + data.racer2.photo
     document.getElementById('racer2_name').innerText = data.racer2.name
     document.getElementById('racer2_cost').innerText = data.racer2.cost
 
-    document.getElementById('engine_photo').src = data.engine.photo
+    document.getElementById('engine_photo').src = ".." + data.engine.photo
     document.getElementById('engine_name').innerText = data.engine.name
     document.getElementById('engine_cost').innerText = data.engine.cost
 
-    document.getElementById('pit_stop_photo').src = data.pit_stop.photo
+    document.getElementById('pit_stop_photo').src = ".." + data.pit_stop.photo
     document.getElementById('pit_stop_name').innerText = data.pit_stop.name
     document.getElementById('pit_stop_cost').innerText = data.pit_stop.cost
 
-    document.getElementById('bridge_photo').src = data.bridge.photo
+    document.getElementById('bridge_photo').src = ".." + data.bridge.photo
     document.getElementById('bridge_name').innerText = data.bridge.name
     document.getElementById('bridge_cost').innerText = data.bridge.cost
   });
