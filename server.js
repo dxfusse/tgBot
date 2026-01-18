@@ -400,7 +400,9 @@ app.post('/entering', (req, res) => {
         pit_stop : null,
         bridge : null
       },
-      score: 0
+      score: 0,
+      money: 100000000,
+      team_cost : 0
     };
     console.log('В базу данных добавлен новый пользователь: ' + user.username);
     database.users.push(new_user);
@@ -435,7 +437,9 @@ app.post('/getUserInfo', (req, res) =>{
   console.log('Загрузка данных пользователя: ', user.username)
   const data = {
     score : database.users[database.users.findIndex(item => item.id == user.id)].score,
-    photo: database.users[database.users.findIndex(item => item.id == user.id)].photo
+    photo: database.users[database.users.findIndex(item => item.id == user.id)].photo,
+    money : database.users[database.users.findIndex(item => item.id == user.id)].money,
+    team_cost : database.users[database.users.findIndex(item => item.id == user.id)].team_cost
   }
   console.log('Данные отправлены пользователю');
   res.json(data);
@@ -446,13 +450,13 @@ app.post('/getTeamInfo', (req, res) =>{
   const user = req.body.user;
   console.log('Пользователь ' + user.username + ' хочет посмотреть свою команду')
   const userTeam = database.users[database.users.findIndex(item => item.id ==user.id)].team;
-  console.log(userTeam)
   let data = {
     racer1 : null,
     racer2 : null,
     engine : null,
     pit_stop : null,
-    bridge : null
+    bridge : null,
+    money: database.users[database.users.findIndex(item => item.id ==user.id)].money
   }
   if (userTeam.racer1 != null){
     data.racer1 = database.drivers.find(item => item.id == userTeam.racer1)
@@ -463,7 +467,6 @@ app.post('/getTeamInfo', (req, res) =>{
       photo: "/images/drivers/null_choise.jpg"
     }
   }
-  console.log(data)
   if (userTeam.racer2 != null){
     data.racer2 = database.drivers.find(item => item.id == userTeam.racer2)
   }else{
@@ -473,7 +476,6 @@ app.post('/getTeamInfo', (req, res) =>{
       photo: "/images/drivers/null_choise.jpg"
     }
   }
-  console.log(data)
   if (userTeam.engine != null){
     data.engine = database.engines.find(item => item.id == userTeam.engine)
   }else{
@@ -483,7 +485,6 @@ app.post('/getTeamInfo', (req, res) =>{
       photo: "/images/engines/null_choise.jpg"
     }
   }
-  console.log(data)
   if (userTeam.pit_stop != null){
     data.pit_stop = database.pit_stops.find(item => item.id == userTeam.pit_stop)
   }else{
@@ -493,7 +494,6 @@ app.post('/getTeamInfo', (req, res) =>{
       photo: "/images/pit_stops/null_choise.jpg"
     }
   }
-  console.log(data)
   if (userTeam.bridge != null){
     data.bridge = database.bridges.find(item => item.id == userTeam.bridge)
   }else{
@@ -503,7 +503,7 @@ app.post('/getTeamInfo', (req, res) =>{
       photo: "/images/bridges/null_choise.jpg"
     }
   }
-  console.log(data)
+  console.log('Отправка пользователю ' + user.username + ' данных о его команде')
   res.json(data);
 })
 
