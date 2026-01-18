@@ -23,12 +23,11 @@ function MainPage() {
 
   render( `
     <img src="../images/other/f1_logo.png" class="f1_logo">
-    <p class="текст-мэйн">Привет! Я твой помощник в составлении <br>прогнозов на каждую гонку в Формуле 1. Если ты угадаешь топ-10, то получишь баллы!</p>
-    <p class="меню-текст">Доступные действия</p>
     <div class="меню">
       <button data-page="profile" class="кнопка-меню">Профиль</button>
+      <button data-page="team" class="кнопка-меню">Моя команда</button>
       <button data-page="prognoz" class="кнопка-меню">Сделать прогноз</button>
-      <button data-page="global_top" class="кнопка-меню">Глобальный топ</button>
+      <button data-page="global_top" class="кнопка-меню">Рейтинг</button>
       <button data-page="helper" class="кнопка-меню" id="helper">Помощник</button>
     </div>
   `);
@@ -50,15 +49,12 @@ function ProfilePage() {
     <p class="меню-текст">Твой профиль</p>
     <img class="pfp" id="pfp">
     <p></p>
-    <div class="profile-menu">
-      <p class="текст-меню" id="id">Загрузка...</p>
+    <div class="меню">
       <p class="текст-меню" id="username">Загрузка...</p>
       <p class="текст-меню" id="name">Загрузка...</p>
       <p class="текст-меню" id="score">Загрузка...</p>
-      <div class="меню">
-        <button data-page="team" class="кнопка-меню">Моя команда</button>
-        <button data-page="statistic" class="кнопка-меню">Статистика</button>
-      </div>
+      <p class="текст-меню" id="money">Загрузка...</p>
+      <p class="текст-меню" id="team_cost">Загрузка...</p>
     </div>
     <p></p>
     <button class="кнопка-меню" data-page="main">Назад</button>
@@ -78,10 +74,11 @@ function ProfilePage() {
   })
   .then(res => res.json())
   .then(data => {
-    document.getElementById('id').innerText = "ID: " + user.id;
     document.getElementById('name').innerText = "Имя: " + user.first_name + ' ' + user.last_name;
     document.getElementById('username').innerText = "Ник: @" + user.username;
-    document.getElementById('score').innerText = "Ваш баланс: " + data.score;
+    document.getElementById('score').innerText = "Ваши баллы: " + data.score;
+    document.getElementById('money').innerText = "Ваш баланс: " + data.money;
+    document.getElementById('team_cost').innerText = "Стоимость команды: " + data.score;
     document.getElementById('pfp').src = data.photo;
   })
   .catch(err => console.error('Ошибка fetch:', err));
@@ -92,6 +89,7 @@ function TeamPage() {
   
   render(`
     <p class="меню-текст">Твоя команда</p>
+    <p class="баланс" id="balance">Баланс: $</p>
     <div class="team_menu-container">
       <button class="team_place-container" id="racer1_button">
         <img class="photo-team_container" id="racer1_photo">
@@ -120,7 +118,10 @@ function TeamPage() {
       </button>
     </div>
     <p></p>
-    <button class="кнопка-меню" data-page="profile">Назад</button>
+    <div class="footer-twoButtons">
+      <button class="button-forFooter" data-page="main">Назад</button>
+      <button class="button-forFooter" id="saveTeam">Сохранить</button>
+    </div>
   `);
 
   fetch('https://tgbot-eiq1.onrender.com/getTeamInfo', {
@@ -130,7 +131,8 @@ function TeamPage() {
   })
   .then(res => res.json())
   .then(data => {
-    alert(data)
+    document.getElementById('balance').innerText = "Баланс: $" + data.money
+
     document.getElementById('racer1_photo').src = ".." + data.racer1.photo
     document.getElementById('racer1_name').innerText = "Гонщик 1: " + data.racer1.name
     document.getElementById('racer1_cost').innerText = "Стоимость: " + data.racer1.cost
