@@ -3,18 +3,31 @@ body {
   display: flex;
   justify-content: center;
 }
-.app {
+#app {
   width: 100%;
   max-width: 480px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  transition: background 0.3s ease;
 }
 .page {
   display: none;
 }
 .page.active {
   display: block;
+}
+.page-main {
+  background-image: url('../images/other/background1.jpg');
+}
+.page-profile {
+  background-image: url('../images/other/background2.jpg');
+}
+.page-team {
+  background-image: url('../images/other/background3.jpg');
 }
 .f1_logo{
   width: 250px;
