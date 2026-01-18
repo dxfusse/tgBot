@@ -59,7 +59,9 @@ body {
   border-radius: 30px;
   width: max-content;
   padding: 10px 20px;
-  background-color: transparent;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  border-color: rgba(255, 255, 255, 0.2);
 }
 .кнопка-меню {
   cursor: pointer;
