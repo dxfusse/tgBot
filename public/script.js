@@ -132,29 +132,34 @@ function TeamPage() {
   .then(data => {
     alert(data)
     document.getElementById('racer1_photo').src = ".." + data.racer1.photo
-    document.getElementById('racer1_name').innerText = data.racer1.name
-    document.getElementById('racer1_cost').innerText = data.racer1.cost
+    document.getElementById('racer1_name').innerText = "Гонщик 1: " + data.racer1.name
+    document.getElementById('racer1_cost').innerText = "Стоимость: " + data.racer1.cost
 
     document.getElementById('racer2_photo').src = ".." + data.racer2.photo
-    document.getElementById('racer2_name').innerText = data.racer2.name
-    document.getElementById('racer2_cost').innerText = data.racer2.cost
+    document.getElementById('racer2_name').innerText = "Гонщик 2: " + data.racer2.name
+    document.getElementById('racer2_cost').innerText = "Стоимость: " +data.racer2.cost
 
     document.getElementById('engine_photo').src = ".." + data.engine.photo
-    document.getElementById('engine_name').innerText = data.engine.name
-    document.getElementById('engine_cost').innerText = data.engine.cost
+    document.getElementById('engine_name').innerText = "Двигатель: " + data.engine.name
+    document.getElementById('engine_cost').innerText = "Стоимость: " +data.engine.cost
 
     document.getElementById('pit_stop_photo').src = ".." + data.pit_stop.photo
-    document.getElementById('pit_stop_name').innerText = data.pit_stop.name
-    document.getElementById('pit_stop_cost').innerText = data.pit_stop.cost
+    document.getElementById('pit_stop_name').innerText = "Пит-стоп: " + data.pit_stop.name
+    document.getElementById('pit_stop_cost').innerText = "Стоимость: " +data.pit_stop.cost
 
     document.getElementById('bridge_photo').src = ".." + data.bridge.photo
-    document.getElementById('bridge_name').innerText = data.bridge.name
-    document.getElementById('bridge_cost').innerText = data.bridge.cost
+    document.getElementById('bridge_name').innerText = "Мостик " + data.bridge.name
+    document.getElementById('bridge_cost').innerText = "Стоимость: " +data.bridge.cost
   });
+}
+
+function setPageClass(page) {
+  app.className = `page-${page}`;
 }
 
 // SPA Маршрутизация
 function go(page) {
+  setPageClass(page);
   if (page === 'main') MainPage();
   if (page === 'profile') ProfilePage();
   if (page === 'team') TeamPage();
