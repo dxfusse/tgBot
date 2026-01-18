@@ -441,9 +441,12 @@ app.post('/getUserInfo', (req, res) =>{
   res.json(data);
 });
 
+//Получение инфы о команде пользователе
 app.post('/getTeamInfo', (req, res) =>{
-  const userid = req.body.userid;
-  const userTeam = database.users[database.users.findIndex(item => item.id ==userid)].team;
+  const user = req.body.user;
+  console.log('Пользователь ' + user.username + ' хочет посмотреть свою команду')
+  const userTeam = database.users[database.users.findIndex(item => item.id ==user.id)].team;
+  console.log(userTeam)
   let data = {}
   if (userTeam.racer1 != null){
     data[racer1] = database.drivers.find(item => item.id == userTeam.racer1)
@@ -454,7 +457,7 @@ app.post('/getTeamInfo', (req, res) =>{
       photo: "/images/drivers/null_choise.jpg"
     }
   }
-
+  console.log(data)
   if (userTeam.racer2 != null){
     data[racer2] = database.drivers.find(item => item.id == userTeam.racer2)
   }else{
@@ -464,7 +467,7 @@ app.post('/getTeamInfo', (req, res) =>{
       photo: "/images/drivers/null_choise.jpg"
     }
   }
-
+  console.log(data)
   if (userTeam.engine != null){
     data[engine] = database.engines.find(item => item.id == userTeam.engine)
   }else{
@@ -474,7 +477,7 @@ app.post('/getTeamInfo', (req, res) =>{
       photo: "/images/engines/null_choise.jpg"
     }
   }
-
+  console.log(data)
   if (userTeam.pit_stop != null){
     data[pit_stop] = database.pit_stops.find(item => item.id == userTeam.pit_stop)
   }else{
@@ -484,7 +487,7 @@ app.post('/getTeamInfo', (req, res) =>{
       photo: "/images/pit_stops/null_choise.jpg"
     }
   }
-
+  console.log(data)
   if (userTeam.bridge != null){
     data[bridge] = database.bridges.find(item => item.id == userTeam.bridge)
   }else{
@@ -494,6 +497,7 @@ app.post('/getTeamInfo', (req, res) =>{
       photo: "/images/bridges/null_choise.jpg"
     }
   }
+  console.log(data)
   res.json(data);
 })
 
@@ -506,4 +510,3 @@ app.listen(PORT, () => {
   console.log(`Сервер запущен на порту: ${PORT}`);
   console.log(`Mini App доступен на /`);
 });
-
