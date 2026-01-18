@@ -93,32 +93,33 @@ function TeamPage() {
   render(`
     <p class="меню-текст">Твоя команда</p>
     <div class="team_menu-container">
-      <div class="team_place-container">
+      <button class="team_place-container">
         <img class="photo-team_container" src="null_choise.jpg">
         <p class="текст-мэйн">Гонщик 1:</p>
         <p class="текст-мэйн">Стоимость:</p>
-      </div>
-      <div class="team_place-container">
+      </button>
+      <button class="team_place-container">
         <img class="photo-team_container" src="null_choise.jpg">
         <p class="текст-мэйн">Гонщик 2:</p>
         <p class="текст-мэйн">Стоимость:</p>
-      </div>
-      <div class="team_place-container">
+      </button>
+      <button class="team_place-container">
         <img class="photo-team_container" src="null_choise.jpg">
         <p class="текст-мэйн">Двигатель:</p>
         <p class="текст-мэйн">Стоимость:</p>
-      </div>
-      <div class="team_place-container">
+      </button>
+      <button class="team_place-container">
         <img class="photo-team_container" src="null_choise.jpg">
         <p class="текст-мэйн">Пит-стоп:</p>
         <p class="текст-мэйн">Стоимость:</p>
-      </div>
-      <div class="team_place-container">
+      </button>
+      <button class="team_place-container">
         <img class="photo-team_container" src="null_choise.jpg">
         <p class="текст-мэйн">Мостик:</p>
         <p class="текст-мэйн">Стоимость:</p>
-      </div>
+      </button>
     </div>
+    <p>>/p>
     <button class="кнопка-меню" data-page="profile">Назад</button>
   `);
 }
