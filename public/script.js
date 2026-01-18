@@ -89,7 +89,7 @@ function TeamPage() {
   
   render(`
     <p class="меню-текст">Твоя команда</p>
-    <p class="баланс" id="balance">Баланс: $</p>
+    <p class="баланс" id="balance"></p>
     <div class="team_menu-container">
       <button class="team_place-container" id="racer1_button">
         <img class="photo-team_container" id="racer1_photo">
@@ -158,26 +158,13 @@ function TeamPage() {
 function setPageClass(page) {
   app.className = `page-${page}`;
 }
-function setBackground(src) {
-  app.style.backgroundImage =`url('${src}')`;
-}
-
 
 // SPA Маршрутизация
 function go(page) {
   setPageClass(page);
-  if (page === 'main'){
-    MainPage();
-    setBackground('../images/other/background1.jpg');
-  }
-  if (page === 'profile'){
-    ProfilePage();
-    setBackground('../images/other/background2.jpg');
-  }
-  if (page === 'team'){ 
-    TeamPage();
-    setBackground('../images/other/background3.jpg');
-  }
+  if (page === 'main') MainPage();
+  if (page === 'profile') ProfilePage();
+  if (page === 'team') TeamPage();
 }
 
 function CreateTeamPage(select){
