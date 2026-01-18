@@ -93,28 +93,28 @@ function TeamPage() {
     <div class="team_menu-container">
       <button class="team_place-container" id="racer1_button">
         <img class="photo-team_container" id="racer1_photo">
-        <p class="текст-мэйн" id="racer1_name">Гонщик 1:</p>
-        <p class="текст-мэйн" id="racer1_cost">Стоимость:</p>
+        <p class="баланс" id="racer1_name">Гонщик 1:</p>
+        <p class="баланс" id="racer1_cost">Стоимость:</p>
       </button>
       <button class="team_place-container" id="racer2_button">
         <img class="photo-team_container" id="racer2_photo">
-        <p class="текст-мэйн" id="racer2_name">Гонщик 2:</p>
-        <p class="текст-мэйн" id="racer2_cost">Стоимость:</p>
+        <p class="баланс" id="racer2_name">Гонщик 2:</p>
+        <p class="баланс" id="racer2_cost">Стоимость:</p>
       </button>
       <button class="team_place-container" id="engine_button">
         <img class="photo-team_container" id="engine_photo">
-        <p class="текст-мэйн" id="engine_name">Двигатель:</p>
-        <p class="текст-мэйн" id="engine_cost">Стоимость:</p>
+        <p class="баланс" id="engine_name">Двигатель:</p>
+        <p class="баланс" id="engine_cost">Стоимость:</p>
       </button>
       <button class="team_place-container" id="pit_stop_button">
         <img class="photo-team_container" id="pit_stop_photo">
-        <p class="текст-мэйн" id="pit_stop_name">Пит-стоп:</p>
-        <p class="текст-мэйн" id="pit_stop_cost">Стоимость:</p>
+        <p class="баланс" id="pit_stop_name">Пит-стоп:</p>
+        <p class="баланс" id="pit_stop_cost">Стоимость:</p>
       </button>
       <button class="team_place-container" id="bridge_button">
         <img class="photo-team_container" id="bridge_photo">
-        <p class="текст-мэйн" id="bridge_name">Мостик:</p>
-        <p class="текст-мэйн" id="bridge_cost">Стоимость:</p>
+        <p class="баланс" id="bridge_name">Мостик:</p>
+        <p class="баланс" id="bridge_cost">Стоимость:</p>
       </button>
     </div>
     <p></p>
@@ -155,26 +155,28 @@ function TeamPage() {
   });
 
   document.getElementById('racer1_button').addEventListener('click', () => {
-    CreateTeamPage('racer1')
+    go('createTeam', { select: 'racer1' });
   })
   document.getElementById('racer2_button').addEventListener('click', () => {
-    CreateTeamPage('racer2')
+    go('createTeam', { select: 'racer2' });
+
   })
   document.getElementById('engine_button').addEventListener('click', () => {
-    CreateTeamPage('engine')
+    go('createTeam', { select: 'engine' });
+
   })
   document.getElementById('pit_stop_button').addEventListener('click', () => {
-    CreateTeamPage('pit_stop')
+    go('createTeam', { select: 'pit_stop' });
   })
   document.getElementById('bridge_button').addEventListener('click', () => {
-    CreateTeamPage('bridge')
+    go('createTeam', { select: 'bridge' });
   })
 }
 
 function CreateTeamPage(select){
   const user = tg.initDataUnsafe.user;
   app.className = 'page-createTeam';
-  
+
   render(`
     <p class="меню-текст" id="mainText"></p>
     <img class="pfp" id="pfp">
@@ -249,16 +251,25 @@ function CreateTeamPage(select){
   })
 }
 
+// SPA Маршрутизация
+let currentRoute = {
+  page: 'main',
+  params: {}
+};
+
 function setPageClass(page) {
   app.className = `page-${page}`;
 }
 
-// SPA Маршрутизация
-function go(page) {
+function go(page, params = {}) {
   setPageClass(page);
+  currentRoute.page = page;
+  currentRoute.params = params;
+
   if (page === 'main') MainPage();
   if (page === 'profile') ProfilePage();
   if (page === 'team') TeamPage();
+  if (page === 'createTeam') CreateTeamPage(params.select);
 }
 
 // Привязка событий к кнопкам
