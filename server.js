@@ -4,7 +4,6 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 const path = require('path');
-const { useInsertionEffect } = require('react');
 
 //бот
 const BOT_TOKEN = '8179159056:AAFp_2akr_bkTcq1t6bXnxoUT6xV0EhBvf4';
@@ -507,3 +506,4 @@ app.listen(PORT, () => {
   console.log(`Сервер запущен на порту: ${PORT}`);
   console.log(`Mini App доступен на /`);
 });
+
