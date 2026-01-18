@@ -455,9 +455,9 @@ app.post('/getTeamInfo', (req, res) =>{
     bridge : null
   }
   if (userTeam.racer1 != null){
-    data[racer1] = database.drivers.find(item => item.id == userTeam.racer1)
+    data.racer1 = database.drivers.find(item => item.id == userTeam.racer1)
   }else{
-    data[racer1] = {
+    data.racer1 = {
       name: "Не выбран",
       cost : 0,
       photo: "/images/drivers/null_choise.jpg"
@@ -465,9 +465,9 @@ app.post('/getTeamInfo', (req, res) =>{
   }
   console.log(data)
   if (userTeam.racer2 != null){
-    data[racer2] = database.drivers.find(item => item.id == userTeam.racer2)
+    data.racer2 = database.drivers.find(item => item.id == userTeam.racer2)
   }else{
-    data[racer2] = {
+    data.racer2 = {
       name: "Не выбран",
       cost : 0,
       photo: "/images/drivers/null_choise.jpg"
@@ -475,9 +475,9 @@ app.post('/getTeamInfo', (req, res) =>{
   }
   console.log(data)
   if (userTeam.engine != null){
-    data[engine] = database.engines.find(item => item.id == userTeam.engine)
+    data.engine = database.engines.find(item => item.id == userTeam.engine)
   }else{
-    data[engine] = {
+    data.engine = {
       name: "Не выбран",
       cost : 0,
       photo: "/images/engines/null_choise.jpg"
@@ -485,9 +485,9 @@ app.post('/getTeamInfo', (req, res) =>{
   }
   console.log(data)
   if (userTeam.pit_stop != null){
-    data[pit_stop] = database.pit_stops.find(item => item.id == userTeam.pit_stop)
+    data.pit_stop = database.pit_stops.find(item => item.id == userTeam.pit_stop)
   }else{
-    data[pit_stop] = {
+    data.pit_stop = {
       name: "Не выбран",
       cost : 0,
       photo: "/images/pit_stops/null_choise.jpg"
@@ -495,9 +495,9 @@ app.post('/getTeamInfo', (req, res) =>{
   }
   console.log(data)
   if (userTeam.bridge != null){
-    data[bridge] = database.bridges.find(item => item.id == userTeam.bridge)
+    data.bridge = database.bridges.find(item => item.id == userTeam.bridge)
   }else{
-    data[bridge] = {
+    data.bridge = {
       name: "Не выбран",
       cost : 0,
       photo: "/images/bridges/null_choise.jpg"
