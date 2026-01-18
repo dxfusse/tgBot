@@ -130,7 +130,7 @@ body {
 }
 @font-face {
     font-family: 'dop';
-    src: url('dopText.ttf') format('truetype');
+    src: url('dopText.otf') format('truetype');
 }
 .activate-menuButtons-animation{
     animation: menuButtons 0.5s ease-out forwards;
@@ -143,4 +143,5 @@ body {
         opacity: 1;
     }
 }
+
 
