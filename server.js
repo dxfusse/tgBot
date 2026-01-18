@@ -103,6 +103,7 @@ app.post('/entering', (req, res) => {
       language: user.language_code,
       username: user.username,
       photo : user.photo_url,
+      team : [],
       score: 0
     };
     console.log('В базу данных добавлен новый пользователь: ' + user.username);
@@ -146,7 +147,6 @@ app.post('/getUserInfo', (req, res) =>{
 })
 
 app.post('/getDB', (req, res) =>{
-    const userid = req.body.userid;
     res.json(database);
 
 })
