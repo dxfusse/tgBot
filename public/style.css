@@ -36,13 +36,6 @@ body {
   margin-top: 100px;
   width: 250px;
 }
-.текст-мэйн{
-  font-size: 14px;
-  text-align: center;
-  color: rgb(255, 255, 255);
-  font-family: "dop";
-  font-weight: bold;
-}
 .меню-текст{
   position: relative;
   font-size: 30px;
@@ -157,6 +150,46 @@ body {
   color: rgb(255, 255, 255);
   font-family: "dop";
   font-weight: bold;
+}
+.div-createTeam{
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  justify-content: center;
+  flex: 1;
+  border-radius: 30px;
+  width: max-content;
+  max-width: 400px;
+  overflow: auto;
+  padding: 10px 20px;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+.button-createTeam{
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  cursor: pointer;
+  width: max-content;
+  height: max-content;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  color: white;
+  font-size: 20px;
+  border-color: rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  transition: all 0.4s ease;
+  font-family: "dop";
+}
+.button-createTeam:hover{
+  transform: scale(1.1);
+  background: rgba(255, 255, 255, 0.6);
+}
+.photo-createTeam{
+  height: 50px;
+  width: 50px;
+  border-radius: 15px;
 }
 @font-face {
     font-family: 'dop';
