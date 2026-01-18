@@ -133,26 +133,97 @@ function TeamPage() {
   .then(data => {
     document.getElementById('balance').innerText = "Баланс: $" + data.money
 
-    document.getElementById('racer1_photo').src = ".." + data.racer1.photo
+    document.getElementById('racer1_photo').src = data.racer1.photo
     document.getElementById('racer1_name').innerText = "Гонщик 1: " + data.racer1.name
     document.getElementById('racer1_cost').innerText = "Стоимость: " + data.racer1.cost
 
-    document.getElementById('racer2_photo').src = ".." + data.racer2.photo
+    document.getElementById('racer2_photo').src = data.racer2.photo
     document.getElementById('racer2_name').innerText = "Гонщик 2: " + data.racer2.name
     document.getElementById('racer2_cost').innerText = "Стоимость: " +data.racer2.cost
 
-    document.getElementById('engine_photo').src = ".." + data.engine.photo
+    document.getElementById('engine_photo').src = data.engine.photo
     document.getElementById('engine_name').innerText = "Двигатель: " + data.engine.name
     document.getElementById('engine_cost').innerText = "Стоимость: " +data.engine.cost
 
-    document.getElementById('pit_stop_photo').src = ".." + data.pit_stop.photo
+    document.getElementById('pit_stop_photo').src = data.pit_stop.photo
     document.getElementById('pit_stop_name').innerText = "Пит-стоп: " + data.pit_stop.name
     document.getElementById('pit_stop_cost').innerText = "Стоимость: " +data.pit_stop.cost
 
-    document.getElementById('bridge_photo').src = ".." + data.bridge.photo
+    document.getElementById('bridge_photo').src = data.bridge.photo
     document.getElementById('bridge_name').innerText = "Мостик " + data.bridge.name
     document.getElementById('bridge_cost').innerText = "Стоимость: " +data.bridge.cost
   });
+}
+
+function CreateTeamPage(select){
+  const user = tg.initDataUnsafe.user;
+
+  render(`
+    <p class="меню-текст" id="mainText"></p>
+    <img class="pfp" id="pfp">
+    <p></p>
+    <div class="div-createTeam" id="container_createTeam"></div>
+    <p></p>
+    <div class="footer-twoButtons">
+      <button class="button-forFooter" data-page="team">Назад</button>
+      <button class="button-forFooter" id="saveChoise">Сохранить</button>
+    </div>
+  `);
+  if (select == 'racer1'){
+    document.getElementById('mainText').innerText = "Выбор первого пилота";
+  }
+  if (select == 'racer2'){
+    document.getElementById('mainText').innerText = "Выбор второго пилота";
+  }
+  if (select == 'engine'){
+    document.getElementById('mainText').innerText = "Выбор двигателя";
+  }
+  if (select == 'pit_stop'){
+    document.getElementById('mainText').innerText = "Выбор команды пит-стопа";
+  }
+  if (select == 'bridge'){
+    document.getElementById('mainText').innerText = "Выбор моста";
+  }
+
+  fetch('https://tgbot-eiq1.onrender.com/selectTeamOpt', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ user : user })
+  })
+  .then(res => res.json())
+  .then(data => {
+    const names = data.map(item => item.name);
+    const costs = data.map(item => item.cost);
+    const photos = data.map(item => item.photo);
+
+    let choise;
+
+    const container = document.getElementById('container_createTeam');
+    for (let i = 0; i < names.length; i++) {
+      const btn = document.createElement('button');
+      btn.className = 'button-createTeam';
+
+      const img = document.createElement('img');
+      img.src = photos[i];
+      img.className = 'photo-createTeam';
+
+      const text = document.createElement('div');
+      text.textContent = names[i] + "Стоимость: " + costs[i];
+      text.className = 'баланс'
+
+      btn.appendChild(img);
+      btn.appendChild(text);
+
+      btn.onclick = () => {
+        choise = names[i];
+      };
+
+      container.appendChild(btn);
+    };
+    document.getElementById('saveChoise').addEventListener('click', () => {
+      alert(choise);
+    });
+  })
 }
 
 function setPageClass(page) {
@@ -165,10 +236,6 @@ function go(page) {
   if (page === 'main') MainPage();
   if (page === 'profile') ProfilePage();
   if (page === 'team') TeamPage();
-}
-
-function CreateTeamPage(select){
-
 }
 
 // Привязка событий к кнопкам
@@ -195,5 +262,3 @@ function bindEvents() {
 
 // Старт приложения
 go('main');
-
-
