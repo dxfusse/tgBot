@@ -119,7 +119,7 @@ function TeamPage() {
         <p class="текст-мэйн">Стоимость:</p>
       </button>
     </div>
-    <p>>/p>
+    <p></p>
     <button class="кнопка-меню" data-page="profile">Назад</button>
   `);
 }
