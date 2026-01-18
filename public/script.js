@@ -153,6 +153,22 @@ function TeamPage() {
     document.getElementById('bridge_name').innerText = "Мостик " + data.bridge.name
     document.getElementById('bridge_cost').innerText = "Стоимость: " +data.bridge.cost
   });
+
+  document.getElementById('racer1_button').addEventListener('click', () => {
+    CreateTeamPage('racer1')
+  })
+  document.getElementById('racer2_button').addEventListener('click', () => {
+    CreateTeamPage('racer2')
+  })
+  document.getElementById('engine_button').addEventListener('click', () => {
+    CreateTeamPage('engine')
+  })
+  document.getElementById('pit_stop_button').addEventListener('click', () => {
+    CreateTeamPage('pit_stop')
+  })
+  document.getElementById('bridge_button').addEventListener('click', () => {
+    CreateTeamPage('bridge')
+  })
 }
 
 function CreateTeamPage(select){
@@ -169,6 +185,7 @@ function CreateTeamPage(select){
       <button class="button-forFooter" id="saveChoise">Сохранить</button>
     </div>
   `);
+
   if (select == 'racer1'){
     document.getElementById('mainText').innerText = "Выбор первого пилота";
   }
@@ -185,10 +202,15 @@ function CreateTeamPage(select){
     document.getElementById('mainText').innerText = "Выбор моста";
   }
 
+  const data = {
+    user : user,
+    select : select
+  }
+  
   fetch('https://tgbot-eiq1.onrender.com/selectTeamOpt', {
   method: 'POST',
   headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({ user : user })
+  body: JSON.stringify(data)
   })
   .then(res => res.json())
   .then(data => {
@@ -262,3 +284,5 @@ function bindEvents() {
 
 // Старт приложения
 go('main');
+
+
