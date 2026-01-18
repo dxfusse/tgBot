@@ -85,8 +85,9 @@ body {
 }
 .team_menu-container {
   display: grid;
+  padding: 20px 20px;
   grid-template-columns: repeat(2, 1fr);
-  gap: 16px;
+  gap: 20px;
   justify-items: center;
   background-color: rgb(0, 189, 214);
 }
@@ -97,6 +98,10 @@ body {
   height: max-content;
   border: none;
   background-color: rgb(0, 165, 187);
+}
+.team_place-container:hover{
+  transform: scale(1.1);
+  background-color: rgb(0, 225, 255);
 }
 .photo-team_container{
   border-radius: 25px;
