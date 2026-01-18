@@ -173,7 +173,8 @@ function TeamPage() {
 
 function CreateTeamPage(select){
   const user = tg.initDataUnsafe.user;
-
+  app.className = 'page-createTeam';
+  
   render(`
     <p class="меню-текст" id="mainText"></p>
     <img class="pfp" id="pfp">
@@ -206,7 +207,7 @@ function CreateTeamPage(select){
     user : user,
     select : select
   }
-  
+
   fetch('https://tgbot-eiq1.onrender.com/selectTeamOpt', {
   method: 'POST',
   headers: { 'Content-Type': 'application/json' },
