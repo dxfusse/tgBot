@@ -4,6 +4,9 @@ body {
   justify-content: center;
 }
 #app {
+  padding: 16px;
+  box-sizing: border-box;
+  min-height: 100vh;
   width: 100%;
   max-width: 480px;
   display: flex;
@@ -24,25 +27,26 @@ body {
   background-image: url('../images/other/background1.jpg');
 }
 .page-profile {
-  background-image: url('../images/other/background2.JPG');
+  background-image: url('../images/other/background2.jpg');
 }
 .page-team {
-  background-image: url('../images/other/background3.JPG');
+  background-image: url('../images/other/background3.jpg');
 }
 .f1_logo{
+  margin-top: 100px;
   width: 250px;
 }
 .текст-мэйн{
   font-size: 14px;
   text-align: center;
-  color: rgb(0, 0, 0);
+  color: rgb(255, 255, 255);
   font-family: "dop";
   font-weight: bold;
 }
 .меню-текст{
   position: relative;
   font-size: 30px;
-  color: rgb(0, 0, 0);
+  color: rgb(255, 255, 255);
   font-family: "dop";
   font-weight: bold;
 }
@@ -55,41 +59,29 @@ body {
   border-radius: 30px;
   width: max-content;
   padding: 10px 20px;
-  background-color: rgb(0, 189, 214);
+  background-color: transparent;
 }
 .кнопка-меню {
   cursor: pointer;
   height: 50px;
   width: 300px;
-  background-color: rgb(0, 189, 214);
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
   color: white;
   font-size: 20px;
-  border: none;
+  border-color: rgba(255, 255, 255, 0.2);
   border-radius: 25px;
   transition: all 0.4s ease;
   font-family: "dop";
 }
 .кнопка-меню:hover{
   transform: scale(1.1);
-  background-color: rgb(0, 225, 255);
+  background: rgba(255, 255, 255, 0.6);
 }
 .текст-меню {
   color: white;
   font-size: 20px;
   font-family: "dop";
-}
-.profile-menu{
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 15px;
-  flex: 1;
-  border-radius: 30px;
-  width: max-content;
-  min-width: 300px;
-  padding: 10px 20px;
-  background-color: rgb(0, 165, 187);
 }
 .pfp{
   width: 150px;
@@ -102,7 +94,9 @@ body {
   grid-template-columns: repeat(2, 1fr);
   gap: 20px;
   justify-items: center;
-  background-color: rgb(0, 189, 214);
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
   border-radius: 25px;
 }
 .team_menu-container > :last-child:nth-child(odd) {
@@ -128,6 +122,40 @@ body {
   width: 150px;
   height: 150px;
 }
+.footer-twoButtons{
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  justify-content: center;
+  flex: 1;
+  border-radius: 30px;
+  width: 350px;
+  padding: 10px 20px;
+  background-color: rgba(255, 255, 255, 0.2);
+}
+.button-forFooter{
+  cursor: pointer;
+  height: 50px;
+  width: 250px;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  color: white;
+  font-size: 20px;
+  border-color: rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  transition: all 0.4s ease;
+  font-family: "dop";
+}
+.button-forFooter:hover{
+  transform: scale(1.1);
+  background: rgba(255, 255, 255, 0.6);
+}
+.баланс{
+  font-size: 20px;
+  color: rgb(255, 255, 255);
+  font-family: "dop";
+  font-weight: bold;
+}
 @font-face {
     font-family: 'dop';
     src: url('dopText.otf') format('truetype');
@@ -143,5 +171,3 @@ body {
         opacity: 1;
     }
 }
-
-
