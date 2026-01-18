@@ -126,7 +126,7 @@ function TeamPage() {
   fetch('https://tgbot-eiq1.onrender.com/getTeamInfo', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ userid: user.id })
+    body: JSON.stringify({ user: user })
   })
   .then(res => res.json())
   .then(data => {
