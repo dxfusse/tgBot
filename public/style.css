@@ -104,6 +104,7 @@ body {
   height: max-content;
   border: none;
   background-color: rgb(0, 165, 187);
+  transition: all 0.4s ease;
 }
 .team_place-container:hover{
   transform: scale(1.1);
@@ -129,3 +130,4 @@ body {
         opacity: 1;
     }
 }
+
