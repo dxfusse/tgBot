@@ -447,7 +447,13 @@ app.post('/getTeamInfo', (req, res) =>{
   console.log('Пользователь ' + user.username + ' хочет посмотреть свою команду')
   const userTeam = database.users[database.users.findIndex(item => item.id ==user.id)].team;
   console.log(userTeam)
-  let data = {}
+  let data = {
+    racer1 : null,
+    racer2 : null,
+    engine : null,
+    pit_stop : null,
+    bridge : null
+  }
   if (userTeam.racer1 != null){
     data[racer1] = database.drivers.find(item => item.id == userTeam.racer1)
   }else{
