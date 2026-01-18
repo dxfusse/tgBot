@@ -84,121 +84,121 @@ function createNewDatabase(filePath) {
         id: 0,
         name: "Макс Ферстаппен",
         cost: 10000,
-        photo: "/images/drivers/mv.jpg"
+        photo: "../images/drivers/mv.jpg"
       },
       {
         id: 1,
         name: "Шарль Леклер",
         cost: 9000,
-        photo: "/images/drivers/cl.jpg"
+        photo: "../images/drivers/cl.jpg"
       },
       {
         id: 2,
         name: "Льюис Хэмилтон",
         cost: 9500,
-        photo: "/images/drivers/lh.jpg"
+        photo: "../images/drivers/lh.jpg"
       },
       {
         id: 3,
         name: "Карлос Сайнс",
         cost: 8500,
-        photo: "/images/drivers/cs.jpg"
+        photo: "../images/drivers/cs.jpg"
       },
       {
         id: 4,
         name: "Лиам Лоусон",
         cost: 3000,
-        photo: "/images/drivers/ll.jpg"
+        photo: "../images/drivers/ll.jpg"
       },
       {
         id: 5,
         name: "Ландо Норрис",
         cost: 8800,
-        photo: "/images/drivers/ln.jpg"
+        photo: "../images/drivers/ln.jpg"
       },
       {
         id: 6,
         name: "Фернандо Алонсо",
         cost: 8200,
-        photo: "/images/drivers/fa.jpg"
+        photo: "../images/drivers/fa.jpg"
       },
       {
         id: 7,
         name: "Оскар Пиастри",
         cost: 7500,
-        photo: "/images/drivers/op.jpg"
+        photo: "../images/drivers/op.jpg"
       },
       {
         id: 8,
         name: "Джордж Расселл",
         cost: 8000,
-        photo: "/images/drivers/gr.jpg"
+        photo: "../images/drivers/gr.jpg"
       },
       {
         id: 9,
         name: "Юки Цунода",
         cost: 4500,
-        photo: "/images/drivers/yt.jpg"
+        photo: "../images/drivers/yt.jpg"
       },
       {
         id: 10,
         name: "Габриэль Бортолето",
         cost: 2000,
-        photo: "/images/drivers/gb.jpg"
+        photo: "../images/drivers/gb.jpg"
       },
       {
         id: 11,
         name: "Алекс Албон",
         cost: 5500,
-        photo: "/images/drivers/aa.jpg"
+        photo: "../images/drivers/aa.jpg"
       },
       {
         id: 12,
         name: "Франко Колапинто",
         cost: 1800,
-        photo: "/images/drivers/fc.jpg"
+        photo: "../images/drivers/fc.jpg"
       },
       {
         id: 13,
         name: "Оливер Берман",
         cost: 2500,
-        photo: "/images/drivers/ob.jpg"
+        photo: "../images/drivers/ob.jpg"
       },
       {
         id: 14,
         name: "Нико Хюлькенберг",
         cost: 4000,
-        photo: "/images/drivers/nh.jpg"
+        photo: "../images/drivers/nh.jpg"
       },
       {
         id: 15,
         name: "Кими Антонелли",
         cost: 2200,
-        photo: "/images/drivers/ka.jpg"
+        photo: "../images/drivers/ka.jpg"
       },
       {
         id: 16,
         name: "Изак Хаджар",
         cost: 1500,
-        photo: "/images/drivers/ih.jpg"
+        photo: "../images/drivers/ih.jpg"
       },
       {
         id: 17,
         name: "Эстебан Окон",
         cost: 5000,
-        photo: "/images/drivers/eo.jpg"
+        photo: "../images/drivers/eo.jpg"
       },
       {
         id: 18,
         name: "Пьер Гасли",
         cost: 4800,
-        photo: "/images/drivers/pg.jpg"
+        photo: "../images/drivers/pg.jpg"
       },
       {
         id: 19,
         name: "Лэнс Стролл",
         cost: 4200,
-        photo: "/images/drivers/ls.jpg"
+        photo: "../images/drivers/ls.jpg"
       }
     ],
     engines: [
@@ -206,31 +206,31 @@ function createNewDatabase(filePath) {
         id: 0,
         name: "Ferrari",
         cost: 10000,
-        photo: "/images/engines/Ferrari.jpg"
+        photo: "../images/engines/Ferrari.jpg"
       },
       {
         id: 1,
         name: "Mercedes",
         cost: 9000,
-        photo: "/images/engines/Mercedes.jpg"
+        photo: "../images/engines/Mercedes.jpg"
       },
       {
         id: 2,
         name: "Honda",
         cost: 9500,
-        photo: "/images/engines/Honda.jpg"
+        photo: "../images/engines/Honda.jpg"
       },
       {
         id: 3,
         name: "Audi",
         cost: 8500,
-        photo: "/images/engines/Audi.jpg"
+        photo: "../images/engines/Audi.jpg"
       },
       {
         id: 4,
         name: "Red Bull",
         cost: 3000,
-        photo: "/images/engines/Red_Bull.jpg"
+        photo: "../images/engines/Red_Bull.jpg"
       }
     ],
     pit_stops: [
@@ -238,67 +238,67 @@ function createNewDatabase(filePath) {
         id: 0,
         name: "Феррари",
         cost: 15000,
-        photo: "/images/pit_stops/Феррари.jpg"
+        photo: "../images/pit_stops/Феррари.jpg"
       },
       {
         id: 1,
         name: "Мерседес",
         cost: 14500,
-        photo: "/images/pit_stops/Мерседес.jpg"
+        photo: "../images/pit_stops/Мерседес.jpg"
       },
       {
         id: 2,
         name: "Макларен",
         cost: 14000,
-        photo: "/images/pit_stops/Макларен.jpg"
+        photo: "../images/pit_stops/Макларен.jpg"
       },
       {
         id: 3,
         name: "Ред Булл",
         cost: 15500,
-        photo: "/images/pit_stops/Ред Булл.jpg"
+        photo: "../images/pit_stops/Ред Булл.jpg"
       },
       {
         id: 4,
         name: "Рейсинг Булз",
         cost: 12000,
-        photo: "/images/pit_stops/Рейсинг Булз.jpg"
+        photo: "../images/pit_stops/Рейсинг Булз.jpg"
       },
       {
         id: 5,
         name: "Астон Мартин",
         cost: 13500,
-        photo: "/images/pit_stops/Астон Мартин.jpg"
+        photo: "../images/pit_stops/Астон Мартин.jpg"
       },
       {
         id: 6,
         name: "Уильямс",
         cost: 11000,
-        photo: "/images/pit_stops/Уильямс.jpg"
+        photo: "../images/pit_stops/Уильямс.jpg"
       },
       {
         id: 7,
         name: "Хаас",
         cost: 10000,
-        photo: "/images/pit_stops/Хаас.jpg"
+        photo: "../images/pit_stops/Хаас.jpg"
       },
       {
         id: 8,
         name: "Ауди",
         cost: 13000,
-        photo: "/images/pit_stops/Ауди.jpg"
+        photo: "../images/pit_stops/Ауди.jpg"
       },
       {
         id: 9,
         name: "Альпин",
         cost: 11500,
-        photo: "/images/pit_stops/Альпин.jpg"
+        photo: "../images/pit_stops/Альпин.jpg"
       },
       {
         id: 10,
         name: "Кадиллак",
         cost: 12500,
-        photo: "/images/pit_stops/Кадиллак.jpg"
+        photo: "../images/pit_stops/Кадиллак.jpg"
       }
     ],
     bridges: [
@@ -306,67 +306,67 @@ function createNewDatabase(filePath) {
         id: 0,
         name: "Феррари",
         cost: 8000,
-        photo: "/images/bridges/Феррари.jpg"
+        photo: "../images/bridges/Феррари.jpg"
       },
       {
         id: 1,
         name: "Мерседес",
         cost: 7800,
-        photo: "/images/bridges/Мерседес.jpg"
+        photo: "../images/bridges/Мерседес.jpg"
       },
       {
         id: 2,
         name: "Макларен",
         cost: 7500,
-        photo: "/images/bridges/Макларен.jpg"
+        photo: "../images/bridges/Макларен.jpg"
       },
       {
         id: 3,
         name: "Ред Булл",
         cost: 8200,
-        photo: "/images/bridges/Ред Булл.jpg"
+        photo: "../images/bridges/Ред Булл.jpg"
       },
       {
         id: 4,
         name: "Рейсинг Булз",
         cost: 7000,
-        photo: "/images/bridges/Рейсинг Булз.jpg"
+        photo: "../images/bridges/Рейсинг Булз.jpg"
       },
       {
         id: 5,
         name: "Астон Мартин",
         cost: 7700,
-        photo: "/images/bridges/Астон Мартин.jpg"
+        photo: "../images/bridges/Астон Мартин.jpg"
       },
       {
         id: 6,
         name: "Уильямс",
         cost: 6800,
-        photo: "/images/bridges/Уильямс.jpg"
+        photo: "../images/bridges/Уильямс.jpg"
       },
       {
         id: 7,
         name: "Хаас",
         cost: 6500,
-        photo: "/images/bridges/Хаас.jpg"
+        photo: "../images/bridges/Хаас.jpg"
       },
       {
         id: 8,
         name: "Ауди",
         cost: 7600,
-        photo: "/images/bridges/Ауди.jpg"
+        photo: "../images/bridges/Ауди.jpg"
       },
       {
         id: 9,
         name: "Альпин",
         cost: 7200,
-        photo: "/images/bridges/Альпин.jpg"
+        photo: "../images/bridges/Альпин.jpg"
       },
       {
         id: 10,
         name: "Кадиллак",
         cost: 7400,
-        photo: "/images/bridges/Кадиллак.jpg"
+        photo: "../images/bridges/Кадиллак.jpg"
       }
     ]
   };
@@ -464,7 +464,7 @@ app.post('/getTeamInfo', (req, res) =>{
     data.racer1 = {
       name: "Не выбран",
       cost : 0,
-      photo: "/images/drivers/null_choise.jpg"
+      photo: "../images/drivers/null_choise.jpg"
     }
   }
   if (userTeam.racer2 != null){
@@ -473,7 +473,7 @@ app.post('/getTeamInfo', (req, res) =>{
     data.racer2 = {
       name: "Не выбран",
       cost : 0,
-      photo: "/images/drivers/null_choise.jpg"
+      photo: "../images/drivers/null_choise.jpg"
     }
   }
   if (userTeam.engine != null){
@@ -482,7 +482,7 @@ app.post('/getTeamInfo', (req, res) =>{
     data.engine = {
       name: "Не выбран",
       cost : 0,
-      photo: "/images/engines/null_choise.jpg"
+      photo: "../images/engines/null_choise.jpg"
     }
   }
   if (userTeam.pit_stop != null){
@@ -491,7 +491,7 @@ app.post('/getTeamInfo', (req, res) =>{
     data.pit_stop = {
       name: "Не выбран",
       cost : 0,
-      photo: "/images/pit_stops/null_choise.jpg"
+      photo: "../images/pit_stops/null_choise.jpg"
     }
   }
   if (userTeam.bridge != null){
@@ -500,11 +500,33 @@ app.post('/getTeamInfo', (req, res) =>{
     data.bridge = {
       name: "Не выбран",
       cost : 0,
-      photo: "/images/bridges/null_choise.jpg"
+      photo: "../images/bridges/null_choise.jpg"
     }
   }
   console.log('Отправка пользователю ' + user.username + ' данных о его команде')
   res.json(data);
+})
+
+//Получить список
+app.post('/getList', (req, res) =>{
+  const choise = req.body.choise;
+  if (choise == 'racer1' || choise == 'racer2'){
+    res.json(database.drivers);
+  }
+  if (choise == 'engine'){
+    res.json(database.engines);
+  }
+  if (choise == 'pit_stop'){
+    res.json(database.pit_stops);
+  }
+  if (choise == 'bridge'){
+    res.json(database.bridges);
+  }
+})
+
+//Выбор элеметов команды
+app.post('/selectTeamOpt', (req, res) =>{
+  const user = req.body.user;
 })
 
 app.post('/getDB', (req, res) =>{
