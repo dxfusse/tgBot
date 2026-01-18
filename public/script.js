@@ -49,6 +49,7 @@ function ProfilePage() {
   render(`
     <p class="меню-текст">Твой профиль</p>
     <img class="pfp" id="pfp">
+    <p></p>
     <div class="profile-menu">
       <p class="текст-меню" id="id">Загрузка...</p>
       <p class="текст-меню" id="username">Загрузка...</p>
