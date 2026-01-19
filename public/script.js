@@ -26,6 +26,7 @@ function showToast(text, duration = 4000) {
 //Главная страница
 function MainPage() {
   const user = tg.initDataUnsafe.user;
+  app.style.backgroundImage = "url('../images/other/background1.jpg')"
 
   fetch('https://tgbot-eiq1.onrender.com/entering', {
     method: 'POST',
@@ -54,11 +55,10 @@ function MainPage() {
   })
 }
 
-
 //Страница профиля
 function ProfilePage() {
   const user = tg.initDataUnsafe.user;
-  app.className = 'page-profile';
+  app.style.backgroundImage = "url('../images/other/background2.JPG')"
 
   render(`
     <p class="меню-текст">Твой профиль</p>
@@ -102,6 +102,7 @@ function ProfilePage() {
 //Страница команды
 function TeamPage() {
   const user = tg.initDataUnsafe.user;
+  app.style.backgroundImage = "url('../images/other/background3.JPG')"
   
   render(`
     <p class="меню-текст">Твоя команда</p>
@@ -271,7 +272,7 @@ function TeamPage() {
 //Страница создания команды
 function CreateTeamPage(select){
   const user = tg.initDataUnsafe.user;
-  app.className = 'page-createTeam';
+  app.style.backgroundImage = "url('../images/other/background3.JPG')"
 
   render(`
     <p class="меню-текст" id="mainText"></p>
@@ -398,6 +399,7 @@ function CreateTeamPage(select){
 //Страница Кланов
 function ClansPage() {
   const user = tg.initDataUnsafe.user;
+  app.style.backgroundImage = "url('../images/other/background4.jpg')"
 
   render( `
     <p class="меню-текст">Кланы</p>
@@ -476,24 +478,8 @@ let currentRoute = {
   params: {}
 };
 
-//Замена фона форм
-function setBackground(page) {
-  const app = document.getElementById('app');
-
-  const backgrounds = {
-    main: "url('../images/other/background1.jpg')",
-    profile: "url(''../images/other/background2.JPG')",
-    team: "url('../images/other/background3.JPG')",
-    createTeam: "url('../images/other/background3.JPG')",
-    clans: "url('../images/other/background4.jpg')"
-  };
-
-  app.style.backgroundImage = backgrounds[page] || 'none';
-}
-
 //Формы
 function go(page, params = {}) {
-  setBackground(page);
   currentRoute.page = page;
   currentRoute.params = params;
 
