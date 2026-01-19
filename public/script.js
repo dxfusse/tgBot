@@ -40,8 +40,8 @@ function MainPage() {
     <div class="меню">
       <button data-page="profile" class="кнопка-меню">Профиль</button>
       <button data-page="team" class="кнопка-меню">Моя команда</button>
-      <button data-page="players_top" class="кнопка-меню">Рейтинг кланов</button>
-      <button data-page="clans_top" class="кнопка-меню">Рейтинг игроков</button>
+      <button data-page="clans" class="кнопка-меню">Рейтинг кланов</button>
+      <button data-page="players_top" class="кнопка-меню">Рейтинг игроков</button>
       <button data-page="helper" class="кнопка-меню" id="helper">Помощник</button>
     </div>
   `);
