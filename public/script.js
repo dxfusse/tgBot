@@ -23,7 +23,7 @@ function showToast(text, duration = 4000) {
 }
 
 
-// Main Page
+//Главная страница
 function MainPage() {
   const user = tg.initDataUnsafe.user;
 
@@ -40,8 +40,8 @@ function MainPage() {
     <div class="меню">
       <button data-page="profile" class="кнопка-меню">Профиль</button>
       <button data-page="team" class="кнопка-меню">Моя команда</button>
-      <button data-page="prognoz" class="кнопка-меню">Сделать прогноз</button>
-      <button data-page="global_top" class="кнопка-меню">Рейтинг</button>
+      <button data-page="players_top" class="кнопка-меню">Рейтинг кланов</button>
+      <button data-page="clans_top" class="кнопка-меню">Рейтинг игроков</button>
       <button data-page="helper" class="кнопка-меню" id="helper">Помощник</button>
     </div>
   `);
@@ -55,9 +55,10 @@ function MainPage() {
 }
 
 
-// Profile Page
+//Страница профиля
 function ProfilePage() {
   const user = tg.initDataUnsafe.user;
+  app.className = 'page-profile';
 
   render(`
     <p class="меню-текст">Твой профиль</p>
@@ -98,6 +99,7 @@ function ProfilePage() {
   .catch(err => console.error('Ошибка fetch:', err));
 }
 
+//Страница команды
 function TeamPage() {
   const user = tg.initDataUnsafe.user;
   
@@ -266,6 +268,7 @@ function TeamPage() {
   })
 }
 
+//Страница создания команды
 function CreateTeamPage(select){
   const user = tg.initDataUnsafe.user;
   app.className = 'page-createTeam';
@@ -283,7 +286,7 @@ function CreateTeamPage(select){
       <button class="button-forFooter" id="saveChoise">Сохранить</button>
     </div>
   `);
-  
+
   const container = document.getElementById('container_createTeam');
   if (container) container.scrollTop = 0;
 
@@ -309,9 +312,9 @@ function CreateTeamPage(select){
   }
 
   fetch('https://tgbot-eiq1.onrender.com/getList', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify(data)
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
   })
   .then(res => res.json())
   .then(data => {
@@ -392,12 +395,87 @@ function CreateTeamPage(select){
   })
 }
 
-// SPA Маршрутизация
+//Страница Кланов
+function ClansPage() {
+  const user = tg.initDataUnsafe.user;
+
+  render( `
+    <p class="меню-текст">Кланы</p>
+    <p></p>
+    <div class="div-createTeam" id="container_clans"></div>
+    <p></p>
+    <div class="footer-twoButtons">
+      <button class="button-forFooter" id="createClan">Создать</button>
+      <button class="button-forFooter" id="joinClan">Вступить</button>
+    </div>
+    <button data-page="main" class="кнопка-меню">Назад</button>
+  `);
+
+  fetch('https://tgbot-eiq1.onrender.com/getClansList', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({user : user})
+  })
+  .then(res => res.json())
+  .then(data => {
+    const names = data.base.map(item => item.name);
+    const members = data.base.map(item => item.members);
+    const scores = data.base.map(item => item.score);
+    const photos = data.base.map(item => item.photo);
+
+    const container = document.getElementById('container_clans');
+    for (let i = 0; i < names.length; i++) {
+      const btn = document.createElement('button');
+      btn.className = 'button-createTeam';
+
+      const img = document.createElement('img');
+      img.src = photos[i];
+      img.className = 'photo-createTeam';
+
+      const div = document.createElement('div');
+      div.className = 'div_texts-clans'
+
+      const name = document.createElement('div');
+      name.textContent = names[i]
+      name.className = 'баланс'
+
+      const membs = document.createElement('div');
+      membs.textContent = members[i] + "/100";
+      membs.className = 'баланс'
+
+      const score = document.createElement('div');
+      score.textContent = scores[i];
+      score.className = 'баланс'
+
+      div.appendChild(name);
+      div.appendChild(membs);
+      div.appendChild(score);
+
+      btn.appendChild(img);
+      btn.appendChild(div);
+
+      btn.onclick = () => {
+        showToast('В разработке...')
+      };
+
+      container.appendChild(btn);
+    };
+    document.getElementById('createClan').addEventListener('click', () => {
+      showToast('В разработке...')
+    });
+    document.getElementById('joinClan').addEventListener('click', () => {
+      showToast('В разработке...')
+    });
+  })
+}
+
+//Маршрутизация
 let currentRoute = {
   page: 'main',
   params: {}
 };
 
+//Замена фона форм
 function setBackground(page) {
   const app = document.getElementById('app');
 
@@ -411,6 +489,7 @@ function setBackground(page) {
   app.style.backgroundImage = backgrounds[page] || 'none';
 }
 
+//Формы
 function go(page, params = {}) {
   setBackground(page);
   currentRoute.page = page;
@@ -419,6 +498,7 @@ function go(page, params = {}) {
   if (page === 'main') MainPage();
   if (page === 'profile') ProfilePage();
   if (page === 'team') TeamPage();
+  if (page === 'clans') ClansPage();
   if (page === 'createTeam') CreateTeamPage(params.select);
 }
 
