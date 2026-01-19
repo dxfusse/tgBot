@@ -56,7 +56,7 @@ body {
 }
 .меню-текст{
   position: relative;
-  font-size: 30px;
+  font-size: 40px;
   color: rgb(255, 255, 255);
   font-family: "dop";
   font-weight: bold;
@@ -230,10 +230,8 @@ body {
 }
 .div_texts-clans{
   display: flex;
-  flex-direction: row;
-  justify-content: left;
-  height: max-content;
-  width: max-content;
+  flex-direction: column;
+  justify-content:left;
 }
 @font-face {
     font-family: 'dop';
