@@ -193,7 +193,6 @@ function CreateTeamPage(select){
 
   render(`
     <p class="меню-текст" id="mainText"></p>
-    <p></p>
     <p class="баланс" id="balance_createTeam">Баланс: $0</p>
     <p></p>
     <div class="div-createTeam" id="container_createTeam"></div>
@@ -234,7 +233,10 @@ function CreateTeamPage(select){
   })
   .then(res => res.json())
   .then(data => {
-    const balance = data.balance;
+    let balance = data.balance;
+    if(balance == undefined){
+      balance = 0;
+    }
     const names = data.base.map(item => item.name);
     const costs = data.base.map(item => item.cost);
     const photos = data.base.map(item => item.photo);
@@ -286,8 +288,9 @@ function CreateTeamPage(select){
     document.getElementById('saveChoise').addEventListener('click', () => {
       if(balance < parseInt(global_cost)){
         showToast('Недостаточно денег!')
+      }else{
+        showToast('Выбор сохранён!')
       }
-      alert("Выбор сохранён: " + choise);
     });
   })
 }
