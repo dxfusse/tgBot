@@ -32,7 +32,7 @@ body {
 .page-team {
   background-image: url('../images/other/background3.JPG');
 }
-.page-team {
+.page-createTeam {
   background-image: url('../images/other/background3.JPG');
 }
 .f1_logo{
@@ -54,7 +54,8 @@ body {
   flex: 1;
   border-radius: 30px;
   width: max-content;
-  padding: 10px 20px;
+  height: max-content;
+  padding: 20px 20px;
   background: rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(10px);
   border-color: rgba(255, 255, 255, 0.2);
@@ -89,6 +90,8 @@ body {
 .team_menu-container {
   display: grid;
   padding: 20px 20px;
+  width: max-content;
+  height: max-content;
   grid-template-columns: repeat(2, 1fr);
   gap: 20px;
   justify-items: center;
@@ -117,11 +120,13 @@ body {
 }
 .photo-team_container{
   border-radius: 25px;
-  width: 150px;
-  height: 150px;
+  width: 100px;
+  height: 100px;
 }
 .footer-twoButtons{
   display: flex;
+  height: max-content;
+  width: max-content;
   flex-direction: row;
   gap: 20px;
   justify-content: center;
