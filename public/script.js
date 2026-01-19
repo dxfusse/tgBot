@@ -204,15 +204,10 @@ function CreateTeamPage(select){
     document.getElementById('mainText').innerText = "Выбор моста";
   }
 
-  const data = {
-    user : user,
-    select : select
-  }
-
   fetch('https://tgbot-eiq1.onrender.com/getList', {
   method: 'POST',
   headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify(data)
+  body: JSON.stringify({choise : select})
   })
   .then(res => res.json())
   .then(data => {
