@@ -62,6 +62,9 @@ body {
 .page-createTeam {
   background-image: url('../images/other/background3.JPG');
 }
+.page-clans {
+  background-image: url('../images/other/background2.JPG');
+}
 .f1_logo{
   margin-top: 100px;
   width: 250px;
@@ -236,6 +239,13 @@ body {
 .div_texts-createTeam{
   display: flex;
   flex-direction: column;
+  justify-content: left;
+  height: max-content;
+  width: max-content;
+}
+.div_texts-clans{
+  display: flex;
+  flex-direction: row;
   justify-content: left;
   height: max-content;
   width: max-content;
