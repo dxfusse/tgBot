@@ -421,10 +421,10 @@ function ClansPage() {
   })
   .then(res => res.json())
   .then(data => {
-    const names = data.names
-    const members = data.members.length;
-    const scores = data.scores
-    const photos = data.photos
+    const names = data.clans.names;
+    const members = data.clans.members;
+    const scores = data.clans.scores;
+    const photos = data.clans.photos;
 
     const container = document.getElementById('container_clans');
     for (let i = 0; i < names.length; i++) {
@@ -433,21 +433,23 @@ function ClansPage() {
 
       const img = document.createElement('img');
       img.src = photos[i];
-      img.className = 'photo-createTeam';
+      img.style.width = '100px';
+      img.style.height = '100px';
+      img.style.borderRadius = '20px';
 
       const div = document.createElement('div');
       div.className = 'div_texts-clans'
 
       const name = document.createElement('div');
       name.textContent = names[i]
-      name.className = 'баланс'
+      name.className = 'меню-текст'
 
       const membs = document.createElement('div');
-      membs.textContent = members[i] + "/100";
+      membs.textContent = "Участников: " + members[i].length + "/100";
       membs.className = 'баланс'
 
       const score = document.createElement('div');
-      score.textContent = scores[i];
+      score.textContent = "Баллы: " + scores[i];
       score.className = 'баланс'
 
       div.appendChild(name);
@@ -514,6 +516,5 @@ function bindEvents() {
 
 // Старт приложения
 go('main');
-
 
 
