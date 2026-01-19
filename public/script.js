@@ -77,7 +77,7 @@ function ProfilePage() {
   const menuButtons = document.querySelectorAll('.текст-меню');
   menuButtons.forEach((btn, index) => {
     setTimeout(()=>{
-        btn.classList.add('activate-menuButtons-animation')
+      btn.classList.add('activate-menuButtons-animation')
     }, index * 70)
   })
 
@@ -300,8 +300,9 @@ function CreateTeamPage(select){
           body: JSON.stringify(data)
         })
         .then(res => {
-          if (response.status == 200){
-            showToast('Выбор сохранён')
+          if (res.status == 200){
+            showToast('Выбор сохранён');
+            go('team');
           }
         })
       }
