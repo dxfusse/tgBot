@@ -70,6 +70,7 @@ function ProfilePage() {
       <p class="текст-меню" id="score">Загрузка...</p>
       <p class="текст-меню" id="money">Загрузка...</p>
       <p class="текст-меню" id="team_cost">Загрузка...</p>
+      <p class="текст-меню" id="clan">Загрузка...</p>
     </div>
     <p></p>
     <button class="кнопка-меню" data-page="main">Назад</button>
@@ -89,6 +90,11 @@ function ProfilePage() {
   })
   .then(res => res.json())
   .then(data => {
+    if(data.clan == null){
+      document.getElementById('clan').innerText = "Отсутствует";
+    } else {
+      document.getElementById('clan').innerText = data.clan;
+    }
     document.getElementById('name').innerText = "Имя: " + user.first_name + ' ' + user.last_name;
     document.getElementById('username').innerText = "Ник: @" + user.username;
     document.getElementById('score').innerText = "Ваши баллы: " + data.score;
@@ -488,6 +494,7 @@ function ClanCreatePage() {
     <p class="меню-текст">Создание клана</p>
     <p></p>
     <div class="div-createTeam">
+      <p></p>
       <input class="inputs" placeholder="Имя клана (макс. 13 символов)" type="text" id="clanNameInput">
       <p></p>
       <input class="inputs" placeholder="Ссылка на фото клана" type="text" id="clanPhotoInput">
@@ -503,25 +510,29 @@ function ClanCreatePage() {
     const name = document.getElementById('clanNameInput').value;
     const photo = document.getElementById('clanPhotoInput').value;
     if(name != "" && photo != ""){
-      const data = {
-        name : name,
-        photo : photo,
-        user : user
-      }
-      fetch('https://tgbot-eiq1.onrender.com/createClan', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-      })
-      .then(res => {
-        if (res.status == 200) {
-          showToast('Клан создан!');
-          go('clans');
-        }else if(res.status == 201){
-          showToast('У вас уже есть клан!');
-          go('clans');
+      if(name.length <= 13){
+        const data = {
+          name : name,
+          photo : photo,
+          user : user
         }
-      })
+        fetch('https://tgbot-eiq1.onrender.com/createClan', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        })
+        .then(res => {
+          if (res.status == 200) {
+            showToast('Клан создан!');
+            go('clans');
+          }else if(res.status == 201){
+            showToast('У вас уже есть клан!');
+            go('clans');
+          }
+        })
+      } else {
+        showToast('Слишком длинное имя клана')
+      }
     } else { 
       showToast('Заполните все поля!')
     }
