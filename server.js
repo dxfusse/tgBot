@@ -404,6 +404,15 @@ function createNewDatabase(filePath) {
         cost: 7400,
         photo: "../images/bridges/Кадиллак.jpg"
       }
+    ],
+    clans : [
+      {
+        id : 0,
+        name : "F1 test clan",
+        members : [0],
+        photo : "https://i.pinimg.com/originals/74/29/43/7429430a85e8d3b2ddd19994149bcad4.jpg",
+        score : 100
+      }
     ]
   };
 
@@ -669,12 +678,25 @@ app.post('/saveTeam', (req, res) =>{
     console.log('Итоговая стоимость команды: $', teamCost)
     database.users[database.users.findIndex(item => item.id == user.id)].money -= teamCost;
     database.users[database.users.findIndex(item => item.id == user.id)].team_changing = false;
-    
+    database.users[database.users.findIndex(item => item.id == user.id)].team_cost = teamCost;
+
     fs.writeFileSync('database.json', JSON.stringify(database, null, 2));
     console.log('Команда пользователя сохранена')
     res.sendStatus(200);
   }
 })
+
+//Получить список кланов
+app.post('/getClansList', (req, res) =>{
+  const data = {
+    names : database.clans.map(item => item.name),
+    members : database.clans.members.lenght,
+    photos : database.clans.map(item => item.photo),
+    scores : database.clans.map(item => item.score)
+  }
+  res.json(data)
+})
+
 
 app.post('/getDB', (req, res) =>{
   res.json(database);
