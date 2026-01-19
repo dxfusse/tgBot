@@ -50,21 +50,6 @@ body {
 .page.active {
   display: block;
 }
-.page-main {
-  background-image: url('../images/other/background1.jpg');
-}
-.page-profile {
-  background-image: url('../images/other/background2.JPG');
-}
-.page-team {
-  background-image: url('../images/other/background3.JPG');
-}
-.page-createTeam {
-  background-image: url('../images/other/background3.JPG');
-}
-.page-clans {
-  background-image: url('../images/other/background2.JPG');
-}
 .f1_logo{
   margin-top: 100px;
   width: 250px;
