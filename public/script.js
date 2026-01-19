@@ -407,7 +407,7 @@ function ClansPage() {
     <div class="div-createTeam" id="container_clans"></div>
     <p></p>
     <div class="footer-twoButtons">
-      <button class="button-forFooter" id="createClan">Создать</button>
+      <button class="button-forFooter" id="createClanBtn">Создать</button>
       <button class="button-forFooter" id="joinClan">Вступить</button>
     </div>
     <p>
@@ -421,10 +421,10 @@ function ClansPage() {
   })
   .then(res => res.json())
   .then(data => {
-    const names = data.clans.map(item => item.names);
-    const members = data.clans.map(item => item.members);
-    const scores = data.clans.map(item => item.scores);
-    const photos = data.clans.map(item => item.photos);
+    const names = data.clans.map(item => item.names).reverse();
+    const members = data.clans.map(item => item.members).reverse();
+    const scores = data.clans.map(item => item.scores).reverse();
+    const photos = data.clans.map(item => item.photos).reverse();
 
     const container = document.getElementById('container_clans');
     for (let i = 0; i < names.length; i++) {
@@ -470,13 +470,63 @@ function ClansPage() {
 
       container.appendChild(btn);
     };
-    document.getElementById('createClan').addEventListener('click', () => {
-      showToast('В разработке...')
+    document.getElementById('createClanBtn').addEventListener('click', () => {
+      go('createClan')
     });
     document.getElementById('joinClan').addEventListener('click', () => {
       showToast('В разработке...')
     });
   })
+}
+
+//Создание клана
+function ClanCreatePage() {
+  const user = tg.initDataUnsafe.user;
+  app.style.backgroundImage = "url('../images/other/background4.png')"
+
+  render(`
+    <p class="меню-текст">Создание клана</p>
+    <p></p>
+    <div class="div-createTeam">
+      <input class="inputs" placeholder="Имя клана (макс. 13 символов)" type="text" id="clanNameInput">
+      <p></p>
+      <input class="inputs" placeholder="Ссылка на фото клана" type="text" id="clanPhotoInput">
+    </div>
+    <p></p>
+    <div class="footer-twoButtons">
+      <button class="button-forFooter" data-page="clans">Назад</button>
+      <button class="button-forFooter" id="createClan">Создать</button>
+    </div>
+  `);
+
+  document.getElementById('createClan').addEventListener('click', () => {
+    const name = document.getElementById('clanNameInput').value;
+    const photo = document.getElementById('clanPhotoInput').value;
+    if(name != "" && photo != ""){
+      const data = {
+        name : name,
+        photo : photo,
+        user : user
+      }
+      fetch('https://tgbot-eiq1.onrender.com/createClan', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      })
+      .then(res => {
+        if (res.status == 200) {
+          showToast('Клан создан!');
+          go('clans');
+        }else if(res.status == 201){
+          showToast('У вас уже есть клан!');
+          go('clans');
+        }
+      })
+    } else { 
+      showToast('Заполните все поля!')
+    }
+  });
+
 }
 
 //Маршрутизация
@@ -495,6 +545,7 @@ function go(page, params = {}) {
   if (page === 'team') TeamPage();
   if (page === 'clans') ClansPage();
   if (page === 'createTeam') CreateTeamPage(params.select);
+  if (page === 'createClan') ClanCreatePage();
 }
 
 // Привязка событий к кнопкам
