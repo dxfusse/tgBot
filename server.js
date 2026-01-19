@@ -204,33 +204,69 @@ function createNewDatabase(filePath) {
     engines: [
       {
         id: 0,
-        name: "Ferrari",
-        cost: 10000,
-        photo: "../images/engines/Ferrari.jpg"
+        name: "Феррари",
+        cost: 15000,
+        photo: "../images/engines/Феррари.jpg"
       },
       {
         id: 1,
-        name: "Mercedes",
-        cost: 9000,
-        photo: "../images/engines/Mercedes.jpg"
+        name: "Мерседес",
+        cost: 14500,
+        photo: "../images/engines/Мерседес.jpg"
       },
       {
         id: 2,
-        name: "Honda",
-        cost: 9500,
-        photo: "../images/engines/Honda.jpg"
+        name: "Макларен",
+        cost: 14000,
+        photo: "../images/engines/Макларен.jpg"
       },
       {
         id: 3,
-        name: "Audi",
-        cost: 8500,
-        photo: "../images/engines/Audi.jpg"
+        name: "Ред Булл",
+        cost: 15500,
+        photo: "../images/engines/Ред Булл.jpg"
       },
       {
         id: 4,
-        name: "Red Bull",
-        cost: 3000,
-        photo: "../images/engines/Red_Bull.jpg"
+        name: "Рейсинг Булз",
+        cost: 12000,
+        photo: "../images/engines/Рейсинг Булз.jpg"
+      },
+      {
+        id: 5,
+        name: "Астон Мартин",
+        cost: 13500,
+        photo: "../images/engines/Астон Мартин.jpg"
+      },
+      {
+        id: 6,
+        name: "Уильямс",
+        cost: 11000,
+        photo: "../images/engines/Уильямс.jpg"
+      },
+      {
+        id: 7,
+        name: "Хаас",
+        cost: 10000,
+        photo: "../images/engines/Хаас.jpg"
+      },
+      {
+        id: 8,
+        name: "Ауди",
+        cost: 13000,
+        photo: "../images/engines/Ауди.jpg"
+      },
+      {
+        id: 9,
+        name: "Альпин",
+        cost: 11500,
+        photo: "../images/engines/Альпин.jpg"
+      },
+      {
+        id: 10,
+        name: "Кадиллак",
+        cost: 12500,
+        photo: "../images/engines/Кадиллак.jpg"
       }
     ],
     pit_stops: [
@@ -549,6 +585,50 @@ app.post('/getList', (req, res) =>{
 //Выбор элеметов команды
 app.post('/selectTeamOpt', (req, res) =>{
   const user = req.body.user;
+  const choise = req.body.option;
+  const name = req.body.name;
+
+  if (choise == 'racer1'){
+    console.log('Пользователь: ' + user.usename + ' выбрал себе первого пилота: ' + name);
+    const driver = database.drivers.find(item => item.name == name);
+    database.users[database.users.findIndex(item => item.id == user.id)].racer1 = driver;
+    fs.writeFileSync('database.json', JSON.stringify(database, null, 2));
+    console.log('Выбор сохранён')
+    res.sendStatus(200);
+  }
+  if (choise == 'racer2'){
+    console.log('Пользователь: ' + user.usename + ' выбрал себе второго пилота: ' + name);
+    const driver = database.drivers.find(item => item.name == name);
+    database.users[database.users.findIndex(item => item.id == user.id)].racer2 = driver;
+    fs.writeFileSync('database.json', JSON.stringify(database, null, 2));
+    console.log('Выбор сохранён')
+    res.sendStatus(200);
+  }
+  if (choise == 'engine'){
+    console.log('Пользователь: ' + user.usename + ' выбрал себе двигатель: ' + name);
+    const engine = database.engines.find(item => item.name == name);
+    database.users[database.users.findIndex(item => item.id == user.id)].engine = engine;
+    fs.writeFileSync('database.json', JSON.stringify(database, null, 2));
+    console.log('Выбор сохранён')
+    res.sendStatus(200);
+  }
+  if (choise == 'pit_stop'){
+    console.log('Пользователь: ' + user.usename + ' выбрал себе пит стоп: ' + name);
+    const pit_stop = database.pit_stops.find(item => item.name == name);
+    database.users[database.users.findIndex(item => item.id == user.id)].pit_stop = pit_stop;
+    fs.writeFileSync('database.json', JSON.stringify(database, null, 2));
+    console.log('Выбор сохранён')
+    res.sendStatus(200);
+  }
+  if (choise == 'bridge'){
+    console.log('Пользователь: ' + user.usename + ' выбрал себе мостик: ' + name);
+    const bridge = database.bridges.find(item => item.name == name);
+    database.users[database.users.findIndex(item => item.id == user.id)].bridge = bridge;
+    fs.writeFileSync('database.json', JSON.stringify(database, null, 2));
+    console.log('Выбор сохранён')
+    res.sendStatus(200);
+  }
+
 })
 
 app.post('/getDB', (req, res) =>{
