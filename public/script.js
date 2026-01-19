@@ -216,6 +216,7 @@ function CreateTeamPage(select){
   })
   .then(res => res.json())
   .then(data => {
+    alert('Получена база: ', data);
     const names = data.map(item => item.name);
     const costs = data.map(item => item.cost);
     const photos = data.map(item => item.photo);
