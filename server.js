@@ -690,7 +690,7 @@ app.post('/getClansList', (req, res) =>{
   console.log('\nОтправка данных о кланах')
   const data = {
     names : database.clans.map(item => item.name),
-    members : database.clans.members,
+    members : database.clans.map(item => item.members),
     photos : database.clans.map(item => item.photo),
     scores : database.clans.map(item => item.score)
   }
