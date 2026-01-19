@@ -702,7 +702,7 @@ app.post('/getClansList', (req, res) =>{
       photos: clan.photo,
       scores: clan.score
     }))
-    .sort((a, b) => b.score - a.score)
+    .sort((a, b) => a.score - b.score)
   };
   res.json(data)
 })
