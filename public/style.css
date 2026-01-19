@@ -3,6 +3,31 @@ body {
   display: flex;
   justify-content: center;
 }
+#toast {
+  position: fixed;
+  top: -100px;
+  left: 50%;
+  transform: translateX(-50%);
+  min-width: 280px;
+  max-width: 90%;
+  padding: 14px 20px;
+  backdrop-filter: blur(10px);
+  border: 2px solid #c80000;
+  background-color: rgba(200, 0, 0, 0.15);
+  box-shadow: rgb(185, 0, 0);
+  color: white;
+  font-size: 16px;
+  text-align: center;
+  border-radius: 20px;
+  z-index: 9999;
+  transition: top 0.4s ease, opacity 0.4s ease;
+  opacity: 0;
+  pointer-events: none;
+}
+#toast.show {
+  top: 20px;
+  opacity: 1;
+}
 #app {
   padding: 16px;
   box-sizing: border-box;
@@ -51,7 +76,6 @@ body {
   flex-direction: column;
   gap: 15px;
   justify-content: center;
-  flex: 1;
   border-radius: 30px;
   width: max-content;
   height: max-content;
@@ -125,12 +149,11 @@ body {
 }
 .footer-twoButtons{
   display: flex;
-  height: max-content;
+  height:  max-content;
   width: max-content;
   flex-direction: row;
   gap: 20px;
   justify-content: center;
-  flex: 1;
   border-radius: 30px;
   width: 350px;
   padding: 10px 20px;
@@ -166,9 +189,10 @@ body {
   justify-content: center;
   flex: 1;
   border-radius: 30px;
-  width: max-content;
-  max-width: 400px;
-  overflow: auto;
+  width: 380px;
+  max-height: 400px;
+  overflow-x: hidden;
+  scrollbar-width: thin;
   padding: 10px 20px;
   background: rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(10px);
@@ -178,8 +202,9 @@ body {
   display: flex;
   flex-direction: row;
   gap: 20px;
+  padding: 10px 10px;
   cursor: pointer;
-  width: max-content;
+  width: 380px;
   height: max-content;
   background: rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(10px);
@@ -191,13 +216,24 @@ body {
   font-family: "dop";
 }
 .button-createTeam:hover{
-  transform: scale(1.1);
+  transform: scale(1.05);
   background: rgba(255, 255, 255, 0.6);
+}
+.button-createTeam.selected {
+  border: 2px solid #00c853;
+  background-color: rgba(0, 200, 83, 0.15);
 }
 .photo-createTeam{
   height: 50px;
   width: 50px;
   border-radius: 15px;
+}
+.div_texts-createTeam{
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  height: max-content;
+  width: max-content;
 }
 @font-face {
     font-family: 'dop';
