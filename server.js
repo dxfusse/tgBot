@@ -510,6 +510,7 @@ app.post('/getTeamInfo', (req, res) =>{
 //Получить список
 app.post('/getList', (req, res) =>{
   const choise = req.body.choise;
+  console.log('Запрос базы: ', choise);
   if (choise == 'racer1' || choise == 'racer2'){
     console.log('Отправка базы пилотов')
     res.json(database.drivers);
