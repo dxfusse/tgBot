@@ -399,7 +399,7 @@ function CreateTeamPage(select){
 //Страница Кланов
 function ClansPage() {
   const user = tg.initDataUnsafe.user;
-  app.style.backgroundImage = "url('../images/other/background4.jpg')"
+  app.style.backgroundImage = "url('../images/other/background4.png')"
 
   render( `
     <p class="меню-текст">Кланы</p>
@@ -514,5 +514,6 @@ function bindEvents() {
 
 // Старт приложения
 go('main');
+
 
 
