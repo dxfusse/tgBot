@@ -408,6 +408,7 @@ function ClansPage() {
       <button class="button-forFooter" id="createClan">Создать</button>
       <button class="button-forFooter" id="joinClan">Вступить</button>
     </div>
+    <p>
     <button data-page="main" class="кнопка-меню">Назад</button>
   `);
 
@@ -483,7 +484,8 @@ function setBackground(page) {
     main: "url('../images/other/background1.jpg')",
     profile: "url(''../images/other/background2.JPG')",
     team: "url('../images/other/background3.JPG')",
-    createTeam: "url('../images/other/background3.JPG')"
+    createTeam: "url('../images/other/background3.JPG')",
+    clans: "url('../images/other/background4.jpg')"
   };
 
   app.style.backgroundImage = backgrounds[page] || 'none';
