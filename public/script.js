@@ -11,7 +11,7 @@ function render(html) {
 }
 
 //Всплывающее уведомление
-function showToast(text, duration = 5000) {
+function showToast(text, duration = 3000) {
   const toast = document.getElementById('toast');
 
   toast.innerText = text;
@@ -157,33 +157,112 @@ function TeamPage() {
 
     document.getElementById('engine_photo').src = data.engine.photo
     document.getElementById('engine_name').innerText = "Двигатель:\n" + data.engine.name
-    document.getElementById('engine_cost').innerText = "$" +data.engine.cost
+    document.getElementById('engine_cost').innerText = "$" + data.engine.cost
 
     document.getElementById('pit_stop_photo').src = data.pit_stop.photo
     document.getElementById('pit_stop_name').innerText = "Пит-стоп:\n" + data.pit_stop.name
     document.getElementById('pit_stop_cost').innerText = "$" +data.pit_stop.cost
 
     document.getElementById('bridge_photo').src = data.bridge.photo
-    document.getElementById('bridge_name').innerText = "Мостик\n" + data.bridge.name
+    document.getElementById('bridge_name').innerText = "Мостик:\n" + data.bridge.name
     document.getElementById('bridge_cost').innerText = "$" +data.bridge.cost
   });
 
   document.getElementById('racer1_button').addEventListener('click', () => {
-    go('createTeam', { select: 'racer1' });
+    fetch('https://tgbot-eiq1.onrender.com/checkPredictings', {
+       method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({user : user})
+    })
+    .then(res => {
+      if (res.status == 200){
+        go('createTeam', { select: 'racer1' });
+      }else if(res.status == 201){
+        showToast('Вы уже подтвердили свой состав!')
+      }else if(res.status == 202){
+        showToast('На данный момент менять состав команды нельзя')
+      }
+    })
   })
   document.getElementById('racer2_button').addEventListener('click', () => {
-    go('createTeam', { select: 'racer2' });
-
+    fetch('https://tgbot-eiq1.onrender.com/checkPredictings', {
+       method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({user : user})
+    })
+    .then(res => {
+      if (res.status == 200){
+        go('createTeam', { select: 'racer2' });
+      }else if(res.status == 201){
+        showToast('Вы уже подтвердили свой состав!')
+      }else if(res.status == 202){
+        showToast('На данный момент менять состав команды нельзя')
+      }
+    })
   })
   document.getElementById('engine_button').addEventListener('click', () => {
-    go('createTeam', { select: 'engine' });
-
+    fetch('https://tgbot-eiq1.onrender.com/checkPredictings', {
+       method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({user : user})
+    })
+    .then(res => {
+      if (res.status == 200){
+        go('createTeam', { select: 'engine' });
+      }else if(res.status == 201){
+        showToast('Вы уже подтвердили свой состав!')
+      }else if(res.status == 202){
+        showToast('На данный момент менять состав команды нельзя')
+      }
+    })
   })
   document.getElementById('pit_stop_button').addEventListener('click', () => {
-    go('createTeam', { select: 'pit_stop' });
+    fetch('https://tgbot-eiq1.onrender.com/checkPredictings', {
+       method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({user : user})
+    })
+    .then(res => {
+      if (res.status == 200){
+        go('createTeam', { select: 'pit_stop' });
+      }else if(res.status == 201){
+        showToast('Вы уже подтвердили свой состав!')
+      }else if(res.status == 202){
+        showToast('На данный момент менять состав команды нельзя')
+      }
+    })
   })
   document.getElementById('bridge_button').addEventListener('click', () => {
-    go('createTeam', { select: 'bridge' });
+    fetch('https://tgbot-eiq1.onrender.com/checkPredictings', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({user : user})
+    })
+    .then(res => {
+      if (res.status == 200){
+        go('createTeam', { select: 'bridge' });
+      }else if(res.status == 201){
+        showToast('Вы уже подтвердили свой состав!')
+      }else if(res.status == 202){
+        showToast('На данный момент менять состав команды нельзя')
+      }
+    })
+  })
+  document.getElementById('saveTeam').addEventListener('click', () => {
+    if(confirm("Вы уверены, что хотите сохранить состав команды? Изменить его будет нельзя до следующей гонки")){
+      fetch('https://tgbot-eiq1.onrender.com/saveTeam', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({user : user})
+      })
+      .then(res => {
+        if (res.status == 200){
+          showToast('Вы подтвердили свой состав!')
+        }else if (res.status == 201){
+          showToast('Отказано: вы уже подтвердили свой состав!')
+        }
+      })
+    }
   })
 }
 
