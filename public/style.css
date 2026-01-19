@@ -133,6 +133,7 @@ body {
   border-radius: 25px;
   padding: 10px 10px;
   width: max-content;
+  max-width: 120px;
   height: max-content;
   border: none;
   background-color: rgb(0, 165, 187);
@@ -250,3 +251,4 @@ body {
         opacity: 1;
     }
 }
+
