@@ -179,7 +179,6 @@ function CreateTeamPage(select){
 
   render(`
     <p class="меню-текст" id="mainText"></p>
-    <img class="pfp" id="pfp">
     <p></p>
     <div class="div-createTeam" id="container_createTeam"></div>
     <p></p>
@@ -257,12 +256,21 @@ let currentRoute = {
   params: {}
 };
 
-function setPageClass(page) {
-  app.className = `page-${page}`;
+function setBackground(page) {
+  const app = document.getElementById('app');
+
+  const backgrounds = {
+    main: "url('../images/other/background1.jpg')",
+    profile: "url(''../images/other/background2.JPG')",
+    team: "url('../images/other/background3.JPG')",
+    createTeam: "url('../images/other/background3.JPG')"
+  };
+
+  app.style.backgroundImage = backgrounds[page] || 'none';
 }
 
 function go(page, params = {}) {
-  setPageClass(page);
+  setBackground(page);
   currentRoute.page = page;
   currentRoute.params = params;
 
