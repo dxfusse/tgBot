@@ -690,7 +690,7 @@ app.post('/saveTeam', (req, res) =>{
 app.post('/getClansList', (req, res) =>{
   const data = {
     names : database.clans.map(item => item.name),
-    members : database.clans.members.lenght,
+    members : database.clans.members,
     photos : database.clans.map(item => item.photo),
     scores : database.clans.map(item => item.score)
   }
