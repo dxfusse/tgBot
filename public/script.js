@@ -11,7 +11,7 @@ function render(html) {
 }
 
 //Всплывающее уведомление
-function showToast(text, duration = 3000) {
+function showToast(text, duration = 4000) {
   const toast = document.getElementById('toast');
 
   toast.innerText = text;
@@ -283,6 +283,9 @@ function CreateTeamPage(select){
       <button class="button-forFooter" id="saveChoise">Сохранить</button>
     </div>
   `);
+  
+  const container = document.getElementById('container_createTeam');
+  if (container) container.scrollTop = 0;
 
   if (select == 'racer1'){
     document.getElementById('mainText').innerText = "Выбор первого пилота";
