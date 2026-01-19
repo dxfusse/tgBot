@@ -412,6 +412,13 @@ function createNewDatabase(filePath) {
         members : [774319557],
         photo : "https://i.pinimg.com/originals/74/29/43/7429430a85e8d3b2ddd19994149bcad4.jpg",
         score : 100
+      },
+      {
+        id : 1,
+        name : "F1 second clan",
+        members : [774319557, 6372939, 372354],
+        photo : "https://i.pinimg.com/736x/7c/29/96/7c2996770695ac8e001cef5b76ae0371.jpg",
+        score : 400
       }
     ]
   };
@@ -689,11 +696,14 @@ app.post('/saveTeam', (req, res) =>{
 app.post('/getClansList', (req, res) =>{
   console.log('\nОтправка данных о кланах')
   const data = {
-    names : database.clans.map(item => item.name),
-    members : database.clans.map(item => item.members),
-    photos : database.clans.map(item => item.photo),
-    scores : database.clans.map(item => item.score)
-  }
+    clans: database.clans.map(clan => ({
+      names: clan.name,
+      members: clan.members,
+      photos: clan.photo,
+      scores: clan.score
+    }))
+    .sort((a, b) => b.score - a.score)
+  };
   res.json(data)
 })
 
