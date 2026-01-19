@@ -289,7 +289,21 @@ function CreateTeamPage(select){
       if(balance < parseInt(global_cost)){
         showToast('Недостаточно денег!')
       }else{
-        showToast('Выбор сохранён!')
+        const data = {
+          user : user,
+          option : select,
+          name : choise
+        }
+        fetch('https://tgbot-eiq1.onrender.com/selectTeamOpt', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        })
+        .then(res => {
+          if (response.status == 200){
+            showToast('Выбор сохранён')
+          }
+        })
       }
     });
   })
