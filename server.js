@@ -510,22 +510,39 @@ app.post('/getTeamInfo', (req, res) =>{
 //Получить список
 app.post('/getList', (req, res) =>{
   const choise = req.body.choise;
-  console.log('Запрос базы: ', choise);
+  const user = req.body.user;
+  console.log('Запрос базы: ', choise, ', пользователем: ', user.username);
   if (choise == 'racer1' || choise == 'racer2'){
     console.log('Отправка базы пилотов')
-    res.json(database.drivers);
+    const data = {
+      balance : database.users.find(item => item.id == user.id).money,
+      base : database.drivers
+    }
+    res.json(data);
   }
   if (choise == 'engine'){
     console.log('Отправка базы моторов')
-    res.json(database.engines);
+    const data = {
+      balance : database.users.find(item => item.id == user.id).money,
+      base : database.engines
+    }
+    res.json(data);
   }
   if (choise == 'pit_stop'){
     console.log('Отправка базы пит стопов')
-    res.json(database.pit_stops);
+    const data = {
+      balance : database.users.find(item => item.id == user.id).money,
+      base : database.pit_stops
+    }
+    res.json(data);
   }
   if (choise == 'bridge'){
     console.log('Отправка базы мостиков')
-    res.json(database.bridges);
+    const data = {
+      balance : database.users.find(item => item.id == user.id).money,
+      base : database.bridges
+    }
+    res.json(data);
   }
 })
 
