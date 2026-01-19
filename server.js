@@ -409,7 +409,7 @@ function createNewDatabase(filePath) {
       {
         id : 0,
         name : "F1 test clan",
-        members : [0],
+        members : [774319557],
         photo : "https://i.pinimg.com/originals/74/29/43/7429430a85e8d3b2ddd19994149bcad4.jpg",
         score : 100
       }
@@ -426,7 +426,6 @@ initDatabase();
 
 //Вход пользователя + проверка на регистрацию
 app.post('/entering', (req, res) => {
-  console.log('Заход пользователя');
   const user = req.body.user;
 
   const exists = database.users.some(u => u.id === user.id);
@@ -454,7 +453,7 @@ app.post('/entering', (req, res) => {
     database.users.push(new_user);
     fs.writeFileSync('database.json', JSON.stringify(database, null, 2));
   }else{
-    console.log('Пользователь  ' + user.username + ' уже есть в базе данных');
+    console.log('\nПользователь  ' + user.username + ' зашёл в бота и он есть в базе данных');
     const bd_user = database.users[database.users.findIndex(item => item.id == user.id)];
     let edited = false;
     if (bd_user.first_name != user.first_name){
@@ -480,7 +479,7 @@ app.post('/entering', (req, res) => {
 //Получение инфы о пользователе
 app.post('/getUserInfo', (req, res) =>{
   const user = req.body.user;
-  console.log('Загрузка данных пользователя: ', user.username)
+  console.log('\nЗагрузка данных пользователя: ', user.username)
   const data = {
     score : database.users[database.users.findIndex(item => item.id == user.id)].score,
     photo: database.users[database.users.findIndex(item => item.id == user.id)].photo,
@@ -494,7 +493,7 @@ app.post('/getUserInfo', (req, res) =>{
 //Получение инфы о команде пользователе
 app.post('/getTeamInfo', (req, res) =>{
   const user = req.body.user;
-  console.log('Пользователь ' + user.username + ' хочет посмотреть свою команду')
+  console.log('\nПользователь ' + user.username + ' хочет посмотреть свою команду')
   const userTeam = database.users[database.users.findIndex(item => item.id ==user.id)].team;
   let data = {
     racer1 : null,
@@ -571,7 +570,7 @@ app.post('/checkPredictings', (req, res) =>{
 app.post('/getList', (req, res) =>{
   const choise = req.body.choise;
   const user = req.body.user;
-  console.log('Запрос базы: ', choise, ', пользователем: ', user.username);
+  console.log('\nЗапрос базы: ', choise, ', пользователем: ', user.username);
   if (choise == 'racer1' || choise == 'racer2'){
     console.log('Отправка базы пилотов')
     const data = {
@@ -611,7 +610,7 @@ app.post('/selectTeamOpt', (req, res) =>{
   const user = req.body.user;
   const choise = req.body.option;
   const name = req.body.name;
-  console.log('Пользователь ' + user.usename + ' выбрал себе: ' + choise + ', а именно: ' + name);
+  console.log('\nПользователь ' + user.usename + ' выбрал себе: ' + choise + ', а именно: ' + name);
   if (choise == 'racer1'){
     console.log('Пользователь: ' + user.usename + ' выбрал себе первого пилота: ' + name);
     const driver = database.drivers.find(item => item.name == name);
@@ -658,7 +657,7 @@ app.post('/selectTeamOpt', (req, res) =>{
 //Сохранить команду
 app.post('/saveTeam', (req, res) =>{
   const user = req.body.user;
-  console.log('Пользователь ' + user.username + ' хочет сохранить свою команду')
+  console.log('\nПользователь ' + user.username + ' хочет сохранить свою команду')
   if(database.users[database.users.findIndex(item => item.id == user.id)].team_changing == false){
     console.log('Пользователь ' + user.username + ' уже подтвердил состав своей команды')
     res.sendStatus(201);
@@ -688,6 +687,7 @@ app.post('/saveTeam', (req, res) =>{
 
 //Получить список кланов
 app.post('/getClansList', (req, res) =>{
+  console.log('\nОтправка данных о кланах')
   const data = {
     names : database.clans.map(item => item.name),
     members : database.clans.members,
