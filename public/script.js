@@ -419,10 +419,10 @@ function ClansPage() {
   })
   .then(res => res.json())
   .then(data => {
-    const names = data.base.map(item => item.name);
-    const members = data.base.map(item => item.members);
-    const scores = data.base.map(item => item.score);
-    const photos = data.base.map(item => item.photo);
+    const names = data.names
+    const members = data.members.length;
+    const scores = data.scores
+    const photos = data.photos
 
     const container = document.getElementById('container_clans');
     for (let i = 0; i < names.length; i++) {
