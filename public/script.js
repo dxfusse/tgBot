@@ -421,10 +421,10 @@ function ClansPage() {
   })
   .then(res => res.json())
   .then(data => {
-    const names = data.clans.names;
-    const members = data.clans.members;
-    const scores = data.clans.scores;
-    const photos = data.clans.photos;
+    const names = data.clans.map(item => item.names);
+    const members = data.clans.map(item => item.members);
+    const scores = data.clans.map(item => item.scores);
+    const photos = data.clans.map(item => item.photos);
 
     const container = document.getElementById('container_clans');
     for (let i = 0; i < names.length; i++) {
@@ -452,12 +452,17 @@ function ClansPage() {
       score.textContent = "Баллы: " + scores[i];
       score.className = 'баланс'
 
+      const place = document.createElement('div');
+      place.className = 'place-clans'
+      place.textContent = '#' + (i+1)
+
       div.appendChild(name);
       div.appendChild(membs);
       div.appendChild(score);
 
       btn.appendChild(img);
       btn.appendChild(div);
+      btn.appendChild(place);
 
       btn.onclick = () => {
         showToast('В разработке...')
