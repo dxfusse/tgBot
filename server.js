@@ -591,7 +591,7 @@ app.post('/selectTeamOpt', (req, res) =>{
   if (choise == 'racer1'){
     console.log('Пользователь: ' + user.usename + ' выбрал себе первого пилота: ' + name);
     const driver = database.drivers.find(item => item.name == name);
-    database.users[database.users.findIndex(item => item.id == user.id)].racer1 = driver;
+    database.users[database.users.findIndex(item => item.id == user.id)].team.racer1 = driver;
     fs.writeFileSync('database.json', JSON.stringify(database, null, 2));
     console.log('Выбор сохранён')
     res.sendStatus(200);
@@ -599,7 +599,7 @@ app.post('/selectTeamOpt', (req, res) =>{
   if (choise == 'racer2'){
     console.log('Пользователь: ' + user.usename + ' выбрал себе второго пилота: ' + name);
     const driver = database.drivers.find(item => item.name == name);
-    database.users[database.users.findIndex(item => item.id == user.id)].racer2 = driver;
+    database.users[database.users.findIndex(item => item.id == user.id)].team.racer2 = driver;
     fs.writeFileSync('database.json', JSON.stringify(database, null, 2));
     console.log('Выбор сохранён')
     res.sendStatus(200);
@@ -607,7 +607,7 @@ app.post('/selectTeamOpt', (req, res) =>{
   if (choise == 'engine'){
     console.log('Пользователь: ' + user.usename + ' выбрал себе двигатель: ' + name);
     const engine = database.engines.find(item => item.name == name);
-    database.users[database.users.findIndex(item => item.id == user.id)].engine = engine;
+    database.users[database.users.findIndex(item => item.id == user.id)].team.engine = engine;
     fs.writeFileSync('database.json', JSON.stringify(database, null, 2));
     console.log('Выбор сохранён')
     res.sendStatus(200);
@@ -615,7 +615,7 @@ app.post('/selectTeamOpt', (req, res) =>{
   if (choise == 'pit_stop'){
     console.log('Пользователь: ' + user.usename + ' выбрал себе пит стоп: ' + name);
     const pit_stop = database.pit_stops.find(item => item.name == name);
-    database.users[database.users.findIndex(item => item.id == user.id)].pit_stop = pit_stop;
+    database.users[database.users.findIndex(item => item.id == user.id)].team.pit_stop = pit_stop;
     fs.writeFileSync('database.json', JSON.stringify(database, null, 2));
     console.log('Выбор сохранён')
     res.sendStatus(200);
@@ -623,7 +623,7 @@ app.post('/selectTeamOpt', (req, res) =>{
   if (choise == 'bridge'){
     console.log('Пользователь: ' + user.usename + ' выбрал себе мостик: ' + name);
     const bridge = database.bridges.find(item => item.name == name);
-    database.users[database.users.findIndex(item => item.id == user.id)].bridge = bridge;
+    database.users[database.users.findIndex(item => item.id == user.id)].team.bridge = bridge;
     fs.writeFileSync('database.json', JSON.stringify(database, null, 2));
     console.log('Выбор сохранён')
     res.sendStatus(200);
