@@ -456,7 +456,8 @@ app.post('/entering', (req, res) => {
       team_changing: true,
       score: 0,
       money: 100000000,
-      team_cost : 0
+      team_cost : 0,
+      clan : null
     };
     console.log('В базу данных добавлен новый пользователь: ' + user.username);
     database.users.push(new_user);
@@ -490,10 +491,11 @@ app.post('/getUserInfo', (req, res) =>{
   const user = req.body.user;
   console.log('\nЗагрузка данных пользователя: ', user.username)
   const data = {
-    score : database.users[database.users.findIndex(item => item.id == user.id)].score,
-    photo: database.users[database.users.findIndex(item => item.id == user.id)].photo,
-    money : database.users[database.users.findIndex(item => item.id == user.id)].money,
-    team_cost : database.users[database.users.findIndex(item => item.id == user.id)].team_cost
+    score : database.users.find(item => item.id == user.id).score,
+    photo: database.users.find(item => item.id == user.id).photo,
+    money : database.find(item => item.id == user.id).money,
+    team_cost : database.users.find(item => item.id == user.id).team_cost,
+    clan : database.find(item => item.id == user.id).clan,
   }
   console.log('Данные отправлены пользователю');
   res.json(data);
@@ -731,7 +733,8 @@ app.post('/createClan', (req, res) =>{
       name : name,
       photo : photo,
       members : [user.id],
-      score : 0
+      score : 0,
+      invite_code : null
     }
     database.clans.push(data)
     fs.writeFileSync('database.json', JSON.stringify(database, null, 2));
