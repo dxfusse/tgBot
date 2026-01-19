@@ -436,6 +436,7 @@ app.post('/entering', (req, res) => {
         pit_stop : null,
         bridge : null
       },
+      team_changing: true,
       score: 0,
       money: 100000000,
       team_cost : 0
@@ -543,6 +544,20 @@ app.post('/getTeamInfo', (req, res) =>{
   res.json(data);
 })
 
+//Проверка на разрешение изменения команды
+app.post('/checkPredictings', (req, res) =>{
+  const user = req.body.user;
+  if(database.predict_accepting == 1){
+    if(database.users.find(item => item.id == user.id).team_changing){
+      res.sendStatus(200);
+    }else{
+      res.sendStatus(201);
+    }
+  }else{
+    res.sendStatus(202);
+  }
+})
+
 //Получить список
 app.post('/getList', (req, res) =>{
   const choise = req.body.choise;
@@ -629,6 +644,36 @@ app.post('/selectTeamOpt', (req, res) =>{
     res.sendStatus(200);
   }
 
+})
+
+//Сохранить команду
+app.post('/saveTeam', (req, res) =>{
+  const user = req.body.user;
+  console.log('Пользователь ' + user.username + ' хочет сохранить свою команду')
+  if(database.users[database.users.findIndex(item => item.id == user.id)].team_changing == false){
+    console.log('Пользователь ' + user.username + ' уже подтвердил состав своей команды')
+    res.sendStatus(201);
+  }else{
+    const user_racer1 = database.users.find(item => item.id == user.id).team.racer1
+    const user_racer2 = database.users.find(item => item.id == user.id).team.racer1
+    const user_engine = database.users.find(item => item.id == user.id).team.engine
+    const user_pit_stop = database.users.find(item => item.id == user.id).team.pit_stop
+    const user_bridge = database.users.find(item => item.id == user.id).team.bridge
+
+    let teamCost = database.drivers.find(item => item.id == user_racer1).cost
+    teamCost += database.drivers.find(item => item.id == user_racer2).cost
+    teamCost += database.engines.find(item => item.id == user_engine).cost
+    teamCost += database.pit_stops.find(item => item.id == user_pit_stop).cost
+    teamCost += database.bridges.find(item => item.id == user_bridge).cost
+
+    console.log('Итоговая стоимость команды: $', teamCost)
+    database.users[database.users.findIndex(item => item.id == user.id)].money -= teamCost;
+    database.users[database.users.findIndex(item => item.id == user.id)].team_changing = false;
+    
+    fs.writeFileSync('database.json', JSON.stringify(database, null, 2));
+    console.log('Команда пользователя сохранена')
+    res.sendStatus(200);
+  }
 })
 
 app.post('/getDB', (req, res) =>{
