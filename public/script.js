@@ -10,6 +10,18 @@ function render(html) {
   bindEvents(); // после вставки HTML привязываем события
 }
 
+//Всплывающее уведомление
+function showToast(text, duration = 5000) {
+  const toast = document.getElementById('toast');
+
+  toast.innerText = text;
+  toast.classList.add('show');
+
+  setTimeout(() => {
+    toast.classList.remove('show');
+  }, duration);
+}
+
 
 // Main Page
 function MainPage() {
@@ -23,6 +35,8 @@ function MainPage() {
 
   render( `
     <img src="../images/other/f1_logo.png" class="f1_logo">
+    <p></p>
+    <p></p>
     <div class="меню">
       <button data-page="profile" class="кнопка-меню">Профиль</button>
       <button data-page="team" class="кнопка-меню">Моя команда</button>
@@ -180,7 +194,11 @@ function CreateTeamPage(select){
   render(`
     <p class="меню-текст" id="mainText"></p>
     <p></p>
+    <p class="баланс" id="balance_createTeam">Баланс: $0</p>
+    <p></p>
     <div class="div-createTeam" id="container_createTeam"></div>
+    <p></p>
+    <p class="баланс" id="userChoise">Ваш выбор: Не выбрано</p>
     <p></p>
     <div class="footer-twoButtons">
       <button class="button-forFooter" data-page="team">Назад</button>
@@ -204,21 +222,29 @@ function CreateTeamPage(select){
     document.getElementById('mainText').innerText = "Выбор моста";
   }
 
+  const data = {
+    user : user,
+    choise : select
+  }
+
   fetch('https://tgbot-eiq1.onrender.com/getList', {
   method: 'POST',
   headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({choise : select})
+  body: JSON.stringify(data)
   })
   .then(res => res.json())
   .then(data => {
-    alert('Получена база: ', data);
-    const names = data.map(item => item.name);
-    const costs = data.map(item => item.cost);
-    const photos = data.map(item => item.photo);
+    const balance = data.balance;
+    const names = data.base.map(item => item.name);
+    const costs = data.base.map(item => item.cost);
+    const photos = data.base.map(item => item.photo);
 
     let choise;
+    let global_cost;
 
+    document.getElementById('balance_createTeam').innerText = 'Баланс: $' + balance;
     const container = document.getElementById('container_createTeam');
+    const userChoise = document.getElementById('userChoise');
     for (let i = 0; i < names.length; i++) {
       const btn = document.createElement('button');
       btn.className = 'button-createTeam';
@@ -227,21 +253,41 @@ function CreateTeamPage(select){
       img.src = photos[i];
       img.className = 'photo-createTeam';
 
-      const text = document.createElement('div');
-      text.textContent = names[i] + "Стоимость: " + costs[i];
-      text.className = 'баланс'
+      const div = document.createElement('div');
+      div.className = 'div_texts-createTeam'
+
+      const name = document.createElement('div');
+      name.textContent = names[i]
+      name.className = 'баланс'
+
+      const cost = document.createElement('div');
+      cost.textContent = "Стоимость: $" + costs[i];
+      cost.className = 'баланс'
+
+      div.appendChild(name);
+      div.appendChild(cost);
 
       btn.appendChild(img);
-      btn.appendChild(text);
+      btn.appendChild(div);
 
       btn.onclick = () => {
+        document
+          .querySelectorAll('.button-createTeam')
+          .forEach(b => b.classList.remove('selected'));
+
+        btn.classList.add('selected');
         choise = names[i];
+        global_cost = cost[i];
+        userChoise.innerText = "Ваш выбор: " + choise;
       };
 
       container.appendChild(btn);
     };
     document.getElementById('saveChoise').addEventListener('click', () => {
-      alert(choise);
+      if(balance < parseInt(global_cost)){
+        showToast('Недостаточно денег!')
+      }
+      alert("Выбор сохранён: " + choise);
     });
   })
 }
