@@ -242,6 +242,18 @@ body {
   font-family: "dop";
   font-weight: bold;
 }
+.inputs{
+  width: 380px;
+  height: max-content;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  color: white;
+  font-size: 20px;
+  border-color: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  transition: all 0.4s ease;
+  font-family: "dop";
+}
 @font-face {
     font-family: 'dop';
     src: url('dopText.otf') format('truetype');
