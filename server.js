@@ -406,6 +406,7 @@ function createNewDatabase(filePath) {
       }
     ],
     clans : [
+      /*
       {
         id : 0,
         name : "F1 test clan",
@@ -420,6 +421,7 @@ function createNewDatabase(filePath) {
         photo : "https://i.pinimg.com/736x/7c/29/96/7c2996770695ac8e001cef5b76ae0371.jpg",
         score : 400
       }
+      */
     ]
   };
 
@@ -707,6 +709,36 @@ app.post('/getClansList', (req, res) =>{
   res.json(data)
 })
 
+//Создать клан
+app.post('/createClan', (req, res) =>{
+  const user = req.body.user;
+  const name = req.body.name;
+  const photo = req.body.photo;
+  console.log('\nПользователь ' + user.username + ' хочет создать клан')
+  const leaders = database.clans.map(item => item.members[0]);
+  if(leaders.includes(user.id)){
+    console.log('Пользователь уже имеет свой клан')
+    res.sendStatus(201);
+  } else {
+    let id = 0;
+    let ids = database.clans.map(item => item.id);
+    if (ids.lenght != 0){
+      ids.sort((a, b) => b - a);
+      id = ids[0];
+    }
+    const data = {
+      id : id + 1,
+      name : name,
+      photo : photo,
+      members : [user.id],
+      score : 0
+    }
+    database.clans.push(data)
+    fs.writeFileSync('database.json', JSON.stringify(database, null, 2));
+    console.log('Клан пользователя сохранён')
+    res.sendStatus(200);
+  }
+})
 
 app.post('/getDB', (req, res) =>{
   res.json(database);
