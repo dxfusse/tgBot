@@ -433,8 +433,15 @@ function ClansPage() {
 
   render( `
     <p class="меню-текст">Кланы</p>
-    <p></p>
-    <div class="div-createTeam" id="container_clans"></div>
+    <div class="div-createTeam" id="container_clans">
+      <div class="head-div">
+        <span class="head-text">Фото</span>
+        <span class="head-text">Название</span>
+        <span class="head-text">Участники</span>
+        <span class="head-text">Баллы</span>
+        <span class="head-text">Место</span>
+      </div>
+    </div>
     <p></p>
     <div class="footer-twoButtons">
       <button class="button-forFooter" id="createClanBtn">Создать</button>
@@ -459,12 +466,12 @@ function ClansPage() {
     const container = document.getElementById('container_clans');
     for (let i = 0; i < names.length; i++) {
       const btn = document.createElement('button');
-      btn.className = 'button-createTeam';
+      btn.className = 'button-clans';
 
       const img = document.createElement('img');
       img.src = photos[i];
-      img.style.width = '100px';
-      img.style.height = '100px';
+      img.style.width = '70px';
+      img.style.height = '70px';
       img.style.borderRadius = '20px';
 
       const div = document.createElement('div');
@@ -472,26 +479,24 @@ function ClansPage() {
 
       const name = document.createElement('div');
       name.textContent = names[i]
-      name.className = 'меню-текст'
+      name.className = 'баланс'
 
       const membs = document.createElement('div');
-      membs.textContent = "Участников: " + members[i].length + "/100";
+      membs.textContent = members[i].length + "/100";
       membs.className = 'баланс'
 
       const score = document.createElement('div');
-      score.textContent = "Баллы: " + scores[i];
+      score.textContent = scores[i];
       score.className = 'баланс'
 
       const place = document.createElement('div');
-      place.className = 'place-clans'
+      place.className = 'баланс'
       place.textContent = '#' + (i+1)
 
-      div.appendChild(name);
-      div.appendChild(membs);
-      div.appendChild(score);
-
       btn.appendChild(img);
-      btn.appendChild(div);
+      btn.appendChild(name);
+      btn.appendChild(membs);
+      btn.appendChild(score);
       btn.appendChild(place);
 
       btn.onclick = () => {
@@ -602,7 +607,7 @@ function UserRatingPage() {
     <p></p>
     <div class="div-createTeam" id="container_users"></div>
     <p></p>
-    <div class="div-createTeam" id="place_user">
+    <div class="div-userInfoRating" id="place_user">
       <p class="баланс" id="user_place"></p>
       <p class="баланс" id="user_name"></p>
       <p class="баланс" id="user_score"></p>
@@ -618,11 +623,11 @@ function UserRatingPage() {
   })
   .then(res => res.json())
   .then(data => {
-    const usernames = data.clans.map(item => item.usernames).reverse();
-    const first_names = data.clans.map(item => item.first_names).reverse();
-    const last_names = data.clans.map(item => item.last_names).reverse();
-    const photos = data.clans.map(item => item.photos).reverse();
-    const scores = data.clans.map(item => item.scores).reverse();
+    const usernames = data.users.map(item => item.usernames).reverse();
+    const first_names = data.users.map(item => item.first_names).reverse();
+    const last_names = data.users.map(item => item.last_names).reverse();
+    const photos = data.users.map(item => item.photos).reverse();
+    const scores = data.users.map(item => item.scores).reverse();
 
     const container = document.getElementById('container_users');
     for (let i = 0; i < usernames.length; i++) {
@@ -631,8 +636,8 @@ function UserRatingPage() {
 
       const img = document.createElement('img');
       img.src = photos[i];
-      img.style.width = '100px';
-      img.style.height = '100px';
+      img.style.width = '60px';
+      img.style.height = '60px';
       img.style.borderRadius = '20px';
 
       const div = document.createElement('div');
@@ -643,7 +648,7 @@ function UserRatingPage() {
       fullName.className = 'баланс';
 
       const username = document.createElement('div');
-      username.textContent = '@' + username[i];
+      username.textContent = '@' + usernames[i];
       username.className = 'баланс';
 
       const score = document.createElement('div');
