@@ -457,7 +457,8 @@ app.post('/entering', (req, res) => {
       score: 0,
       money: 100000000,
       team_cost : 0,
-      clan : null
+      clan : null,
+      creatingClan : true
     };
     console.log('В базу данных добавлен новый пользователь: ' + user.username);
     database.users.push(new_user);
@@ -493,9 +494,9 @@ app.post('/getUserInfo', (req, res) =>{
   const data = {
     score : database.users.find(item => item.id == user.id).score,
     photo: database.users.find(item => item.id == user.id).photo,
-    money : database.find(item => item.id == user.id).money,
+    money : database.users.find(item => item.id == user.id).money,
     team_cost : database.users.find(item => item.id == user.id).team_cost,
-    clan : database.find(item => item.id == user.id).clan,
+    clan : database.users.find(item => item.id == user.id).clan,
   }
   console.log('Данные отправлены пользователю');
   res.json(data);
@@ -717,29 +718,34 @@ app.post('/createClan', (req, res) =>{
   const name = req.body.name;
   const photo = req.body.photo;
   console.log('\nПользователь ' + user.username + ' хочет создать клан')
-  const leaders = database.clans.map(item => item.members[0]);
-  if(leaders.includes(user.id)){
-    console.log('Пользователь уже имеет свой клан')
-    res.sendStatus(201);
+  if(database.users.find(item => item.id == user.id).creatingClan){
+    const leaders = database.clans.map(item => item.members[0]);
+    if(leaders.includes(user.id)){
+      console.log('Пользователь уже имеет свой клан')
+      res.sendStatus(201);
+    } else {
+      let id = 0;
+      let ids = database.clans.map(item => item.id);
+      if (ids.lenght != 0){
+        ids.sort((a, b) => b - a);
+        id = ids[0];
+      }
+      const data = {
+        id : id + 1,
+        name : name,
+        photo : photo,
+        members : [user.id],
+        score : 0,
+        invite_code : null
+      }
+      database.clans.push(data)
+      fs.writeFileSync('database.json', JSON.stringify(database, null, 2));
+      console.log('Клан пользователя сохранён')
+      res.sendStatus(200);
+    }
   } else {
-    let id = 0;
-    let ids = database.clans.map(item => item.id);
-    if (ids.lenght != 0){
-      ids.sort((a, b) => b - a);
-      id = ids[0];
-    }
-    const data = {
-      id : id + 1,
-      name : name,
-      photo : photo,
-      members : [user.id],
-      score : 0,
-      invite_code : null
-    }
-    database.clans.push(data)
-    fs.writeFileSync('database.json', JSON.stringify(database, null, 2));
-    console.log('Клан пользователя сохранён')
-    res.sendStatus(200);
+    console.log('Пользователь не может создавать кланы')
+    res.sendStatus(202);
   }
 })
 
