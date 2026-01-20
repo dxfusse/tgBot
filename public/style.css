@@ -137,9 +137,8 @@ body {
 }
 .footer-twoButtons{
   display: flex;
-  height:  max-content;
-  width: max-content;
   flex-direction: row;
+  align-items: center;
   gap: 20px;
   justify-content: center;
   border-radius: 30px;
@@ -173,17 +172,14 @@ body {
 .div-createTeam{
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 10px;
   justify-content: flex-start;
-  flex: 1;
   border-radius: 30px;
   width: 100%;
   max-width: 380px;
+  min-height: 250px;
   max-height: 400px;
-  overflow-y: auto;
-  overflow-x: hidden;
-  scrollbar-width: thin;
-  padding: 10px 20px;
+  overflow: hidden;
   background: rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(10px);
   border-color: rgba(255, 255, 255, 0.2);
@@ -191,7 +187,8 @@ body {
 .button-createTeam{
   display: flex;
   flex-direction: row;
-  gap: 20px;
+  align-items: center;
+  gap: 40px;
   padding: 10px 10px;
   cursor: pointer;
   width: 380px;
@@ -250,6 +247,74 @@ body {
   border-radius: 10px;
   transition: all 0.4s ease;
   font-family: "dop";
+}
+.head-div{
+  position: relative;
+  top: 5px;
+  display: grid;
+  grid-template-columns: 60px 1.5fr 1fr 1fr 1fr;
+  column-gap: 7px;
+  padding: 10px 15px;
+  font-size: 14px;
+  opacity: 0.8;
+}
+.head-text{
+  font-size: 15px;
+  color: rgb(255, 255, 255);
+  font-family: "dop";
+  font-weight: bold;
+}
+.button-clans {
+  position: relative;
+  display: grid;
+  grid-template-columns: 70px 1.5fr 1.5fr 1fr 1fr;
+  padding: 10px 10px;
+  align-items: center;
+  width: 380px;
+  height: max-content;
+  border-left: none;
+  border-right: none;
+  border-color: rgba(255, 255, 255, 0.2);
+  background: transparent;
+  transition: all 0.4s ease;
+  color: rgb(255, 255, 255);
+  font-family: "dop";
+  font-weight: bold;
+  overflow: hidden;
+}
+.button-clans::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -75%;
+  width: 50%;
+  height: 200%;
+  background: linear-gradient(
+    120deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.5) 50%,
+    transparent 100%
+  );
+  transform: rotate(25deg);
+  pointer-events: none;
+}
+.button-clans:hover::before {
+  left: 125%;
+  transition: left 0.7s ease-in-out;
+}
+.div-userInfoRating{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  justify-content: flex-start;
+  border-radius: 30px;
+  width: 100%;
+  max-width: 380px;
+  height: max-content;
+  max-height: 100px;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  border-color: rgba(255, 255, 255, 0.2);
 }
 @font-face {
     font-family: 'dop';
