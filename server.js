@@ -406,7 +406,6 @@ function createNewDatabase(filePath) {
       }
     ],
     clans : [
-      /*
       {
         id : 0,
         name : "F1 test clan",
@@ -421,7 +420,6 @@ function createNewDatabase(filePath) {
         photo : "https://i.pinimg.com/736x/7c/29/96/7c2996770695ac8e001cef5b76ae0371.jpg",
         score : 400
       }
-      */
     ]
   };
 
