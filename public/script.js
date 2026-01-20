@@ -52,7 +52,7 @@ function MainPage() {
       <button data-page="profile" class="кнопка-меню">Профиль</button>
       <button data-page="team" class="кнопка-меню">Моя команда</button>
       <button data-page="clans" class="кнопка-меню">Рейтинг кланов</button>
-      <button data-page="players_top" class="кнопка-меню">Рейтинг игроков</button>
+      <button data-page="rating" class="кнопка-меню">Рейтинг игроков</button>
       <button data-page="helper" class="кнопка-меню" id="helper">Помощник</button>
     </div>
   `);
@@ -108,11 +108,10 @@ function ProfilePage() {
     document.getElementById('name').innerText = "Имя: " + user.first_name + ' ' + user.last_name;
     document.getElementById('username').innerText = "Ник: @" + user.username;
     document.getElementById('score').innerText = "Ваши баллы: " + data.score;
-    document.getElementById('money').innerText = "Ваш баланс: $" + data.money.replace(/\s/g, '').replace(/(.{3})/g, '$1 ').trim();
-    document.getElementById('team_cost').innerText = "Стоимость команды: $" + data.team_cost.replace(/\s/g, '').replace(/(.{3})/g, '$1 ').trim();
+    document.getElementById('money').innerText = "Ваш баланс: $" + data.money;
+    document.getElementById('team_cost').innerText = "Стоимость команды: $" + data.team_cost;
     document.getElementById('pfp').src = data.photo;
   })
-  .catch(err => console.error('Ошибка fetch:', err));
 }
 
 //Страница команды
@@ -593,6 +592,88 @@ function ClansPage() {
   });
 }
 
+//Страница рейтинга игроков
+function UserRatingPage() {
+  const user = tg.initDataUnsafe.user;
+  app.style.backgroundImage = "url('../images/other/background5.png')"
+
+  render( `
+    <p class="меню-текст">Рейтинг игроков</p>
+    <p></p>
+    <div class="div-createTeam" id="container_users"></div>
+    <p></p>
+    <div class="div-createTeam" id="place_user">
+      <p class="баланс" id="user_place"></p>
+      <p class="баланс" id="user_name"></p>
+      <p class="баланс" id="user_score"></p>
+    </div>
+    <p>
+    <button data-page="main" class="кнопка-меню">Назад</button>
+  `);
+
+  fetch('https://tgbot-eiq1.onrender.com/getUsersList', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({user : user})
+  })
+  .then(res => res.json())
+  .then(data => {
+    const usernames = data.clans.map(item => item.usernames).reverse();
+    const first_names = data.clans.map(item => item.first_names).reverse();
+    const last_names = data.clans.map(item => item.last_names).reverse();
+    const photos = data.clans.map(item => item.photos).reverse();
+    const scores = data.clans.map(item => item.scores).reverse();
+
+    const container = document.getElementById('container_users');
+    for (let i = 0; i < usernames.length; i++) {
+      const btn = document.createElement('button');
+      btn.className = 'button-createTeam';
+
+      const img = document.createElement('img');
+      img.src = photos[i];
+      img.style.width = '100px';
+      img.style.height = '100px';
+      img.style.borderRadius = '20px';
+
+      const div = document.createElement('div');
+      div.className = 'div_texts-clans'
+
+      const fullName = document.createElement('div');
+      fullName.textContent = first_names[i] + ' ' + last_names[i];
+      fullName.className = 'баланс';
+
+      const username = document.createElement('div');
+      username.textContent = '@' + username[i];
+      username.className = 'баланс';
+
+      const score = document.createElement('div');
+      score.textContent = scores[i];
+      score.className = 'баланс'
+
+      const place = document.createElement('div');
+      place.className = 'place-clans'
+      place.textContent = '#' + (i+1)
+
+      div.appendChild(fullName)
+      div.appendChild(username)
+
+      btn.appendChild(img)
+      btn.appendChild(div)
+      btn.appendChild(score)
+      btn.appendChild(place)
+
+      container.appendChild(btn);
+    };
+
+    const user_place = usernames.indexOf(user.username) + 1;
+    document.getElementById('user_place').value = "#" + user_place;
+    document.getElementById('user_name').value = user.username + ' (Ты)'
+    document.getElementById('user_score').value = scores[user_place - 1];
+  })
+
+
+}
+
 //Маршрутизация
 let currentRoute = {
   page: 'main',
@@ -608,6 +689,7 @@ function go(page, params = {}) {
   if (page === 'profile') ProfilePage();
   if (page === 'team') TeamPage();
   if (page === 'clans') ClansPage();
+   if (page === 'rating') UserRatingPage()
   if (page === 'createTeam') CreateTeamPage(params.select);
 }
 
