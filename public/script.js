@@ -101,15 +101,15 @@ function ProfilePage() {
   .then(res => res.json())
   .then(data => {
     if(data.clan == null){
-      document.getElementById('clan').innerText = "Отсутствует";
+      document.getElementById('clan').innerText = "Клан: Отсутствует";
     } else {
-      document.getElementById('clan').innerText = data.clan;
+      document.getElementById('clan').innerText = "Клан: " + data.clan;
     }
     document.getElementById('name').innerText = "Имя: " + user.first_name + ' ' + user.last_name;
     document.getElementById('username').innerText = "Ник: @" + user.username;
     document.getElementById('score').innerText = "Ваши баллы: " + data.score;
-    document.getElementById('money').innerText = "Ваш баланс: " + data.money;
-    document.getElementById('team_cost').innerText = "Стоимость команды: " + data.score;
+    document.getElementById('money').innerText = "Ваш баланс: $" + data.money;
+    document.getElementById('team_cost').innerText = "Стоимость команды: $" + data.team_cost;
     document.getElementById('pfp').src = data.photo;
   })
   .catch(err => console.error('Ошибка fetch:', err));
@@ -156,6 +156,13 @@ function TeamPage() {
       <button class="button-forFooter" id="saveTeam">Сохранить</button>
     </div>
   `);
+
+  const menuButtons = document.querySelectorAll('.team_place-container');
+  menuButtons.forEach((btn, index) => {
+    setTimeout(()=>{
+        btn.classList.add('activate-menuButtons-animation')
+    }, index * 70)
+  })
 
   fetch('https://tgbot-eiq1.onrender.com/getTeamInfo', {
     method: 'POST',
@@ -387,7 +394,15 @@ function CreateTeamPage(select){
 
       container.appendChild(btn);
     };
-    document.getElementById('saveChoise').addEventListener('click', () => {
+
+    const menuButtons = document.querySelectorAll('.button-createTeam');
+    menuButtons.forEach((btn, index) => {
+    setTimeout(()=>{
+        btn.classList.add('activate-menuButtons-animation')
+    }, index * 70)
+  })
+    
+  document.getElementById('saveChoise').addEventListener('click', () => {
       if(balance < parseInt(global_cost)){
         showToast('Недостаточно денег!')
       }else{
@@ -492,6 +507,7 @@ function ClansPage() {
     if(!document.getElementById('div_createClan')){
       const div = document.createElement('div');
       div.className = 'div-createTeam'
+      div.style.overflow = 'none';
       div.id = 'div_createClan'
 
       const text = document.createElement('div');
@@ -554,6 +570,9 @@ function ClansPage() {
                 div.remove();
               }else if(res.status == 201){
                 showToast('У вас уже есть клан!');
+                div.remove();
+              }else if(res.status == 202){
+                showToast('Вы не можете создавать кланы!');
                 div.remove();
               }
             })
