@@ -510,7 +510,7 @@ function ClansPage() {
   document.getElementById('createClanBtn').addEventListener('click', () => {
     if(!document.getElementById('div_createClan')){
       const div = document.createElement('div');
-      div.className = 'div-createTeam'
+      div.className = 'div-createClan'
       div.style.overflow = 'none';
       div.id = 'div_createClan'
 
@@ -521,7 +521,7 @@ function ClansPage() {
       const clanName = document.createElement('input');
       clanName.className = 'inputs'
       clanName.id = 'clanNameInput'
-      clanName.placeholder = 'Имя клана (макс. 13 символов)'
+      clanName.placeholder = 'Имя клана (макс. 15 символов)'
       clanName.type = 'text'
 
       const clanPhoto = document.createElement('input');
