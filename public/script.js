@@ -108,8 +108,8 @@ function ProfilePage() {
     document.getElementById('name').innerText = "Имя: " + user.first_name + ' ' + user.last_name;
     document.getElementById('username').innerText = "Ник: @" + user.username;
     document.getElementById('score').innerText = "Ваши баллы: " + data.score;
-    document.getElementById('money').innerText = "Ваш баланс: $" + data.money;
-    document.getElementById('team_cost').innerText = "Стоимость команды: $" + data.team_cost;
+    document.getElementById('money').innerText = "Ваш баланс: $" + data.money.replace(/\s/g, '').replace(/(.{3})/g, '$1 ').trim();
+    document.getElementById('team_cost').innerText = "Стоимость команды: $" + data.team_cost.replace(/\s/g, '').replace(/(.{3})/g, '$1 ').trim();
     document.getElementById('pfp').src = data.photo;
   })
   .catch(err => console.error('Ошибка fetch:', err));
