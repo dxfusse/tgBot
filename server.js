@@ -754,7 +754,7 @@ app.post('/getUsersList', (req, res) =>{
   console.log('Отправка базы пользователей')
   const data = {
     users : database.users.map( user => ({
-      first_names : user.name,
+      first_names : user.first_name,
       last_names :  user.last_name,
       photos : user.photo,
       usernames : user.username,
