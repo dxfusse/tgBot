@@ -11,8 +11,14 @@ function render(html) {
 }
 
 //Всплывающее уведомление
-function showToast(text, duration = 4000) {
+function showToast(text, err = false, duration = 4000) {
   const toast = document.getElementById('toast');
+
+  if(err){
+    toast.style.border = '2px solid #00c811'
+    toast.style.backgroundColor = 'rgba(23, 200, 0, 0.15)'
+    toast.style.boxShadow = 'rgb(0, 185, 31)'
+  }
 
   toast.innerText = text;
   toast.classList.add('show');
@@ -266,7 +272,7 @@ function TeamPage() {
       })
       .then(res => {
         if (res.status == 200){
-          showToast('Вы подтвердили свой состав!')
+          showToast('Вы подтвердили свой состав!', true)
         }else if (res.status == 201){
           showToast('Отказано: вы уже подтвердили свой состав!')
         }
@@ -393,7 +399,7 @@ function CreateTeamPage(select){
         })
         .then(res => {
           if (res.status == 200){
-            showToast('Выбор сохранён');
+            showToast('Выбор сохранён', true);
             go('team');
           }
         })
@@ -477,6 +483,7 @@ function ClansPage() {
       container.appendChild(btn);
     };
   })
+  
   document.getElementById('createClanBtn').addEventListener('click', () => {
     if(!document.getElementById('div_createClan')){
       const div = document.createElement('div');
@@ -539,7 +546,7 @@ function ClansPage() {
             })
             .then(res => {
               if (res.status == 200) {
-                showToast('Клан создан!');
+                showToast('Клан создан!', true);
                 div.remove();
               }else if(res.status == 201){
                 showToast('У вас уже есть клан!');
