@@ -749,6 +749,23 @@ app.post('/createClan', (req, res) =>{
   }
 })
 
+//Рейтинг игроков
+app.post('/getUsersList', (req, res) =>{
+  console.log('Отправка базы пользователей')
+  const data = {
+    users : database.users.map( user => ({
+      first_names : user.name,
+      last_names :  user.last_name,
+      photos : user.photo,
+      usernames : user.username,
+      scores : user.score
+    }))
+    .sort((a, b) => a.score - b.score)
+  };
+  res.json(data)
+})
+
+
 app.post('/getDB', (req, res) =>{
   res.json(database);
 })
