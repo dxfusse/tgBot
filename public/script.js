@@ -18,6 +18,10 @@ function showToast(text, err = false, duration = 4000) {
     toast.style.border = '2px solid #00c811'
     toast.style.backgroundColor = 'rgba(23, 200, 0, 0.15)'
     toast.style.boxShadow = 'rgb(0, 185, 31)'
+  }else{
+    toast.style.border = '2px solid #c80000'
+    toast.style.backgroundColor = 'rgba(200, 0, 0, 0.15)'
+    toast.style.boxShadow = 'rgb(185, 0, 0)'
   }
 
   toast.innerText = text;
@@ -483,7 +487,7 @@ function ClansPage() {
       container.appendChild(btn);
     };
   })
-  
+
   document.getElementById('createClanBtn').addEventListener('click', () => {
     if(!document.getElementById('div_createClan')){
       const div = document.createElement('div');
