@@ -605,7 +605,14 @@ function UserRatingPage() {
   render( `
     <p class="меню-текст">Рейтинг игроков</p>
     <p></p>
-    <div class="div-createTeam" id="container_users"></div>
+    <div class="div-createTeam" id="container_users">
+      <div class="head-div-rating">
+        <span class="head-text">Фото</span>
+        <span class="head-text">Имя</span>
+        <span class="head-text">Баллы</span>
+        <span class="head-text">Место</span>
+      </div>
+    </div>
     <p></p>
     <div class="div-userInfoRating" id="place_user">
       <p class="баланс" id="user_place"></p>
@@ -632,7 +639,7 @@ function UserRatingPage() {
     const container = document.getElementById('container_users');
     for (let i = 0; i < usernames.length; i++) {
       const btn = document.createElement('button');
-      btn.className = 'button-createTeam';
+      btn.className = 'button-rating';
 
       const img = document.createElement('img');
       img.src = photos[i];
@@ -671,9 +678,9 @@ function UserRatingPage() {
     };
 
     const user_place = usernames.indexOf(user.username) + 1;
-    document.getElementById('user_place').value = "#" + user_place;
-    document.getElementById('user_name').value = user.username + ' (Ты)'
-    document.getElementById('user_score').value = scores[user_place - 1];
+    document.getElementById('user_place').innerHTML = "#" + user_place;
+    document.getElementById('user_name').innerHTML = user.username + ' (Ты)'
+    document.getElementById('user_score').innerHTML = scores[user_place - 1];
   })
 
 
