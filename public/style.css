@@ -51,6 +51,11 @@ body {
   margin-top: 100px;
   width: 250px;
 }
+.dop-button{
+  position: absolute;
+  top: 0px;
+  left: 0px;
+}
 .меню-текст{
   font-size: 30px;
   color: rgb(255, 255, 255);
