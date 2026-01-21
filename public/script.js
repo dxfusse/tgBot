@@ -683,7 +683,6 @@ function ClansPage() {
 function ClanViewPage(select) {
   const user = tg.initDataUnsafe.user;
   app.style.backgroundImage = "url('../images/other/background4.png')"
-  alert(select);
 
   render( `
     <p class="меню-текст" id="pageView-clanName">Загрузка...</p>
@@ -701,15 +700,42 @@ function ClanViewPage(select) {
     </div>
   `);
 
-  fetch(service + '/entering', {
+  fetch(service + '/viewClan', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ clan_name : select })
   })
   .then(res => res.json())
   .then(data => {
-    document.getElementById('pageView-clanName').value = "Клан " + data.name;
+    
+    document.getElementById('pageView-clanName').textContent = 'Клан "' + data.name + '"';
     document.getElementById('clan_photo').src = data.photo;
+
+    const container = document.getElementById('container_clan_members');
+    for (let i = 0; i < data.members.length; i++) {
+      const btn = document.createElement('button');
+      btn.className = 'div-viewClan';
+
+      const img = document.createElement('img');
+      img.src = data.members[i].photo;
+      img.style.width = '60px';
+      img.style.height = '60px';
+      img.style.borderRadius = '20px';
+
+      const username = document.createElement('div');
+      username.textContent = '@' + data.members[i].name;
+      username.className = 'баланс';
+
+      const score = document.createElement('div');
+      score.textContent = data.members[i].score;
+      score.className = 'баланс'
+
+      btn.appendChild(img)
+      btn.appendChild(username)
+      btn.appendChild(score)
+
+      container.appendChild(btn);
+    };
   })
 }
 
