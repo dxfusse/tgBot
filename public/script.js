@@ -689,15 +689,19 @@ function ClanViewPage(select) {
     <p></p>
     <img class="pfp" id="clan_photo">
     <p></p>
-    <div class="меню">
-      <div class="div-createTeam" id="container_clan_members">
-        <div class="head-div">
+    <div class="меню" id="viewClan_menu">
+      <p class="баланс" id="clan_score"></p>
+      <p class="баланс">Участники</p>
+      <div class="div-viewClan-main" id="container_clan_members">
+        <div class="head-div-viewClan">
           <span class="head-text">Фото</span>
           <span class="head-text">Имя</span>
           <span class="head-text">Баллы</span>
         </div>
       </div>
     </div>
+    <p></p>
+    <button data-page="clans" class="кнопка-меню">Назад</button>
   `);
 
   fetch(service + '/viewClan', {
@@ -707,9 +711,10 @@ function ClanViewPage(select) {
   })
   .then(res => res.json())
   .then(data => {
-    
+    document.getElementById('viewClan_menu').style.gap = '0px'
     document.getElementById('pageView-clanName').textContent = 'Клан "' + data.name + '"';
     document.getElementById('clan_photo').src = data.photo;
+    document.getElementById('clan_score').textContent = "Баллы клана: " + data.score
 
     const container = document.getElementById('container_clan_members');
     for (let i = 0; i < data.members.length; i++) {
