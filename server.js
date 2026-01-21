@@ -807,9 +807,8 @@ app.post('/viewClan', (req, res) =>{
     }
     data.members.push(user)
   }
-  clan.members = members;
-  console.log('Отправка базы клана: \n', clan)
-  res.json(clan);
+  console.log('Отправка базы клана: \n', data)
+  res.json(data);
 })
 
 app.post('/getDB', (req, res) =>{
