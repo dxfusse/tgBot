@@ -1,6 +1,7 @@
 const tg = window.Telegram.WebApp;
 tg.ready();
 tg.expand();
+const service = "https://tgbot-eiq1.onrender.com";
 
 const app = document.getElementById('app');
 
@@ -38,7 +39,7 @@ function MainPage() {
   const user = tg.initDataUnsafe.user;
   app.style.backgroundImage = "url('../images/other/background1.jpg')"
 
-  fetch('https://tgbot-eiq1.onrender.com/entering', {
+  fetch(service + '/entering', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ user : user })
@@ -93,7 +94,7 @@ function ProfilePage() {
     }, index * 70)
   })
 
-  fetch('https://tgbot-eiq1.onrender.com/getUserInfo', {
+  fetch(service + '/getUserInfo', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ user : user })
@@ -174,7 +175,7 @@ function TeamPage() {
     }, index * 70)
   })
 
-  fetch('https://tgbot-eiq1.onrender.com/getTeamInfo', {
+  fetch(service + '/getTeamInfo', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ user: user })
@@ -205,7 +206,7 @@ function TeamPage() {
   });
 
   document.getElementById('racer1_button').addEventListener('click', () => {
-    fetch('https://tgbot-eiq1.onrender.com/checkPredictings', {
+    fetch(service + '/checkPredictings', {
        method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({user : user})
@@ -221,7 +222,7 @@ function TeamPage() {
     })
   })
   document.getElementById('racer2_button').addEventListener('click', () => {
-    fetch('https://tgbot-eiq1.onrender.com/checkPredictings', {
+    fetch(service + '/checkPredictings', {
        method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({user : user})
@@ -237,7 +238,7 @@ function TeamPage() {
     })
   })
   document.getElementById('engine_button').addEventListener('click', () => {
-    fetch('https://tgbot-eiq1.onrender.com/checkPredictings', {
+    fetch(service + '/checkPredictings', {
        method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({user : user})
@@ -253,7 +254,7 @@ function TeamPage() {
     })
   })
   document.getElementById('pit_stop_button').addEventListener('click', () => {
-    fetch('https://tgbot-eiq1.onrender.com/checkPredictings', {
+    fetch(service + '/checkPredictings', {
        method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({user : user})
@@ -269,7 +270,7 @@ function TeamPage() {
     })
   })
   document.getElementById('bridge_button').addEventListener('click', () => {
-    fetch('https://tgbot-eiq1.onrender.com/checkPredictings', {
+    fetch(service + '/checkPredictings', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({user : user})
@@ -286,7 +287,7 @@ function TeamPage() {
   })
   document.getElementById('saveTeam').addEventListener('click', () => {
     if(confirm("Вы уверены, что хотите сохранить состав команды? Изменить его будет нельзя до следующей гонки")){
-      fetch('https://tgbot-eiq1.onrender.com/saveTeam', {
+      fetch(service + '/saveTeam', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({user : user})
@@ -345,7 +346,7 @@ function CreateTeamPage(select){
     choise : select
   }
 
-  fetch('https://tgbot-eiq1.onrender.com/getList', {
+  fetch(service + '/getList', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data)
@@ -421,7 +422,7 @@ function CreateTeamPage(select){
           option : select,
           name : choise
         }
-        fetch('https://tgbot-eiq1.onrender.com/selectTeamOpt', {
+        fetch(service + '/selectTeamOpt', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(data)
@@ -462,7 +463,7 @@ function ClansPage() {
     <button data-page="main" class="кнопка-меню">Назад</button>
   `);
 
-  fetch('https://tgbot-eiq1.onrender.com/getClansList', {
+  fetch(service + '/getClansList', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({user : user})
@@ -511,7 +512,7 @@ function ClansPage() {
       btn.appendChild(place);
 
       btn.onclick = () => {
-        showToast('В разработке...')
+        go('clanView', { select: names[i] });
       };
 
       container.appendChild(btn);
@@ -574,7 +575,7 @@ function ClansPage() {
               photo : photo,
               user : user
             }
-            fetch('https://tgbot-eiq1.onrender.com/createClan', {
+            fetch(service + '/createClan', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify(data)
@@ -650,7 +651,7 @@ function ClansPage() {
             code : code,
             user : user
           }
-          fetch('https://tgbot-eiq1.onrender.com/joinClan', {
+          fetch(service + '/joinClan', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data)
@@ -676,6 +677,40 @@ function ClansPage() {
       });
     }
   });
+}
+
+//Страница обзора клана
+function ClanViewPage(select) {
+  const user = tg.initDataUnsafe.user;
+  app.style.backgroundImage = "url('../images/other/background4.png')"
+  alert(select);
+
+  render( `
+    <p class="меню-текст" id="pageView-clanName">Загрузка...</p>
+    <p></p>
+    <img class="pfp" id="clan_photo">
+    <p></p>
+    <div class="меню">
+      <div class="div-createTeam" id="container_clan_members">
+        <div class="head-div">
+          <span class="head-text">Фото</span>
+          <span class="head-text">Имя</span>
+          <span class="head-text">Баллы</span>
+        </div>
+      </div>
+    </div>
+  `);
+
+  fetch(service + '/entering', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ clan_name : select })
+  })
+  .then(res => res.json())
+  .then(data => {
+    document.getElementById('pageView-clanName').value = "Клан " + data.name;
+    document.getElementById('clan_photo').src = data.photo;
+  })
 }
 
 //Страница рейтинга игроков
@@ -704,7 +739,7 @@ function UserRatingPage() {
     <button data-page="main" class="кнопка-меню">Назад</button>
   `);
 
-  fetch('https://tgbot-eiq1.onrender.com/getUsersList', {
+  fetch(service + '/getUsersList', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({user : user})
@@ -763,8 +798,6 @@ function UserRatingPage() {
     document.getElementById('user_name').innerHTML = user.username + ' (Ты)'
     document.getElementById('user_score').innerHTML = scores[user_place - 1];
   })
-
-
 }
 
 //Маршрутизация
@@ -773,7 +806,7 @@ let currentRoute = {
   params: {}
 };
 
-//Формы
+//Маршрут для форм
 function go(page, params = {}) {
   currentRoute.page = page;
   currentRoute.params = params;
@@ -783,11 +816,12 @@ function go(page, params = {}) {
   if (page === 'team') TeamPage();
   if (page === 'clans') ClansPage();
   if (page === 'clanEditing') ClanEditingPage();
-  if (page === 'rating') UserRatingPage()
+  if (page === 'clanView') ClanViewPage(params.select);
+  if (page === 'rating') UserRatingPage();
   if (page === 'createTeam') CreateTeamPage(params.select);
 }
 
-// Привязка событий к кнопкам
+//Привязка событий к кнопкам
 function bindEvents() {
   document.querySelectorAll('[data-page]').forEach(btn => {
     btn.onclick = () => go(btn.dataset.page);
@@ -797,7 +831,7 @@ function bindEvents() {
   if (helper) {
     helper.onclick = () => {
       const user = tg.initDataUnsafe.user;
-      fetch('https://tgbot-eiq1.onrender.com/getDB', {
+      fetch(service + '/getDB', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ userid: user.id })
@@ -808,5 +842,5 @@ function bindEvents() {
   }
 }
 
-// Старт приложения
+//Показ главной формы
 go('main');
