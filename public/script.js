@@ -115,6 +115,7 @@ function ProfilePage() {
       const btn_clan = document.createElement('button');
       btn_clan.className = 'кнопка-меню'
       btn_clan.id = 'clanEditing'
+      btn_clan.textContent = 'Управлять кланом'
 
       app.appendChild(btn_clan);
 
