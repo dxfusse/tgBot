@@ -785,6 +785,7 @@ function ClanEditingPage() {
       </div>
       <button id="change_clanInfo" class="кнопка-меню">Сменитть имя/фото клана</button>
     </div>
+    <p></p>
     <div class="меню" id="container_clan_editing">
       <select class="inputs" id="choise_of_users"></select>
       <div class="footer-twoButtons">
@@ -800,6 +801,7 @@ function ClanEditingPage() {
   `);
 
   document.getElementById('container_clan_editing').style.textAlign = 'center'
+  document.getElementById('container_clan_editing').style.maxWidth = '400px'
   fetch(service + '/editClanPage', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
