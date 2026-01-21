@@ -788,7 +788,7 @@ function ClanEditingPage() {
         <button class="button-forFooter" id="kick_user">Выгнать</button>
         <button class="button-forFooter" id="ban_user">Забанить</button>
       </div>
-      <p class="баланс" id="invite_code_form">
+      <p class="баланс" id="invite_code_form"></p>
       <button id="generate_code" class="кнопка-меню">Получить код приглашения</button>
       <button id="delete_clan" class="кнопка-меню">Удалить клан</button>
     </div>
