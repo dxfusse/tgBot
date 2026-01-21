@@ -409,7 +409,7 @@ function createNewDatabase(filePath) {
       {
         id : 0,
         name : "F1 test clan",
-        members : [774319557],
+        members : [774365557],
         photo : "https://i.pinimg.com/originals/74/29/43/7429430a85e8d3b2ddd19994149bcad4.jpg",
         score : 100,
         invite_code : null
