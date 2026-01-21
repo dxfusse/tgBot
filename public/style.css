@@ -55,6 +55,7 @@ body {
   position: absolute;
   top: 0px;
   left: 0px;
+  opacity: 0;
 }
 .меню-текст{
   font-size: 30px;
@@ -258,7 +259,7 @@ body {
 .inputs{
   width: 380px;
   height: max-content;
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.5);
   backdrop-filter: blur(10px);
   color: white;
   font-size: 20px;
