@@ -359,6 +359,25 @@ body {
   overflow: hidden;
   pointer-events: none;
 }
+.div-viewClan {
+  position: relative;
+  display: grid;
+  grid-template-columns: 80px 1fr 1fr;
+  padding: 10px 10px;
+  align-items: center;
+  width: 380px;
+  height: max-content;
+  border-left: none;
+  border-right: none;
+  border-color: rgba(255, 255, 255, 0.2);
+  background: transparent;
+  transition: all 0.4s ease;
+  color: rgb(255, 255, 255);
+  font-family: "dop";
+  font-weight: bold;
+  overflow: hidden;
+  pointer-events: none;
+}
 @font-face {
     font-family: 'dop';
     src: url('dopText.otf') format('truetype');
