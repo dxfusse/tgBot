@@ -794,14 +794,19 @@ app.post('/joinClan', (req, res) =>{
 //Геттер для формы клана
 app.post('/viewClan', (req, res) =>{
   const clan_name = req.body.clan_name;
+  console.log('Отправка базы клана: ', clan_name)
   let clan = database.clans.find(item => item.name == clan_name);
   let members = [];
+    console.log('Найденный клан: ', clan)
+  console.log('Длина массива участников: ', clan.members.length)
   for(let i = 0; i < clan.members.length; i++){
+    console.log('Участник: ', database.users.find(item => item.id == clan.members[i]))
     const user = {
       name : database.users.find(item => item.id == clan.members[i]).username,
       photo : database.users.find(item => item.id == clan.members[i]).photo,
       score : database.users.find(item => item.id == clan.members[i]).score
     }
+    console.log('Составленный участник: ', user)
     members.push(user)
   }
   clan.members = members;
