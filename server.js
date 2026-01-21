@@ -714,7 +714,6 @@ app.post('/getClansList', (req, res) =>{
     }))
     .sort((a, b) => a.score - b.score)
   };
-  console.log(data)
   res.json(data)
 })
 
@@ -797,15 +796,18 @@ app.post('/viewClan', (req, res) =>{
   const clan_name = req.body.clan_name;
   let clan = database.clans.find(item => item.name == clan_name);
   let members = [];
+  console.log(clan.members.lenght)
   for(let i = 0; i < clan.members.lenght; i++){
+    console.log(database.users.find(item => item.id == clan.members[i]))
     let user = {
       name : database.users.find(item => item.id == clan.members[i]).username,
       photo : database.users.find(item => item.id == clan.members[i]).photo,
       score : database.users.find(item => item.id == clan.members[i]).score
     }
+    console.log(user)
     members.push(user)
   }
-  clan.members = members
+  clan.members.concat(members);
   console.log('Отправка базы клана: \n', clan)
   res.json(clan);
 })
