@@ -107,7 +107,7 @@ function ProfilePage() {
     </div>
     <p></p>
     <button class="кнопка-меню" data-page="main">Назад</button>
-
+    <p></p>
   `);
 
   const menuButtons = document.querySelectorAll('.текст-меню');
@@ -765,6 +765,80 @@ function ClanViewPage(select) {
 
       container.appendChild(btn);
     };
+  })
+}
+
+//Страница управления кланом
+function ClanEditingPage() {
+  const user = tg.initDataUnsafe.user;
+  app.style.backgroundImage = "url('../images/other/background1.jpg')"
+
+  render( `
+    <p class="меню-текст">Управление кланом</p>
+    <div class="div-createTeam" id="container_clan_editing">
+      <div>
+        <input class="inputs" placeholder="Новое имя Клана" id="new_clan_name">
+        <p style="color: white; font-size: 14px;">*оставьте пустым, если не хотите менять</p>
+      </div>
+      <div>
+        <input class="inputs" placeholder="Ссылка на новое фото клана" id="new_clan_photo">
+        <p style="color: white; font-size: 14px;">*оставьте пустым, если не хотите менять</p>
+      </div>
+      <select class="inputs" id="choise_of_users"></select>
+      <div class="footer-twoButtons">
+        <button class="button-forFooter" id="kick_user">Выгнать</button>
+        <button class="button-forFooter" id="ban_user">Забанить</button>
+      </div>
+    </div>
+    <p></p>
+    <div class="footer-twoButtons">
+      <button class="button-forFooter" id="createClanBtn">Создать</button>
+      <button class="button-forFooter" id="joinClan">Вступить</button>
+    </div>
+    <p>
+    <button data-page="main" class="кнопка-меню">Назад</button>
+  `);
+
+  fetch(service + '/editClanPage', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ user : user })
+  })
+  .then(res => res.json())
+  .then(data => {
+    const names = data.members.map(item => item.first_name)
+    const families = data.members.map(item => item.last_name)
+    const usernames = data.members.map(item => item.username)
+    const fullNames = names.map((name, index) => `${name} ${families[index]} | ${usernames[index]}`);
+
+    const choise = document.getElementById('choise_of_users')
+    fullNames.forEach((option) => {
+      const opt = document.createElement('option');
+      opt.value = option;
+      opt.innerHTML = option;
+      choise.appendChild(opt);
+    });
+
+    document.getElementById('kick_user').addEventListener('click', () => {
+      const choice_user = choise.fullNames[select.selectedIndex].value;
+      alert('Кикаем: ', choice_user)
+    })
+    document.getElementById('ban_suser').addEventListener('click', () => {
+      const choice_user = choise.fullNames[select.selectedIndex].value;
+      alert('Баним: ', choice_user)
+    })
+
+  })
+
+  const menuButtons = document.querySelectorAll('.кнопка-меню');
+  menuButtons.forEach((btn, index) => {
+    setTimeout(()=>{
+        btn.classList.add('activate-menuButtons-animation')
+    }, index * 70)
+  })
+
+  document.getElementById('dop-button').addEventListener('click', () => {
+    alert()
   })
 }
 
