@@ -798,8 +798,8 @@ app.post('/viewClan', (req, res) =>{
   let clan = database.clans.find(item => item.name == clan_name);
   let members = [];
   console.log('Найденный клан: ', clan)
-  console.log('Длина массива участников: ', clan.members.lenght)
-  for(let i = 0; i < clan.members.lenght; i++){
+  console.log('Длина массива участников: ', clan.members.length)
+  for(let i = 0; i < clan.members.length; i++){
     console.log('Участник: ', database.users.find(item => item.id == clan.members[i]))
     const user = {
       name : database.users.find(item => item.id == clan.members[i]).username,
@@ -809,7 +809,7 @@ app.post('/viewClan', (req, res) =>{
     console.log('Составленный участник: ', user)
     members.push(user)
   }
-  clan.members.concat(members);
+  clan.members = members;
   console.log('Отправка базы: \n', clan)
   res.json(clan);
 })
