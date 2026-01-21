@@ -409,7 +409,7 @@ function createNewDatabase(filePath) {
       {
         id : 0,
         name : "F1 test clan",
-        members : [974315428],
+        members : [774319557],
         photo : "https://i.pinimg.com/originals/74/29/43/7429430a85e8d3b2ddd19994149bcad4.jpg",
         score : 100,
         invite_code : null
@@ -791,6 +791,22 @@ app.post('/joinClan', (req, res) =>{
   } else { console.log('Пользователь отправил несуществующий код'); res.json(202) }
 })
 
+//Геттер для формы клана
+app.post('/viewClan', (req, res) =>{
+  const clan_name = req.body.clan_name;
+  const clan = database.clans.find(item => item.name == clan_name);
+  let members = [];
+  for(let i = 0; i < clan.members.lenght; i++){
+    let user = {
+      name : database.users.find(item => item.id == clan.members[i]).username,
+      photo : database.users.find(item => item.id == clan.members[i]).photo,
+      score : database.users.find(item => item.id == clan.members[i]).score
+    }
+    members.push(user)
+  }
+  clan.members = members
+  res.json(clan);
+})
 
 app.post('/getDB', (req, res) =>{
   res.json(database);
