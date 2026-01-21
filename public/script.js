@@ -783,6 +783,7 @@ function ClanEditingPage() {
         <input class="inputs" placeholder="Ссылка на новое фото клана" id="new_clan_photo">
         <p style="color: white; font-size: 14px;">*оставьте пустым, если не хотите менять</p>
       </div>
+      <button id="change_clanInfo" class="кнопка-меню">Сменитть имя/фото клана</button>
       <select class="inputs" id="choise_of_users"></select>
       <div class="footer-twoButtons">
         <button class="button-forFooter" id="kick_user">Выгнать</button>
@@ -814,6 +815,7 @@ function ClanEditingPage() {
     const banBtn  = document.getElementById('ban_user');
     const genCode = document.getElementById('generate_code');
     const delClan = document.getElementById('delete_clan');
+    const changeCI = document.getElementById('change_clanInfo')
 
     selectEl.innerHTML = '';
     data.members.forEach(member => {
@@ -885,6 +887,41 @@ function ClanEditingPage() {
         document.getElementById('invite_code_form').textContent = "Код приглашения: " + data
         showToast('Код успешно сгенерирован!', true)
         go('clanEditing')
+      })
+    })
+
+    changeCI.addEventListener('click', () => {
+      const name = document.getElementById('new_clan_name').value
+      const photo = document.getElementById('new_clan_photo').value
+      const data = {
+        name : name,
+        photo : photo,
+        user : user
+      }
+      fetch(service + '/changeClanNameOrPhoto', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      })
+      .then(res => {
+        if(res.status == 200){
+          showToast('Данные клана изменены', true)
+        }
+      })
+    })
+
+    delClan.addEventListener('click', () => {
+      if(!confirm('Вы действительно хотите удалить свой клан?')) return;
+      fetch(service + '/delClan', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      })
+      .then(res => {
+        if(res.status == 200){
+          showToast('Клан успешно удалён!', true);
+          go('main');
+        }
       })
     })
   })
