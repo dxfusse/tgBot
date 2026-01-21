@@ -411,14 +411,16 @@ function createNewDatabase(filePath) {
         name : "F1 test clan",
         members : [774319557],
         photo : "https://i.pinimg.com/originals/74/29/43/7429430a85e8d3b2ddd19994149bcad4.jpg",
-        score : 100
+        score : 100,
+        invite_code : null
       },
       {
         id : 1,
         name : "F1 Fantazy chanel",
         members : [774319557, 6372939, 372354],
         photo : "https://i.pinimg.com/736x/7c/29/96/7c2996770695ac8e001cef5b76ae0371.jpg",
-        score : 400
+        score : 400,
+        invite_code : null
       }
     ]
   };
@@ -749,7 +751,7 @@ app.post('/createClan', (req, res) =>{
 
 //Рейтинг игроков
 app.post('/getUsersList', (req, res) =>{
-  console.log('Отправка базы пользователей')
+  console.log('\nОтправка базы пользователей')
   const data = {
     users : database.users.map( user => ({
       first_names : user.first_name,
@@ -761,6 +763,26 @@ app.post('/getUsersList', (req, res) =>{
     .sort((a, b) => a.score - b.score)
   };
   res.json(data)
+})
+
+//Вступление в клан
+app.post('/joinClan', (req, res) =>{
+  const user = req.body.user;
+  const code = req.body.code;
+
+  console.log('\nПользователь ' + user.username + ' хочет вступить в клан');
+  const codes = database.clans.map(item => item.invite_code)
+  if (codes.includes(code)){
+    if(database.users.find(item => item.id == user.id).clan == null){
+      const cid = database.clans.find(item => item.invite_code == code).id
+      database.clans[database.clans.findIndex(item => item.id == cid)].members.push(user.id)
+      database.users[database.users.findIndex(item => item.id == user.id)].clan = database.clans.find(item => item.id == id).name
+
+      fs.writeFileSync('database.json', JSON.stringify(database, null, 2));
+      console.log('Пользователь вступил в клан ', database.clans.find(item => item.id == id).name)
+      res.json(database.clans.find(item => item.id == id).name)
+    } else { res.json(201) }
+  } else { res.json(202) }
 })
 
 
