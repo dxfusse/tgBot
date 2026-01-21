@@ -796,39 +796,43 @@ function ClanEditingPage() {
   fetch(service + '/editClanPage', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ user : user })
+    body: JSON.stringify({ user: user })
   })
   .then(res => res.json())
   .then(data => {
-    const names = data.members.map(item => item.first_name)
-    const families = data.members.map(item => item.last_name)
-    const usernames = data.members.map(item => item.username)
-    const fullNames = names.map((name, index) => `${name} ${families[index]} | ${usernames[index]}`);
 
-    const choise = document.getElementById('choise_of_users')
-    fullNames.forEach((option) => {
-      const opt = document.createElement('option');
-      opt.value = option;
-      opt.innerHTML = option;
-      choise.appendChild(opt);
+    const selectEl = document.getElementById('choise_of_users');
+    const kickBtn = document.getElementById('kick_user');
+    const banBtn  = document.getElementById('ban_user');
+    selectEl.innerHTML = '';
+
+    data.members.forEach(member => {
+      const option = document.createElement('option');
+      option.value = member.id;
+      option.textContent = `${member.first_name} ${member.last_name} | @${member.username}`;
+      selectEl.appendChild(option);
     });
 
-    document.getElementById('kick_user').addEventListener('click', () => {
-      const choice_user = choise.fullNames[select.selectedIndex].value;
-      showToast('Кикаем ' + choice_user)
-    })
-    document.getElementById('ban_user').addEventListener('click', () => {
-      const choice_user = choise.fullNames[select.selectedIndex].value;
-      showToast('Баним ' + choice_user)
-    })
+    kickBtn.addEventListener('click', () => {
+      const selectedUserId = selectEl.value;
+      if (!selectedUserId) {
+        showToast('Выберите пользователя');
+        return;
+      }
+      if (!confirm('Вы уверены, что хотите выгнать пользователя?')) return;
 
-  })
+    });
 
-  const menuButtons = document.querySelectorAll('.кнопка-меню');
-  menuButtons.forEach((btn, index) => {
-    setTimeout(()=>{
-        btn.classList.add('activate-menuButtons-animation')
-    }, index * 70)
+    banBtn.addEventListener('click', () => {
+      const selectedUserId = selectEl.value;
+      if (!selectedUserId) {
+        showToast('Выберите пользователя');
+        return;
+      }
+
+      if (!confirm('Вы уверены, что хотите забанить пользователя?')) return;
+
+    });
   })
 }
 
