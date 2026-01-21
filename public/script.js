@@ -788,10 +788,14 @@ function ClanEditingPage() {
         <button class="button-forFooter" id="kick_user">Выгнать</button>
         <button class="button-forFooter" id="ban_user">Забанить</button>
       </div>
+      <p class="баланс" id="invite_code_form">
+      <button id="generate_code" class="кнопка-меню">Получить код приглашения</button>
+      <button id="delete_clan" class="кнопка-меню">Удалить клан</button>
     </div>
     <p></p>
     <button data-page="main" class="кнопка-меню">Назад</button>
   `);
+
   document.getElementById('container_clan_editing').style.textAlign = 'center'
   fetch(service + '/editClanPage', {
     method: 'POST',
@@ -800,12 +804,18 @@ function ClanEditingPage() {
   })
   .then(res => res.json())
   .then(data => {
-
+    if(data.invite_code != null){
+      document.getElementById('invite_code_form').textContent = "Код приглашения: " + data.invite_code
+    } else {
+      document.getElementById('invite_code_form').textContent = "Код приглашения: Отсутсвтует"
+    }
     const selectEl = document.getElementById('choise_of_users');
     const kickBtn = document.getElementById('kick_user');
     const banBtn  = document.getElementById('ban_user');
-    selectEl.innerHTML = '';
+    const genCode = document.getElementById('generate_code');
+    const delClan = document.getElementById('delete_clan');
 
+    selectEl.innerHTML = '';
     data.members.forEach(member => {
       const option = document.createElement('option');
       option.value = member.id;
@@ -822,9 +832,21 @@ function ClanEditingPage() {
         return;
       }
       if (!confirm(`Вы уверены, что хотите выгнать пользователя:\n${selectedUserName}?`)) return;
-
+      const data = {
+        user : selectedUserId,
+        kick : true
+      }
+      fetch(service + '/banKickUserFromClan', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      })
+      .then(res => {
+        if(res.status == 200){
+          showToast('Игрок успешно кикнут!', true)
+        }
+      })
     });
-
 
     banBtn.addEventListener('click', () => {
       const selectedUserId = selectEl.value;
@@ -836,7 +858,34 @@ function ClanEditingPage() {
       }
 
       if (!confirm(`Вы уверены, что хотите забанить пользователя:\n${selectedUserName}?`)) return;
+      const data = {
+        user : selectedUserId,
+        kick : false
+      }
+       fetch(service + '/banKickUserFromClan', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      })
+      .then(res => {
+        if(res.status == 200){
+          showToast('Игрок успешно забанен!', true)
+        }
+      })
     });
+
+    genCode.addEventListener('click', () => {
+      fetch(service + '/getInvCode', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({user : user})
+      })
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById('invite_code_form').textContent = "Код приглашения: " + data
+        go('clanEditing')
+      })
+    })
   })
 }
 
