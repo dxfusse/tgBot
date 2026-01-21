@@ -687,6 +687,9 @@ function ClansPage() {
             }else if(data == 202){
               showToast('Такого кода не существует!');
               div.remove();
+            }else if(data == 203){
+              showToast('Вы в чёрном списке клана!');
+              div.remove();
             }else {
               showToast('Вы вступили в клан ' + data, true);
               div.remove();
