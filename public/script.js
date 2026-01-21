@@ -594,14 +594,14 @@ function ClansPage() {
   });
   document.getElementById('joinClan').addEventListener('click', () => {
     if(!document.getElementById('div_joinClan')){
-      const div = document.createElement('div');
-      div.className = 'div-createClan'
-      div.style.overflow = 'none';
-      div.id = 'div_joinClan'
+      const div_JC = document.createElement('div');
+      div_JC.className = 'div-createClan'
+      div_JC.style.overflow = 'none';
+      div_JC.id = 'div_joinClan'
 
-      const text = document.createElement('div');
-      text.className = 'меню-текст';
-      text.textContent = 'Вступление в клан'
+      const text_JC = document.createElement('div');
+      text_JC.className = 'меню-текст';
+      text_JC.textContent = 'Вступление в клан'
 
       const clanCode = document.createElement('input');
       clanCode.className = 'inputs'
@@ -609,31 +609,31 @@ function ClansPage() {
       clanCode.placeholder = 'Код приглашения'
       clanCode.type = 'text'
 
-      const div_buttons = document.createElement('div');
-      div_buttons.className = 'footer-twoButtons'
+      const div_buttons_JC = document.createElement('div');
+      div_buttons_JC.className = 'footer-twoButtons'
               
-      const btn1 = document.createElement('button');
-      btn1.className = 'button-forFooter'
-      btn1.textContent = 'Отмена'
-      btn1.id = 'btn1-back'
+      const btn1_JC = document.createElement('button');
+      btn1_JC.className = 'button-forFooter'
+      btn1_JC.textContent = 'Отмена'
+      btn1_JC.id = 'btn1-back'
 
-      const btn2 = document.createElement('button');
-      btn2.className = 'button-forFooter'
-      btn2.textContent = 'Вступить'
-      btn2.id = 'joinClan'
+      const btn2_JC = document.createElement('button');
+      btn2_JC.className = 'button-forFooter'
+      btn2_JC.textContent = 'Вступить'
+      btn2_JC.id = 'joinClan_final'
 
-      div_buttons.appendChild(btn1)
-      div_buttons.appendChild(btn2)
+      div_buttons_JC.appendChild(btn1_JC)
+      div_buttons_JC.appendChild(btn2_JC)
 
-      div.appendChild(text)
-      div.appendChild(clanCode)
-      div.appendChild(div_buttons)
+      div_JC.appendChild(text_JC)
+      div_JC.appendChild(clanCode)
+      div_JC.appendChild(div_buttons_JC)
 
-      app.appendChild(div);
+      app.appendChild(div_JC);
 
-      document.getElementById('joinClan').addEventListener('click', () => {
+      document.getElementById('joinClan_final').addEventListener('click', () => {
         const code = document.getElementById('clanInviteCode').value;
-
+        
         if(code != ""){
           const data = {
             code : code,
@@ -659,8 +659,9 @@ function ClansPage() {
           })
         }
       });
+
       document.getElementById('btn1-back').addEventListener('click', () => {
-        div.remove()
+        div_JC.remove()
       });
     }
   });
@@ -770,7 +771,7 @@ function go(page, params = {}) {
   if (page === 'profile') ProfilePage();
   if (page === 'team') TeamPage();
   if (page === 'clans') ClansPage();
-   if (page === 'rating') UserRatingPage()
+  if (page === 'rating') UserRatingPage()
   if (page === 'createTeam') CreateTeamPage(params.select);
 }
 
@@ -795,8 +796,5 @@ function bindEvents() {
   }
 }
 
-
 // Старт приложения
 go('main');
-
-
