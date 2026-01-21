@@ -521,7 +521,7 @@ function ClansPage() {
       const clanName = document.createElement('input');
       clanName.className = 'inputs'
       clanName.id = 'clanNameInput'
-      clanName.placeholder = 'Имя клана (макс. 15 символов)'
+      clanName.placeholder = 'Имя клана (макс. 24 симв. с пробелами)'
       clanName.type = 'text'
 
       const clanPhoto = document.createElement('input');
@@ -557,7 +557,7 @@ function ClansPage() {
         const name = document.getElementById('clanNameInput').value;
         const photo = document.getElementById('clanPhotoInput').value;
         if(name != "" && photo != ""){
-          if(name.length <= 13){
+          if((name.length <= 7 && !name.includes(" ")) || (name.length <= 24 && name.includes(" "))){
             const data = {
               name : name,
               photo : photo,
@@ -581,19 +581,88 @@ function ClansPage() {
               }
             })
           } else {
-            showToast('Слишком длинное имя клана')
+            showToast('Слишком длинное имя клана!')
           }
         } else { 
           showToast('Заполните все поля!')
         }
       });
       document.getElementById('btn1-back').addEventListener('click', () => {
-        div.remove();
+        div.remove()
       });
     }
   });
   document.getElementById('joinClan').addEventListener('click', () => {
-    showToast('В разработке...')
+    if(!document.getElementById('div_joinClan')){
+      const div = document.createElement('div');
+      div.className = 'div-createClan'
+      div.style.overflow = 'none';
+      div.id = 'div_joinClan'
+
+      const text = document.createElement('div');
+      text.className = 'меню-текст';
+      text.textContent = 'Вступление в клан'
+
+      const clanCode = document.createElement('input');
+      clanCode.className = 'inputs'
+      clanCode.id = 'clanInviteCode'
+      clanCode.placeholder = 'Код приглашения'
+      clanCode.type = 'text'
+
+      const div_buttons = document.createElement('div');
+      div_buttons.className = 'footer-twoButtons'
+              
+      const btn1 = document.createElement('button');
+      btn1.className = 'button-forFooter'
+      btn1.textContent = 'Отмена'
+      btn1.id = 'btn1-back'
+
+      const btn2 = document.createElement('button');
+      btn2.className = 'button-forFooter'
+      btn2.textContent = 'Вступить'
+      btn2.id = 'joinClan'
+
+      div_buttons.appendChild(btn1)
+      div_buttons.appendChild(btn2)
+
+      div.appendChild(text)
+      div.appendChild(clanCode)
+      div.appendChild(div_buttons)
+
+      app.appendChild(div);
+
+      document.getElementById('joinClan').addEventListener('click', () => {
+        const code = document.getElementById('clanInviteCode').value;
+
+        if(code != ""){
+          const data = {
+            code : code,
+            user : user
+          }
+          fetch('https://tgbot-eiq1.onrender.com/joinClan', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+          })
+          .then(res => res.json())
+          .then(data => {
+            if (data == 201) {
+              showToast('Вы уже состоите в клане!');
+              div.remove();
+            }else if(data == 202){
+              showToast('Такого кода не существует!');
+              div.remove();
+            }else {
+              showToast('Вы вступили в клан ' + data, true);
+              div.remove();
+            }
+          })
+        }
+      });
+      document.getElementById('btn1-back').addEventListener('click', () => {
+        div.remove()
+      });
+    }
   });
 }
 
