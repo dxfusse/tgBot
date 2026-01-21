@@ -817,6 +817,7 @@ app.post('/viewClan', (req, res) =>{
   res.json(data);
 })
 
+//Геттер для форма изменения клана
 app.post('/editClanPage', (req, res) =>{
   const user = req.body.user;
   const clan = database.clans.find(item => item.members[0] == user.id);
@@ -834,6 +835,25 @@ app.post('/editClanPage', (req, res) =>{
     data.members.push(user)
   }
   res.json(data);
+})
+
+//Поменять имя/фото клана
+app.post('/changeClanNameOrPhoto', (req, res) =>{
+  const name = req.body.name;
+  const photo = req.body.photo;
+  const user = req.body.user;
+
+  if(photo != ""){
+    database.clans.find(item => item.members[0] == user.id).photo = photo
+    fs.writeFileSync('database.json', JSON.stringify(database, null, 2));
+    console.log('Данные клана ' + database.clans.find(item => item.members[0] == user.id).name + ' обновлены')
+  }
+  if(name != ""){
+    database.clans.find(item => item.members[0] == user.id).name = name
+    fs.writeFileSync('database.json', JSON.stringify(database, null, 2));
+    console.log('Данные клана ' + database.clans.find(item => item.members[0] == user.id).name + ' обновлены')
+  }
+  res.sendStatus(200)
 })
 
 function genCode() {
@@ -880,6 +900,19 @@ app.post('/banKickUserFromClan', (req, res) =>{
     console.log('Пользователя забанили в клане')
     res.sendStatus(200)
   }
+})
+
+//Удалить клан
+app.post('/delClan', (req, res) =>{
+  const user = req.body.user;
+  const cname = database.clans.find(item => item.members[0] == user.id).name
+  const cid = database.clans.findIndex(item => item.members[0] == user.id)
+  database.clans.splice(cid, 1);
+  database.users.find(item => item.id == user.id).clan = null;
+
+  fs.writeFileSync('database.json', JSON.stringify(database, null, 2));
+  console.log('Удалён клан ' + cname)
+  res.sendStatus(200);
 })
 
 app.post('/getDB', (req, res) =>{
