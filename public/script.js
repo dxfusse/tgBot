@@ -769,8 +769,7 @@ function ClanViewPage(select) {
 
 //Страница управления кланом
 function ClanEditingPage() {
-  //const user = tg.initDataUnsafe.user;
-  const user = { id : 7774319557}
+  const user = tg.initDataUnsafe.user;
   app.style.backgroundImage = "url('../images/other/background4.png')"
 
   render( `
