@@ -836,6 +836,52 @@ app.post('/editClanPage', (req, res) =>{
   res.json(data);
 })
 
+function genCode() {
+  return Math.floor(Math.random() * 100000000)
+    .toString()
+    .padStart(8, '0');
+}
+
+//Сгенерировать код приглашения в клан
+app.post('/getInvCode', (req, res) =>{
+  const user = req.body.user
+  let code =  genCode();
+  const codes = database.clans.map(item => item.invite_code)
+  while (!codes.includes(code)){
+    code = genCode();
+  }
+  database.clans.find(item => item.members[0] == user.id).invite_code = code
+  fs.writeFileSync('database.json', JSON.stringify(database, null, 2));
+  console.log('Сгенерирован код приглашения для клана: ' + database.clans.find(item => item.members[0] == user.id).name)
+  res.json(code);
+})
+
+//Бан/кик игрока в клане
+app.post('/banKickUserFromClan', (req, res) =>{
+  const user = req.body.user;
+  const kick = req.body.kick;
+
+  console.log('Выгоняем/Баним игрока ' + user + ' из клана')
+  if(kick){
+    const cid = database.users.find(item => item.id == user).clan
+    database.clans.find(item => item.id == cid).members.filter(item => item !== user)
+    database.users.find(item => item.id == user).clan = null;
+
+    fs.writeFileSync('database.json', JSON.stringify(database, null, 2));
+    console.log('Пользователя кикнули из клана')
+    res.sendStatus(200)
+  } else {
+    const cid = database.users.find(item => item.id == user).clan
+    database.clans.find(item => item.id == cid).members.filter(item => item !== user)
+    database.clans.find(item => item.id == cid).black_list.push(user)
+    database.users.find(item => item.id == user).clan = null;
+
+    fs.writeFileSync('database.json', JSON.stringify(database, null, 2));
+    console.log('Пользователя забанили в клане')
+    res.sendStatus(200)
+  }
+})
+
 app.post('/getDB', (req, res) =>{
   res.json(database);
 })
