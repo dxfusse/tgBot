@@ -106,7 +106,7 @@ function ProfilePage() {
       <p class="текст-меню" id="clan">Загрузка...</p>
     </div>
     <p></p>
-    <button class="кнопка-меню" data-page="main">Назад</button>
+    <button class="кнопка-меню" data-page="clanEditing">Назад</button>
     <p></p>
   `);
 
@@ -769,12 +769,13 @@ function ClanViewPage(select) {
 
 //Страница управления кланом
 function ClanEditingPage() {
-  const user = tg.initDataUnsafe.user;
-  app.style.backgroundImage = "url('../images/other/background1.jpg')"
+  //const user = tg.initDataUnsafe.user;
+  const user = { id : 7774319557}
+  app.style.backgroundImage = "url('../images/other/background4.png')"
 
   render( `
     <p class="меню-текст">Управление кланом</p>
-    <div class="div-createTeam" id="container_clan_editing">
+    <div class="меню" id="container_clan_editing">
       <div>
         <input class="inputs" placeholder="Новое имя Клана" id="new_clan_name">
         <p style="color: white; font-size: 14px;">*оставьте пустым, если не хотите менять</p>
@@ -790,14 +791,9 @@ function ClanEditingPage() {
       </div>
     </div>
     <p></p>
-    <div class="footer-twoButtons">
-      <button class="button-forFooter" id="createClanBtn">Создать</button>
-      <button class="button-forFooter" id="joinClan">Вступить</button>
-    </div>
-    <p>
     <button data-page="main" class="кнопка-меню">Назад</button>
   `);
-
+  document.getElementById('container_clan_editing').style.textAlign = 'center'
   fetch(service + '/editClanPage', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -820,11 +816,11 @@ function ClanEditingPage() {
 
     document.getElementById('kick_user').addEventListener('click', () => {
       const choice_user = choise.fullNames[select.selectedIndex].value;
-      alert('Кикаем: ', choice_user)
+      showToast('Кикаем ' + choice_user)
     })
-    document.getElementById('ban_suser').addEventListener('click', () => {
+    document.getElementById('ban_user').addEventListener('click', () => {
       const choice_user = choise.fullNames[select.selectedIndex].value;
-      alert('Баним: ', choice_user)
+      showToast('Баним ' + choice_user)
     })
 
   })
@@ -834,10 +830,6 @@ function ClanEditingPage() {
     setTimeout(()=>{
         btn.classList.add('activate-menuButtons-animation')
     }, index * 70)
-  })
-
-  document.getElementById('dop-button').addEventListener('click', () => {
-    alert()
   })
 }
 
