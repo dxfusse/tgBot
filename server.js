@@ -847,7 +847,7 @@ app.post('/getInvCode', (req, res) =>{
   const user = req.body.user
   let code =  genCode();
   const codes = database.clans.map(item => item.invite_code)
-  while (!codes.includes(code)){
+  while (codes.includes(code)){
     code = genCode();
   }
   database.clans.find(item => item.members[0] == user.id).invite_code = code
