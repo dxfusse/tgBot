@@ -917,7 +917,7 @@ function ClanEditingPage() {
       fetch(service + '/delClan', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
+        body: JSON.stringify({user : user})
       })
       .then(res => {
         if(res.status == 200){
