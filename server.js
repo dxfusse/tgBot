@@ -714,6 +714,7 @@ app.post('/getClansList', (req, res) =>{
     }))
     .sort((a, b) => a.score - b.score)
   };
+  console.log(data)
   res.json(data)
 })
 
