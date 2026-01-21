@@ -805,6 +805,7 @@ app.post('/viewClan', (req, res) =>{
     members.push(user)
   }
   clan.members = members
+  console.log('Отправка базы клана: \n', clan)
   res.json(clan);
 })
 
