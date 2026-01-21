@@ -106,7 +106,7 @@ function ProfilePage() {
       <p class="текст-меню" id="clan">Загрузка...</p>
     </div>
     <p></p>
-    <button class="кнопка-меню" data-page="clanEditing">Назад</button>
+    <button class="кнопка-меню" data-page="main">Назад</button>
     <p></p>
   `);
 
