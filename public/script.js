@@ -784,6 +784,8 @@ function ClanEditingPage() {
         <p style="color: white; font-size: 14px;">*оставьте пустым, если не хотите менять</p>
       </div>
       <button id="change_clanInfo" class="кнопка-меню">Сменитть имя/фото клана</button>
+    </div>
+    <div class="меню" id="container_clan_editing">
       <select class="inputs" id="choise_of_users"></select>
       <div class="footer-twoButtons">
         <button class="button-forFooter" id="kick_user">Выгнать</button>
