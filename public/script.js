@@ -883,6 +883,7 @@ function ClanEditingPage() {
       .then(res => res.json())
       .then(data => {
         document.getElementById('invite_code_form').textContent = "Код приглашения: " + data
+        showToast('Код успешно сгенерирован!', true)
         go('clanEditing')
       })
     })
