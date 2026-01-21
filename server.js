@@ -491,12 +491,17 @@ app.post('/entering', (req, res) => {
 app.post('/getUserInfo', (req, res) =>{
   const user = req.body.user;
   console.log('\nЗагрузка данных пользователя: ', user.username)
+  let user_clan = null
+  if(database.users.find(item => item.id == user.id).clan != null){
+    const cid = database.users.find(item => item.id == user.id).clan
+    user_clan = database.clans.find(item => item.id == cid).name
+  }
   const data = {
     score : database.users.find(item => item.id == user.id).score,
     photo: database.users.find(item => item.id == user.id).photo,
     money : database.users.find(item => item.id == user.id).money,
     team_cost : database.users.find(item => item.id == user.id).team_cost,
-    clan : database.users.find(item => item.id == user.id).clan,
+    clan : user_clan
   }
   console.log('Данные отправлены пользователю');
   res.json(data);
@@ -739,6 +744,7 @@ app.post('/createClan', (req, res) =>{
         invite_code : null
       }
       database.clans.push(data)
+      database.users[database.users.findIndex(item => item.id == user.id)].clan = id + 1;
       fs.writeFileSync('database.json', JSON.stringify(database, null, 2));
       console.log('Клан пользователя сохранён')
       res.sendStatus(200);
@@ -781,8 +787,8 @@ app.post('/joinClan', (req, res) =>{
       fs.writeFileSync('database.json', JSON.stringify(database, null, 2));
       console.log('Пользователь вступил в клан ', database.clans.find(item => item.id == id).name)
       res.json(database.clans.find(item => item.id == id).name)
-    } else { res.json(201) }
-  } else { res.json(202) }
+    } else { console.log('Пользователь уже состоит в клане'); res.json(201) }
+  } else { console.log('Пользователь отправил несуществующий код'); res.json(202) }
 })
 
 
