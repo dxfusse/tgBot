@@ -143,8 +143,7 @@ function ProfilePage() {
       app.appendChild(btn_clan);
 
       document.getElementById('clanEditing').addEventListener('click', () => {
-        showToast('В разработке...')
-        //go('clanEditing')
+        go('clanEditing')
       })
     }
   })
