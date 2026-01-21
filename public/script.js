@@ -815,23 +815,27 @@ function ClanEditingPage() {
 
     kickBtn.addEventListener('click', () => {
       const selectedUserId = selectEl.value;
+      const selectedUserName = selectEl.options[selectEl.selectedIndex].text;
+
       if (!selectedUserId) {
         showToast('Выберите пользователя');
         return;
       }
-      if (!confirm('Вы уверены, что хотите выгнать пользователя?')) return;
+      if (!confirm(`Вы уверены, что хотите выгнать пользователя:\n${selectedUserName}?`)) return;
 
     });
 
+
     banBtn.addEventListener('click', () => {
       const selectedUserId = selectEl.value;
+      const selectedUserName = selectEl.options[selectEl.selectedIndex].text;
+
       if (!selectedUserId) {
         showToast('Выберите пользователя');
         return;
       }
 
-      if (!confirm('Вы уверены, что хотите забанить пользователя?')) return;
-
+      if (!confirm(`Вы уверены, что хотите забанить пользователя:\n${selectedUserName}?`)) return;
     });
   })
 }
