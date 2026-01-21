@@ -100,17 +100,28 @@ function ProfilePage() {
   })
   .then(res => res.json())
   .then(data => {
-    if(data.clan == null){
-      document.getElementById('clan').innerText = "Клан: Отсутствует";
-    } else {
-      document.getElementById('clan').innerText = "Клан: " + data.clan;
-    }
     document.getElementById('name').innerText = "Имя: " + user.first_name + ' ' + user.last_name;
     document.getElementById('username').innerText = "Ник: @" + user.username;
     document.getElementById('score').innerText = "Ваши баллы: " + data.score;
     document.getElementById('money').innerText = "Ваш баланс: $" + data.money;
     document.getElementById('team_cost').innerText = "Стоимость команды: $" + data.team_cost;
     document.getElementById('pfp').src = data.photo;
+
+    if(data.clan == null){
+      document.getElementById('clan').innerText = "Клан: Отсутствует";
+    } else {
+      document.getElementById('clan').innerText = "Клан: " + data.clan;
+      const btn_clan = document.createElement('button');
+      btn_clan.className = 'кнопка-меню'
+      btn_clan.id = 'clanEditing'
+
+      app.appendChild(btn_clan);
+
+      document.getElementById('clanEditing').addEventListener('click', () => {
+        showToast('В разработке...')
+        //go('clanEditing')
+      })
+    }
   })
 }
 
@@ -771,6 +782,7 @@ function go(page, params = {}) {
   if (page === 'profile') ProfilePage();
   if (page === 'team') TeamPage();
   if (page === 'clans') ClansPage();
+  if (page === 'clanEditing') ClanEditingPage();
   if (page === 'rating') UserRatingPage()
   if (page === 'createTeam') CreateTeamPage(params.select);
 }
