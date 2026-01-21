@@ -25,6 +25,7 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
+//Отправка сообщения в тг
 bot.start((ctx) => {
   ctx.reply(
     '👋 Привет! Я твой помощник в Формуле 1.\nЧтобы начать, нажми кнопку "Начать" ниже!',
@@ -42,6 +43,7 @@ console.log('Бот запущен');
 
 let database = null;
 
+//Инициализация базы данных
 function initDatabase() {
   const filePath = 'database.json';
   
@@ -73,6 +75,7 @@ function initDatabase() {
   return database;
 }
 
+//Создание базы данных
 function createNewDatabase(filePath) {
   database = {
     users: [],
@@ -412,7 +415,8 @@ function createNewDatabase(filePath) {
         members : [774365557],
         photo : "https://i.pinimg.com/originals/74/29/43/7429430a85e8d3b2ddd19994149bcad4.jpg",
         score : 100,
-        invite_code : null
+        invite_code : null,
+        black_list : []
       },
       {
         id : 1,
@@ -420,7 +424,8 @@ function createNewDatabase(filePath) {
         members : [564589557, 6372939, 372354],
         photo : "https://i.pinimg.com/736x/7c/29/96/7c2996770695ac8e001cef5b76ae0371.jpg",
         score : 400,
-        invite_code : null
+        invite_code : null,
+        black_list : []
       }
     ]
   };
@@ -458,7 +463,8 @@ app.post('/entering', (req, res) => {
       money: 100000000,
       team_cost : 0,
       clan : null,
-      creatingClan : true
+      creatingClan : true,
+      admin : false
     };
     console.log('В базу данных добавлен новый пользователь: ' + user.username);
     database.users.push(new_user);
@@ -741,7 +747,8 @@ app.post('/createClan', (req, res) =>{
         photo : photo,
         members : [user.id],
         score : 0,
-        invite_code : null
+        invite_code : null,
+        black_list : []
       }
       database.clans.push(data)
       database.users[database.users.findIndex(item => item.id == user.id)].clan = id + 1;
@@ -804,6 +811,26 @@ app.post('/viewClan', (req, res) =>{
       name : database.users.find(item => item.id == clan.members[i]).username,
       photo : database.users.find(item => item.id == clan.members[i]).photo,
       score : database.users.find(item => item.id == clan.members[i]).score
+    }
+    data.members.push(user)
+  }
+  console.log('Отправка базы клана: \n', data)
+  res.json(data);
+})
+
+app.post('/editClanPage', (req, res) =>{
+  const user = req.body.user;
+  const clan = database.clans.find(item => item.members[0] == user.id);
+  let data = {
+    ...clan,
+    members : []
+  }
+  for(let i = 0; i < clan.members.length; i++){
+    const user = {
+      id : database.users.find(item => item.id == clan.members[i]).id,
+      first_name : database.users.find(item => item.id == clan.members[i]).first_name,
+      last_name : database.users.find(item => item.id == clan.members[i]).last_name,
+      username : database.users.find(item => item.id == clan.members[i]).username
     }
     data.members.push(user)
   }
