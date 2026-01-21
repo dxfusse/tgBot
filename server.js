@@ -794,7 +794,7 @@ app.post('/joinClan', (req, res) =>{
 //Геттер для формы клана
 app.post('/viewClan', (req, res) =>{
   const clan_name = req.body.clan_name;
-  const clan = database.clans.find(item => item.name == clan_name);
+  let clan = database.clans.find(item => item.name == clan_name);
   let members = [];
   for(let i = 0; i < clan.members.lenght; i++){
     let user = {
