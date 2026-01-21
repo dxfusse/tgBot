@@ -814,7 +814,6 @@ app.post('/viewClan', (req, res) =>{
     }
     data.members.push(user)
   }
-  console.log('Отправка базы клана: \n', data)
   res.json(data);
 })
 
@@ -834,7 +833,6 @@ app.post('/editClanPage', (req, res) =>{
     }
     data.members.push(user)
   }
-  console.log('Отправка базы клана: \n', data)
   res.json(data);
 })
 
