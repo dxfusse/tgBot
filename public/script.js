@@ -95,7 +95,7 @@ function ProfilePage() {
 
   render(`
     <p class="меню-текст">Твой профиль</p>
-    <img class="pfp" id="pfp">
+    <img class="pfp" id="pfp" src="../images/drivers/null_choise.jpg">
     <p></p>
     <div class="меню">
       <p class="текст-меню" id="username">Загрузка...</p>
