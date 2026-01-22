@@ -869,6 +869,29 @@ app.post('/joinClan', (req, res) => {
   res.json(clan.name);
 });
 
+// Выход из клана
+app.post('/leaveClan', (req, res) => {
+  const user = req.body.user;
+  console.log('\nПользователь ' + user.username + ' хочет покинуть свой клан');
+
+  if (database.clans.some(clan => clan.members[0] === user.id)) {
+    console.log('Отказано, пользователь является лидером');
+    res.sendStatus(201);
+  } else {
+    const dbUser = database.users.find(u => u.id === user.id);
+    const clan = database.clans.find(c => c.id === dbUser.clan);
+    const index = clan.members.indexOf(user.id);
+
+    clan.members.splice(index, 1);
+    dbUser.clan = null;
+
+    fs.writeFileSync('database.json', JSON.stringify(database, null, 2));
+    console.log('Пользователь вышел из клана');
+    res.sendStatus(200);
+  }
+});
+
+
 //Геттер для формы клана
 app.post('/viewClan', (req, res) =>{
   const clan_name = req.body.clan_name;
