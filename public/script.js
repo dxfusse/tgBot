@@ -708,6 +708,9 @@ function ClansPage() {
             }else if(data == 203){
               showToast('Вы в чёрном списке клана!');
               div.remove();
+            }else if(data == 204){
+              showToast('В клане максимальное число участников!');
+              div.remove();
             }else {
               showToast('Вы вступили в клан ' + data, true);
               div.remove();
