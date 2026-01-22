@@ -90,7 +90,7 @@ function createNewDatabase(filePath) {
         photo : "https://i.pinimg.com/originals/74/29/43/7429430a85e8d3b2ddd19994149bcad4.jpg",
         score : 100,
         invite_code : 12345678,
-        black_list : []
+        black_list : [774319557]
       },
       {
         id : 1,
