@@ -408,6 +408,54 @@ function createNewDatabase(filePath) {
         photo: "../images/bridges/Кадиллак.jpg"
       }
     ],
+    coefficients : {
+      drivers: [
+        { event: 'Вылетел в Q3', points: -2 },
+        { event: 'Прошел в Q2', points: 1 },
+        { event: 'Прошел в Q3', points: 2 },
+        { event: 'Выиграл квалификацию', points: 3 },
+        { event: 'Совершил обгон', points: 2 },
+        { event: 'Допустил ошибку', points: -2 },
+        { event: 'Потерял позицию', points: -3 },
+        { event: 'Отобрал позицию', points: 2 },
+        { event: 'Сход с дистанции', points: -10 },
+        { event: 'Выиграл гонку', points: 10 },
+        { event: 'Приехал на подиум', points: 8 },
+        { event: 'Заработал штраф', points: -3 },
+        { event: 'Приехал в очки', points: 3 },
+        { event: 'Оказался вне очков', points: -3 },
+        { event: 'Гонщик дня', points: 2 }
+      ],
+      engines: [
+        { event: 'Вылетел в Q3', points: -2 },
+        { event: 'Прошел в Q2', points: 1 },
+        { event: 'Прошел в Q3', points: 2 },
+        { event: 'Выиграл квалификацию', points: 3 },
+        { event: 'Сход с дистанции', points: -20 },
+        { event: 'Выиграл гонку', points: 10 },
+        { event: 'Приехал на подиум', points: 8 },
+        { event: 'Приехал в очки', points: 3 },
+        { event: 'Оказался вне очков', points: -3 }
+      ],
+      bridges: [
+        { event: 'Вылетел в Q3', points: -2 },
+        { event: 'Прошел в Q2', points: 1 },
+        { event: 'Прошел в Q3', points: 2 },
+        { event: 'Выиграл квалификацию', points: 3 },
+        { event: 'Выиграл гонку', points: 10 },
+        { event: 'Приехал на подиум', points: 8 },
+        { event: 'Приехал в очки', points: 3 },
+        { event: 'Оказался вне очков', points: -3 },
+        { event: 'Удачная стратегия', points: 5 },
+        { event: 'Провальная стратегия', points: -5 }
+      ],
+      pit_stops: [
+        { event: 'Лучший пит-стоп уикенда', points: 10 },
+        { event: 'Ошибка на пит-стопе', points: -10 },
+        { event: 'Удачная остановка', points: 7 },
+        { event: 'Удачный двойной пит-стоп', points: 10 }
+      ]
+    },
     clans : [
       {
         id : 0,
@@ -710,6 +758,7 @@ app.post('/saveTeam', (req, res) =>{
 
 //Получить список кланов
 app.post('/getClansList', (req, res) => {
+  const user = req.body.user;
   console.log('\nОтправка данных о кланах');
 
   const clans = database.clans
@@ -720,10 +769,13 @@ app.post('/getClansList', (req, res) => {
       score: clan.score ?? 0
     }))
     .sort((a, b) => b.score - a.score);
-
-  res.json({ clans });
+  
+  const data = {
+    ...clans,
+    isLeader : clans.some(clan => clan.members[0] === user.id)
+  }
+  res.json(data);
 });
-
 
 //Создать клан
 app.post('/createClan', (req, res) =>{
@@ -816,7 +868,6 @@ app.post('/joinClan', (req, res) => {
   console.log('Пользователь вступил в клан', clan.name);
   res.json(clan.name);
 });
-
 
 //Геттер для формы клана
 app.post('/viewClan', (req, res) =>{
