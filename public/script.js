@@ -468,7 +468,7 @@ function ClansPage() {
 
   render( `
     <p class="меню-текст">Кланы</p>
-    <div class="div-createTeam" id="container_clans">
+    <div class="меню" id="container_clans">
       <div class="head-div">
         <span class="head-text">Фото</span>
         <span class="head-text">Название</span>
@@ -476,6 +476,7 @@ function ClansPage() {
         <span class="head-text">Баллы</span>
         <span class="head-text">Место</span>
       </div>
+      <div class="div-createTeam" id="container_for_clans"></div>
     </div>
     <p></p>
     <div class="footer-twoButtons">
@@ -493,7 +494,9 @@ function ClansPage() {
   })
   .then(res => res.json())
   .then(data => {
-    const container = document.getElementById('container_clans');
+    const main_cont = document.getElementById('container_clans');
+    main_cont.style.maxWidth = '380px'
+    const container = document.getElementById('container_for_clans');
     container.innerHTML = '';
 
     data.clans.forEach((clan, index) => {
