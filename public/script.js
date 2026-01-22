@@ -523,10 +523,7 @@ function ClansPage() {
       container.appendChild(btn);
     });
 
-    if(!data.isLeader){
-      document.getElementById('clan').innerText = "Клан: Отсутствует";
-    } else {
-      document.getElementById('clan').innerText = "Клан: " + data.clan;
+    if(data.isLeader){
       const btn_clan = document.createElement('button');
       btn_clan.className = 'кнопка-меню'
       btn_clan.id = 'clanEditing'
