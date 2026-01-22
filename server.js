@@ -776,7 +776,6 @@ app.post('/getClansList', (req, res) => {
   });
 });
 
-
 //Создать клан
 app.post('/createClan', (req, res) =>{
   const user = req.body.user;
@@ -860,6 +859,11 @@ app.post('/joinClan', (req, res) => {
     return res.json(203);
   }
 
+  if(clan.members.length == 100){
+    console.log('Максимальное число участников клана');
+    return res.json(204);
+  }
+
   clan.members.push(user.id);
   dbUser.clan = clan.id;
 
@@ -890,7 +894,6 @@ app.post('/leaveClan', (req, res) => {
     res.sendStatus(200);
   }
 });
-
 
 //Геттер для формы клана
 app.post('/viewClan', (req, res) =>{
@@ -1020,7 +1023,5 @@ app.listen(PORT, () => {
   console.log(`Сервер запущен на порту: ${PORT}`);
 });
 
-
-//Проверить вступление в клан/ кик/ бан
 //Добавить админ панель
 //Добавить систему подсчёта баллов
