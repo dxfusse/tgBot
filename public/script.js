@@ -130,22 +130,6 @@ function ProfilePage() {
     document.getElementById('money').innerText = "Ваш баланс: $" + data.money;
     document.getElementById('team_cost').innerText = "Стоимость команды: $" + data.team_cost;
     document.getElementById('pfp').src = data.photo;
-
-    if(data.clan == null){
-      document.getElementById('clan').innerText = "Клан: Отсутствует";
-    } else {
-      document.getElementById('clan').innerText = "Клан: " + data.clan;
-      const btn_clan = document.createElement('button');
-      btn_clan.className = 'кнопка-меню'
-      btn_clan.id = 'clanEditing'
-      btn_clan.textContent = 'Управлять кланом'
-
-      app.appendChild(btn_clan);
-
-      document.getElementById('clanEditing').addEventListener('click', () => {
-        go('clanEditing')
-      })
-    }
   })
 }
 
@@ -533,6 +517,22 @@ function ClansPage() {
 
       container.appendChild(btn);
     });
+
+    if(!data.isLeader){
+      document.getElementById('clan').innerText = "Клан: Отсутствует";
+    } else {
+      document.getElementById('clan').innerText = "Клан: " + data.clan;
+      const btn_clan = document.createElement('button');
+      btn_clan.className = 'кнопка-меню'
+      btn_clan.id = 'clanEditing'
+      btn_clan.textContent = 'Управлять кланом'
+
+      app.appendChild(btn_clan);
+
+      document.getElementById('clanEditing').addEventListener('click', () => {
+        go('clanEditing')
+      })
+    }
   });
 
 
