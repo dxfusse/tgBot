@@ -910,11 +910,12 @@ app.post('/banKickUserFromClan', (req, res) =>{
 app.post('/delClan', (req, res) =>{
   const user = req.body.user;
   const cid = database.clans.findIndex(item => item.members[0] == user.id)
+  console.log('\nПользователь ' + user.username + ' хочет удалить свой клан ' + database.clans[cid].name)
   database.clans.splice(cid, 1);
   database.users.find(item => item.id == user.id).clan = null;
 
   fs.writeFileSync('database.json', JSON.stringify(database, null, 2));
-  console.log('Удалён клан ' + database.clans[cid].name)
+  console.log('Клан успешно удалён!')
   res.sendStatus(200);
 })
 
@@ -930,7 +931,6 @@ app.listen(PORT, () => {
 });
 
 
-//Починить удаление клана
 //Проверить вступление в клан/ кик/ бан
 //Добавить админ панель
 //Добавить систему подсчёта баллов
