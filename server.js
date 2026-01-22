@@ -781,28 +781,42 @@ app.post('/getUsersList', (req, res) =>{
 })
 
 //Вступление в клан
-app.post('/joinClan', (req, res) =>{
+app.post('/joinClan', (req, res) => {
   const user = req.body.user;
-  const code = req.body.code;
+  const code = Number(req.body.code);
 
-  console.log('\nПользователь ' + user.username + ' хочет вступить в клан');
-  const codes = database.clans.map(item => item.invite_code)
-  console.log('Существующие коды: ', codes)
-  console.log('Пользователь отправил код: ', code)
-  if (codes.includes(code)){
-    if(database.users.find(item => item.id == user.id).clan == null){
-      const cid = database.clans.find(item => item.invite_code == code).id
-      if(!database.clans.find(item => item.id == cid).black_list.includes(user.id)){
-        database.clans[database.clans.findIndex(item => item.id == cid)].members.push(user.id)
-        database.users[database.users.findIndex(item => item.id == user.id)].clan = database.clans.find(item => item.id == id).name
+  console.log('\nПользователь', user.username, 'хочет вступить в клан');
+  const clan = database.clans.find(clan => Number(clan.invite_code) === code);
 
-        fs.writeFileSync('database.json', JSON.stringify(database, null, 2));
-        console.log('Пользователь вступил в клан ', database.clans.find(item => item.id == id).name)
-        res.json(database.clans.find(item => item.id == id).name)
-      } else { console.log('Пользователь в чёрном списке клана'); res.json(203) }
-    } else { console.log('Пользователь уже состоит в клане'); res.json(201) }
-  } else { console.log('Пользователь отправил несуществующий код'); res.json(202) }
-})
+  if (!clan) {
+    console.log('Пользователь отправил несуществующий код');
+    return res.json(202);
+  }
+
+  const dbUser = database.users.find(u => Number(u.id) === Number(user.id));
+  if (!dbUser) {
+    return res.status(404).json('Пользователь не найден');
+  }
+
+  if (dbUser.clan !== null) {
+    console.log('Пользователь уже состоит в клане');
+    return res.json(201);
+  }
+
+  if (clan.black_list?.includes(user.id)) {
+    console.log('Пользователь в чёрном списке клана');
+    return res.json(203);
+  }
+
+  clan.members.push(user.id);
+  dbUser.clan = clan.name;
+
+  fs.writeFileSync('database.json', JSON.stringify(database, null, 2));
+
+  console.log('Пользователь вступил в клан', clan.name);
+  res.json(clan.name);
+});
+
 
 //Геттер для формы клана
 app.post('/viewClan', (req, res) =>{
