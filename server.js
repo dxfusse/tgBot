@@ -783,17 +783,19 @@ app.post('/getUsersList', (req, res) =>{
 //Вступление в клан
 app.post('/joinClan', (req, res) => {
   const user = req.body.user;
-  const code = Number(req.body.code);
+  const code = parseInt(req.body.code);
 
   console.log('\nПользователь', user.username, 'хочет вступить в клан');
-  const clan = database.clans.find(clan => Number(clan.invite_code) === code);
+  const clan = database.clans.find(clan => parseInt(clan.invite_code) === code);
+  console.log('Список кодов кланов: ', database.clans.map(item => item.invite_code))
+  console.log('Пользователь отправил код: ' + code + ', его тип: ' + typeof code)
 
   if (!clan) {
     console.log('Пользователь отправил несуществующий код');
     return res.json(202);
   }
 
-  const dbUser = database.users.find(u => Number(u.id) === Number(user.id));
+  const dbUser = database.users.find(item => item.id === user.id);
   if (!dbUser) {
     return res.status(404).json('Пользователь не найден');
   }
