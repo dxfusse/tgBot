@@ -415,7 +415,7 @@ function createNewDatabase(filePath) {
         members : [774365557],
         photo : "https://i.pinimg.com/originals/74/29/43/7429430a85e8d3b2ddd19994149bcad4.jpg",
         score : 100,
-        invite_code : 39581640,
+        invite_code : 12345678,
         black_list : []
       },
       {
@@ -787,6 +787,8 @@ app.post('/joinClan', (req, res) =>{
 
   console.log('\nПользователь ' + user.username + ' хочет вступить в клан');
   const codes = database.clans.map(item => item.invite_code)
+  console.log('Существующие коды: ', codes)
+  console.log('Пользователь отправил код: ', code)
   if (codes.includes(code)){
     if(database.users.find(item => item.id == user.id).clan == null){
       const cid = database.clans.find(item => item.invite_code == code).id
