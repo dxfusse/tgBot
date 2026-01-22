@@ -82,6 +82,26 @@ function createNewDatabase(filePath) {
     race_id: 1,
     predict_accepting: 1,
     race_results: [],
+    clans : [
+      {
+        id : 0,
+        name : "F1 test clan",
+        members : [774365557],
+        photo : "https://i.pinimg.com/originals/74/29/43/7429430a85e8d3b2ddd19994149bcad4.jpg",
+        score : 100,
+        invite_code : 12345678,
+        black_list : []
+      },
+      {
+        id : 1,
+        name : "F1 Fantazy chanel",
+        members : [564589557, 6372939, 372354],
+        photo : "https://i.pinimg.com/736x/7c/29/96/7c2996770695ac8e001cef5b76ae0371.jpg",
+        score : 400,
+        invite_code : 68462068,
+        black_list : []
+      }
+    ],
     drivers: [
       {
         id: 0,
@@ -455,27 +475,7 @@ function createNewDatabase(filePath) {
         { event: 'Удачная остановка', points: 7 },
         { event: 'Удачный двойной пит-стоп', points: 10 }
       ]
-    },
-    clans : [
-      {
-        id : 0,
-        name : "F1 test clan",
-        members : [774365557],
-        photo : "https://i.pinimg.com/originals/74/29/43/7429430a85e8d3b2ddd19994149bcad4.jpg",
-        score : 100,
-        invite_code : 12345678,
-        black_list : []
-      },
-      {
-        id : 1,
-        name : "F1 Fantazy chanel",
-        members : [564589557, 6372939, 372354],
-        photo : "https://i.pinimg.com/736x/7c/29/96/7c2996770695ac8e001cef5b76ae0371.jpg",
-        score : 400,
-        invite_code : 68462068,
-        black_list : []
-      }
-    ]
+    }
   };
 
   fs.writeFileSync('database.json', JSON.stringify(database, null, 2));
