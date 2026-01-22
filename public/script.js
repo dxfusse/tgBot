@@ -134,6 +134,28 @@ function ProfilePage() {
       document.getElementById('clan').innerText = "Клан: отсутствует"
     } else {
       document.getElementById('clan').innerText = "Клан: " + data.clan
+      const btn_clan = document.createElement('button');
+      btn_clan.className = 'кнопка-меню'
+      btn_clan.id = 'leaveClan'
+      btn_clan.textContent = 'Покинуть клан'
+
+      app.appendChild(btn_clan);
+
+      document.getElementById('leaveClan').addEventListener('click', () => {
+        fetch(service + '/leaveClan', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ user : user })
+        })
+        .then(res => {
+          if(res.status == 200){
+            showToast('Вы вышли из клана', true)
+            go('main')
+          } else if (res.status == 201) {
+            showToast('Вы не можете выйти из клана, являясь его лидером!')
+          }
+        })
+      })
     }
   })
 }
