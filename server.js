@@ -787,8 +787,6 @@ app.post('/joinClan', (req, res) => {
 
   console.log('\nПользователь', user.username, 'хочет вступить в клан');
   const clan = database.clans.find(clan => parseInt(clan.invite_code) === code);
-  console.log('Список кодов кланов: ', database.clans.map(item => item.invite_code))
-  console.log('Пользователь отправил код: ' + code + ', его тип: ' + typeof code)
 
   if (!clan) {
     console.log('Пользователь отправил несуществующий код');
@@ -811,7 +809,7 @@ app.post('/joinClan', (req, res) => {
   }
 
   clan.members.push(user.id);
-  dbUser.clan = clan.name;
+  dbUser.clan = clan.id;
 
   fs.writeFileSync('database.json', JSON.stringify(database, null, 2));
 
