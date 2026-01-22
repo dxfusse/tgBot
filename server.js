@@ -709,19 +709,21 @@ app.post('/saveTeam', (req, res) =>{
 })
 
 //Получить список кланов
-app.post('/getClansList', (req, res) =>{
-  console.log('\nОтправка данных о кланах')
-  const data = {
-    clans: database.clans.map(clan => ({
-      names: clan.name,
+app.post('/getClansList', (req, res) => {
+  console.log('\nОтправка данных о кланах');
+
+  const clans = database.clans
+    .map(clan => ({
+      name: clan.name,
       members: clan.members,
-      photos: clan.photo,
-      scores: clan.score
+      photo: clan.photo,
+      score: clan.score ?? 0
     }))
-    .sort((a, b) => a.score - b.score)
-  };
-  res.json(data)
-})
+    .sort((a, b) => b.score - a.score);
+
+  res.json({ clans });
+});
+
 
 //Создать клан
 app.post('/createClan', (req, res) =>{
@@ -907,13 +909,12 @@ app.post('/banKickUserFromClan', (req, res) =>{
 //Удалить клан
 app.post('/delClan', (req, res) =>{
   const user = req.body.user;
-  const cname = database.clans.find(item => item.members[0] == user.id).name
   const cid = database.clans.findIndex(item => item.members[0] == user.id)
   database.clans.splice(cid, 1);
   database.users.find(item => item.id == user.id).clan = null;
 
   fs.writeFileSync('database.json', JSON.stringify(database, null, 2));
-  console.log('Удалён клан ' + cname)
+  console.log('Удалён клан ' + database.clans[cid].name)
   res.sendStatus(200);
 })
 
@@ -927,3 +928,9 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Сервер запущен на порту: ${PORT}`);
 });
+
+
+//Починить удаление клана
+//Проверить вступление в клан/ кик/ бан
+//Добавить админ панель
+//Добавить систему подсчёта баллов
