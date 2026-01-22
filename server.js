@@ -769,13 +769,13 @@ app.post('/getClansList', (req, res) => {
       score: clan.score ?? 0
     }))
     .sort((a, b) => b.score - a.score);
-  
-  const data = {
-    ...clans,
-    isLeader : clans.some(clan => clan.members[0] === user.id)
-  }
-  res.json(data);
+
+  res.json({
+    clans,
+    isLeader: clans.some(clan => clan.members[0] === user.id)
+  });
 });
+
 
 //Создать клан
 app.post('/createClan', (req, res) =>{
