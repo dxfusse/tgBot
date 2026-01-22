@@ -130,6 +130,11 @@ function ProfilePage() {
     document.getElementById('money').innerText = "Ваш баланс: $" + data.money;
     document.getElementById('team_cost').innerText = "Стоимость команды: $" + data.team_cost;
     document.getElementById('pfp').src = data.photo;
+    if(data.clan == null){
+      document.getElementById('clan').innerText = "Клан: отсутствует"
+    } else {
+      document.getElementById('clan').innerText = "Клан: " + data.clan
+    }
   })
 }
 
