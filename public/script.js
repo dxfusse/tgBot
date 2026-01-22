@@ -493,54 +493,45 @@ function ClansPage() {
   })
   .then(res => res.json())
   .then(data => {
-    const names = data.clans.map(item => item.names).reverse();
-    const members = data.clans.map(item => item.members).reverse();
-    const scores = data.clans.map(item => item.scores).reverse();
-    const photos = data.clans.map(item => item.photos).reverse();
-
     const container = document.getElementById('container_clans');
-    for (let i = 0; i < names.length; i++) {
+    container.innerHTML = '';
+
+    data.clans.forEach((clan, index) => {
       const btn = document.createElement('button');
       btn.className = 'button-clans';
 
       const img = document.createElement('img');
-      img.src = photos[i];
+      img.src = clan.photo;
       img.style.width = '70px';
       img.style.height = '70px';
       img.style.borderRadius = '20px';
 
-      const div = document.createElement('div');
-      div.className = 'div_texts-clans'
-
       const name = document.createElement('div');
-      name.textContent = names[i]
-      name.className = 'баланс'
+      name.textContent = clan.name;
+      name.className = 'баланс';
 
       const membs = document.createElement('div');
-      membs.textContent = members[i].length + "/100";
-      membs.className = 'баланс'
+      membs.textContent = `${clan.members.length}/100`;
+      membs.className = 'баланс';
 
       const score = document.createElement('div');
-      score.textContent = scores[i];
-      score.className = 'баланс'
+      score.textContent = clan.score;
+      score.className = 'баланс';
 
       const place = document.createElement('div');
-      place.className = 'баланс'
-      place.textContent = '#' + (i+1)
+      place.textContent = `#${index + 1}`;
+      place.className = 'баланс';
 
-      btn.appendChild(img);
-      btn.appendChild(name);
-      btn.appendChild(membs);
-      btn.appendChild(score);
-      btn.appendChild(place);
+      btn.append(img, name, membs, score, place);
 
       btn.onclick = () => {
-        go('clanView', { select: names[i] });
+        go('clanView', { select: clan.name });
       };
 
       container.appendChild(btn);
-    };
-  })
+    });
+  });
+
 
   document.getElementById('createClanBtn').addEventListener('click', () => {
     if(!document.getElementById('div_createClan')){
