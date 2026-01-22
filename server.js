@@ -98,7 +98,7 @@ function createNewDatabase(filePath) {
         members : [564589557, 6372939, 372354],
         photo : "https://i.pinimg.com/736x/7c/29/96/7c2996770695ac8e001cef5b76ae0371.jpg",
         score : 400,
-        invite_code : 68462068,
+        invite_code : 87654321,
         black_list : []
       }
     ],
