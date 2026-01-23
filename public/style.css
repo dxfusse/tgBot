@@ -412,6 +412,43 @@ body {
   overflow: hidden;
   pointer-events: none;
 }
+
+.faq-item {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  overflow: hidden;
+}
+.faq-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px;
+  cursor: pointer;
+  color: white;
+}
+.faq-toggle {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 18px;
+  transition: transform 0.3s ease;
+}
+.faq-item.open .faq-toggle {
+  transform: rotate(180deg);
+}
+.faq-body {
+  max-height: 0;
+  overflow: hidden;
+  padding: 0 14px;
+  color: white;
+  transition: max-height 0.3s ease, padding 0.3s ease;
+}
+.faq-item.open .faq-body {
+  max-height: 200px;
+  padding: 10px 14px 14px;
+}
+
 @font-face {
     font-family: 'dop';
     src: url('dopText.otf') format('truetype');
