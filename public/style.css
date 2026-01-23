@@ -72,6 +72,7 @@ body {
   border-radius: 30px;
   width: max-content;
   height: max-content;
+  max-width: 380px;
   padding: 20px 20px;
   background: rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(10px);
@@ -185,7 +186,7 @@ body {
   max-width: 380px;
   min-height: 250px;
   max-height: 400px;
-  overflow: hidden;
+  overflow: auto;
   background: rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(10px);
   border-color: rgba(255, 255, 255, 0.2);
@@ -426,6 +427,8 @@ body {
   padding: 14px;
   cursor: pointer;
   color: white;
+  font-family: "dop";
+  font-weight: bold;
 }
 .faq-toggle {
   background: none;
@@ -439,14 +442,26 @@ body {
 }
 .faq-body {
   max-height: 0;
-  overflow: hidden;
+  overflow: auto;
+  scrollbar-width: thin;
   padding: 0 14px;
   color: white;
   transition: max-height 0.3s ease, padding 0.3s ease;
+  font-family: "dop";
 }
 .faq-item.open .faq-body {
   max-height: 200px;
   padding: 10px 14px 14px;
+}
+.faq-divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.3);
+  margin: 0 14px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.faq-item.open .faq-divider {
+  opacity: 1;
 }
 
 @font-face {
