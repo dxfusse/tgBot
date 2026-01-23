@@ -186,7 +186,7 @@ body {
   max-width: 380px;
   max-height: 400px;
   overflow: auto;
-  overflow-y: hidden;
+  overflow-x: hidden;
   background: rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(10px);
   border-color: rgba(255, 255, 255, 0.2);
