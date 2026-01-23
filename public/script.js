@@ -54,7 +54,7 @@ function MainPage() {
       <button data-page="team" class="кнопка-меню">Моя команда</button>
       <button data-page="clans" class="кнопка-меню">Рейтинг кланов</button>
       <button data-page="rating" class="кнопка-меню">Рейтинг игроков</button>
-      <button data-page="helper" class="кнопка-меню" id="helper">Помощник</button>
+      <button data-page="FAQ" class="кнопка-меню">FAQ</button>
     </div>
     <button class="dop-button" id="dop-button">123123123</button>
   `);
@@ -1042,6 +1042,47 @@ function UserRatingPage() {
   })
 }
 
+//Страница админ панели
+function FAQPage() {
+  app.style.backgroundImage = "url('../images/other/background2.JPG')"
+
+  render( `
+    <p class="меню-текст">Админ панель</p>
+    <div class="меню" id="container_clan_editing">
+      <div class="faq-item">
+        <div class="faq-header">
+          <span>Как вступить в клан?</span>
+          <button class="faq-toggle">▼</button>
+        </div>
+        <div class="faq-body">
+          <p>Введите код приглашения в разделе «Кланы» и подтвердите вступление.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-header">
+          <span>Можно ли выйти из клана?</span>
+          <button class="faq-toggle">▼</button>
+        </div>
+        <div class="faq-body">
+          <p>Да, если вы не лидер клана. Лидер должен сначала передать права.</p>
+        </div>
+      </div>
+    </div>
+    <p></p>
+    <button data-page="main" class="кнопка-меню">Назад</button>
+  `);
+
+  document.querySelectorAll('.faq-header').forEach(header => {
+    header.addEventListener('click', () => {
+      const item = header.parentElement;
+      item.classList.toggle('open');
+    });
+  });
+
+}
+
+
 //Маршрутизация
 let currentRoute = {
   page: 'main',
@@ -1061,6 +1102,7 @@ function go(page, params = {}) {
   if (page === 'clanView') ClanViewPage(params.select);
   if (page === 'rating') UserRatingPage();
   if (page === 'createTeam') CreateTeamPage(params.select);
+  if (page === 'FAQ') FAQPage()
 }
 
 //Привязка событий к кнопкам
