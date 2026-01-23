@@ -184,7 +184,6 @@ body {
   border-radius: 30px;
   width: max-content;
   max-width: 380px;
-  min-height: 250px;
   max-height: 400px;
   overflow: auto;
   background: rgba(255, 255, 255, 0.2);
