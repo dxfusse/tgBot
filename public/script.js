@@ -56,6 +56,8 @@ function MainPage() {
       <button data-page="rating" class="кнопка-меню">Рейтинг игроков</button>
       <button data-page="FAQ" class="кнопка-меню">FAQ</button>
     </div>
+    <p></p>
+    <button data-page="admin_panel" class="кнопка-меню" id="admin_panel">Амин-панель</button>
     <button class="dop-button" id="dop-button">123123123</button>
   `);
 
@@ -1139,7 +1141,89 @@ function FAQPage() {
 }
 
 //Страница админа
+function AdminPanelPage() {
+  const user = tg.initDataUnsafe.user;
+  app.style.backgroundImage = "url('../images/other/background4.png')"
 
+  render( `
+    <p class="меню-текст">Админ панель</p>
+    <div class="меню" id="container_admin_panel1"> 
+      <div class="div-head-menu"> 
+        <button class="кнопки-перелистывание"> < </button> 
+        <p id="menu_choise_text" class="текст-меню-админ-панель"></p> 
+        <button class="кнопки-перелистывание"> > </button> 
+      </div>
+      <div class="меню">
+        <select class="inputs" id="admin_select_1"></select>
+        <img src="../images/other/downArrow.png" id="downArrow">
+        <select class="inputs" id="admin_select_2"></select>
+      </div>
+    </div>
+    <p></p>
+    <button data-page="main" class="кнопка-меню">Назад</button>
+  `);
+  document.getElementById('container_admin_panel1').style.width = '380px'
+  const menuTexts = ['Пилоты', 'Двигатели', 'Пит-стопы', 'Мостики'];
+
+  let currentIndex = 0;
+
+  const textEl = document.getElementById('menu_choise_text');
+  const prevBtn = document.querySelector('.кнопки-перелистывание:first-child');
+  const nextBtn = document.querySelector('.кнопки-перелистывание:last-child');
+  document.getElementById('downArrow').style.width = '60px'
+  document.getElementById('downArrow').style.height = '60px'
+
+  textEl.innerText = menuTexts[currentIndex];
+
+  prevBtn.addEventListener('click', () => {
+    currentIndex--;
+    if (currentIndex < 0) {
+      currentIndex = menuTexts.length - 1; // зацикливание
+    }
+    textEl.innerText = menuTexts[currentIndex];
+    sendFetch(menuTexts[currentIndex])
+  });
+
+  nextBtn.addEventListener('click', () => {
+    currentIndex++;
+    if (currentIndex >= menuTexts.length) {
+      currentIndex = 0; // зацикливание
+    }
+    textEl.innerText = menuTexts[currentIndex];
+    sendFetch(menuTexts[currentIndex])
+  });
+
+  function sendFetch(choice){
+    fetch(service + '/getDBforAP', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(choice)
+    })
+    .then(res => res.json())
+    .then(data => {
+      //Для первого селекта
+      const select1 = document.getElementById('admin_select_1');
+      select1.innerHTML = '';
+      data.database.forEach(variant => {
+        const option = document.createElement('option');
+        option.value = variant;
+        option.textContent = variant;
+        select1.appendChild(option);
+      });
+
+      //Для второго селекта
+      const select2 = document.getElementById('admin_select_1');
+      select2.innerHTML = '';
+      data.adminTools.forEach(variant => {
+        const option = document.createElement('option');
+        option.value = variant;
+        option.textContent = variant;
+        select2.appendChild(option);
+      });
+    })
+  }
+
+}
 
 //Маршрутизация
 let currentRoute = {
@@ -1160,7 +1244,8 @@ function go(page, params = {}) {
   if (page === 'clanView') ClanViewPage(params.select);
   if (page === 'rating') UserRatingPage();
   if (page === 'createTeam') CreateTeamPage(params.select);
-  if (page === 'FAQ') FAQPage()
+  if (page === 'FAQ') FAQPage();
+  if (page === 'admin_panel') AdminPanelPage()
 }
 
 //Привязка событий к кнопкам
