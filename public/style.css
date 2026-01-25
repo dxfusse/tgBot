@@ -463,6 +463,42 @@ body {
 .faq-item.open .faq-divider {
   opacity: 1;
 }
+.div-head-menu{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 50px;
+  justify-content: center;
+  border-radius: 10px;
+  padding: 10px;
+  background-color: rgba(255, 255, 255, 0.2);
+  height: 50px;
+}
+.кнопки-перелистывание{
+  border-radius: 10px;
+  background: transparent;
+  border-color: rgba(255, 255, 255, 0.6);
+  color: rgb(255, 255, 255);
+  font-family: "dop";
+  font-weight: bold;
+  padding: 10px 10px;
+  font-size: 20px;
+  transition: transform 0.4s ease;
+}
+.кнопки-перелистывание:hover{
+  transform: scale(1.1);
+}
+.текст-меню-админ-панель{
+  font-size: 20px;
+  color: rgb(255, 255, 255);
+  font-family: "dop";
+  font-weight: bold;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  border-color: rgba(255, 255, 255, 0.2);
+  padding: 10px 10px;
+}
 
 @font-face {
     font-family: 'dop';
