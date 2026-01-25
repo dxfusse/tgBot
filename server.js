@@ -1022,6 +1022,7 @@ app.post('/getDBforAP', (req, res) =>{
       database : database.drivers.map(item => item.name),
       adminTools : database.coefficients.drivers.map(item => item.event)
     }
+    res.json(data);
   }
   if (choise == 'engines'){
     data = {
