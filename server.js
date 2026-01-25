@@ -1012,6 +1012,40 @@ app.post('/delClan', (req, res) =>{
   res.sendStatus(200);
 })
 
+//Получить БД для админ панели
+app.post('/getDBforAP', (req, res) =>{
+  const choise = req.body.choice;
+  console.log('Отправка БД для админов: ', choise)
+  let data = {}
+  if(choise == 'drivers'){
+    data = {
+      database : database.drivers.map(item => item.name),
+      adminTools : database.coefficients.drivers.map(item => item.event)
+    }
+  }
+  if (choise == 'engines'){
+    data = {
+      database : database.engines.map(item => item.name),
+      adminTools : database.coefficients.engines.map(item => item.event)
+    }
+    res.json(data);
+  }
+  if (choise == 'pit_stops'){
+    data = {
+      database : database.pit_stops.map(item => item.name),
+      adminTools : database.coefficients.pit_stops.map(item => item.event)
+    }
+    res.json(data);
+  }
+  if (choise == 'bridges'){
+    data = {
+      database : database.bridges.map(item => item.name),
+      adminTools : database.coefficients.bridges.map(item => item.event)
+    }
+    res.json(data);
+  }
+})
+
 app.post('/getDB', (req, res) =>{
   res.json(database);
 })
@@ -1025,5 +1059,4 @@ app.listen(PORT, () => {
 //Добавить админ панель
 //Добавить систему подсчёта баллов
 
-//Перестало скролится меню с выбором команд
 //Не удаляется участник клана при кике
