@@ -50,13 +50,13 @@ function initDatabase() {
   try {
     if (!fs.existsSync(filePath)) {
       console.log('База данных не существует, создаем...');
-      return createNewDatabase(filePath);
+      return createNewDatabase();
     }
     const data = fs.readFileSync(filePath, 'utf8');
  
     if (!data.trim()) {
       console.log('База данных пустая, создаем скелет...');
-      return createNewDatabase(filePath);
+      return createNewDatabase();
     }
 
     database = JSON.parse(data);
@@ -65,7 +65,7 @@ function initDatabase() {
   } catch (error) {
     if (error instanceof SyntaxError) {
       console.log('База данных повреждена, создаем новую...');
-      return createNewDatabase(filePath);
+      return createNewDatabase();
     } else {
       console.error('Ошибка при загрузке базы данных:', error);
       throw error;
@@ -76,12 +76,17 @@ function initDatabase() {
 }
 
 //Создание базы данных
-function createNewDatabase(filePath) {
+function createNewDatabase() {
   database = {
     users: [],
     race_id: 1,
     predict_accepting: 1,
-    race_results: [],
+    race_results: {
+      drivers : [],
+      engines : [],
+      pit_stops : [],
+      bridges : []
+    },
     clans : [
       {
         id : 0,
@@ -1012,8 +1017,8 @@ app.post('/delClan', (req, res) =>{
   res.sendStatus(200);
 })
 
-//Получить БД для админ панели
-app.post('/getDBforAP', (req, res) =>{
+//Получить БД кэфов для админ панели
+app.post('/getDBCoefsForAP', (req, res) =>{
   const choise = req.body.choice;
   console.log('Отправка БД для админов: ', choise)
   let data = {}
@@ -1047,6 +1052,11 @@ app.post('/getDBforAP', (req, res) =>{
   }
 })
 
+//Сохранить админские изменения
+app.post('/saveRaceResult', (req, res) =>{
+  const editions = req.body.editions;
+})
+
 app.post('/getDB', (req, res) =>{
   res.json(database);
 })
@@ -1057,7 +1067,7 @@ app.listen(PORT, () => {
   console.log(`Сервер запущен на порту: ${PORT}`);
 });
 
-//Добавить админ панель
+//Добавить всё остально в админ панель
 //Добавить систему подсчёта баллов
 
 //Не удаляется участник клана при кике
