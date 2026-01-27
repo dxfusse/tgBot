@@ -80,13 +80,8 @@ function createNewDatabase() {
   database = {
     users: [],
     race_id: 1,
-    predict_accepting: 1,
-    race_results: {
-      drivers : [],
-      engines : [],
-      pit_stops : [],
-      bridges : []
-    },
+    predict_accepting: true,
+    race_results: {},
     clans : [
       {
         id : 0,
@@ -631,7 +626,7 @@ app.post('/getTeamInfo', (req, res) =>{
 //Проверка на разрешение изменения команды
 app.post('/checkPredictings', (req, res) =>{
   const user = req.body.user;
-  if(database.predict_accepting == 1){
+  if(database.predict_accepting){
     if(database.users.find(item => item.id == user.id).team_changing){
       res.sendStatus(200);
     }else{
@@ -958,6 +953,7 @@ app.post('/changeClanNameOrPhoto', (req, res) =>{
   res.sendStatus(200)
 })
 
+//Функция генерации кода приглашения
 function genCode() {
   return Math.floor(Math.random() * 100000000)
     .toString()
@@ -1058,6 +1054,7 @@ app.post('/getDBCoefsForAP', (req, res) =>{
 //Сохранить результаты гонок
 app.post('/saveRaceResult', (req, res) =>{
   const editions = req.body.editions;
+  database.race_results = editions;
 })
 
 //Получить БД игроков для выдачи прав на создание клана
@@ -1098,6 +1095,26 @@ app.post('/giveCCRights', (req, res) =>{
   res.sendStatus(200);
 })
 
+//проверка на разрешение менять команду
+app.post('/checkPredictsAccepting', (req, res) =>{
+  if(database.predict_accepting){
+    res.sendStatus(200)
+  } else {
+    res.sendStatus(201)
+  }
+})
+
+//Запретить/Разрешить менять команду
+app.post('/changeTeamChanging', (req, res) =>{
+  const choise = req.body.choise;
+  if(choise){
+    database.predict_accepting = true
+  } else {
+    database.predict_accepting = false
+  }
+  fs.writeFileSync('database.json', JSON.stringify(database, null, 2));
+  res.sendStatus(200)
+})
 
 app.post('/getDB', (req, res) =>{
   res.json(database);
@@ -1109,6 +1126,5 @@ app.listen(PORT, () => {
   console.log(`Сервер запущен на порту: ${PORT}`);
 });
 
-//Добавить выдача прав на создание кланов
 //Добавить систему подсчёта баллов
 //Добавить систему банов игроков
