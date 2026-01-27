@@ -979,30 +979,33 @@ app.post('/getInvCode', (req, res) =>{
 })
 
 //Бан/кик игрока в клане
-app.post('/banKickUserFromClan', (req, res) =>{
+app.post('/banKickUserFromClan', (req, res) => {
   const user = req.body.user;
   const kick = req.body.kick;
 
-  console.log('Выгоняем/Баним игрока ' + user + ' из клана')
-  if(kick){
-    const cid = database.users.find(item => item.id == user).clan
-    database.clans.find(item => item.id == cid).members.filter(item => item !== user)
-    database.users.find(item => item.id == user).clan = null;
-
-    fs.writeFileSync('database.json', JSON.stringify(database, null, 2));
-    console.log('Пользователя кикнули из клана')
-    res.sendStatus(200)
-  } else {
-    const cid = database.users.find(item => item.id == user).clan
-    database.clans.find(item => item.id == cid).members.filter(item => item !== user)
-    database.clans.find(item => item.id == cid).black_list.push(user)
-    database.users.find(item => item.id == user).clan = null;
-
-    fs.writeFileSync('database.json', JSON.stringify(database, null, 2));
-    console.log('Пользователя забанили в клане')
-    res.sendStatus(200)
+  console.log('Выгоняем/Баним игрока ' + user + ' из клана');
+  const userObj = database.users.find(u => u.id == user);
+  if (!userObj || !userObj.clan) {
+    return res.sendStatus(400);
   }
-})
+
+  const clan = database.clans.find(c => c.id == userObj.clan);
+  if (!clan) {
+    return res.sendStatus(400);
+  }
+
+  clan.members = clan.members.filter(id => id !== user);
+  if (!kick) {
+    clan.black_list.push(user);
+    console.log('Пользователя забанили в клане');
+  } else {
+    console.log('Пользователя кикнули из клана');
+  }
+  userObj.clan = null;
+
+  fs.writeFileSync('database.json', JSON.stringify(database, null, 2));
+  res.sendStatus(200);
+});
 
 //Удалить клан
 app.post('/delClan', (req, res) =>{
@@ -1052,10 +1055,40 @@ app.post('/getDBCoefsForAP', (req, res) =>{
   }
 })
 
-//Сохранить админские изменения
+//Сохранить результаты гонок
 app.post('/saveRaceResult', (req, res) =>{
   const editions = req.body.editions;
 })
+
+//Получить БД игроков для выдачи прав на создание клана
+app.post('/getUsersCCDB', (req, res) =>{
+  let data = {
+    username: [],
+    clanCreating: []
+  };
+  database.users.forEach(user => {
+    data.username.push(user.username);
+    data.clanCreating.push(!!user.creatingClan);
+  });
+  res.json(data)
+})
+
+//Выдать/Забрать права на создание клана
+app.post('/giveCCRights', (req, res) =>{
+  const username = req.body.username;
+  const choise = req.body.choise;
+  if(choise){
+    database.users.find(item => item.username === username).creatingClan = true;
+    console.log('Пользователю ' + username + ' выданы права на создание клана')
+  } else {
+    database.users.find(item => item.username === username).creatingClan = false;
+    console.log('У пользователя ' + username + ' отняты права на создание клана')
+  }
+
+  fs.writeFileSync('database.json', JSON.stringify(database, null, 2));
+  res.sendStatus(200);
+})
+
 
 app.post('/getDB', (req, res) =>{
   res.json(database);
@@ -1067,7 +1100,6 @@ app.listen(PORT, () => {
   console.log(`Сервер запущен на порту: ${PORT}`);
 });
 
-//Добавить всё остально в админ панель
+//Добавить выдача прав на создание кланов
 //Добавить систему подсчёта баллов
-
-//Не удаляется участник клана при кике
+//Добавить систему банов игроков
