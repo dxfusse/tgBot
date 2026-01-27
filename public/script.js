@@ -69,7 +69,7 @@ function MainPage() {
   })
 
   document.getElementById('dop-button').addEventListener('click', () => {
-    alert(`
+    /*alert(`
         Данный бот, состоящий из кода для серверной/клиентской части, включая все медиафайлы, использованные в ходе разработки (Далее - Бот) 
         разработан с нуля разработчиком: @Its_dxfusse, id:774319557 (Далее - Разработчик).
         Дата окончания разработки Бота Разработчиком: 21.01.2026. Любые изменения, внесённые после этой даты не являются ответственностью Разработчика
@@ -86,7 +86,16 @@ function MainPage() {
           - Нарушение действующего законодательства РФ
           - Иные неправомерные действия совершёные Ботом и/или с его помощью
 
-        © 2026 @Its_dxfusse. Все права защищены.`)
+        © 2026 @Its_dxfusse. Все права защищены.`)*/
+    fetch(service + '/getDB', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ user : user })
+    })
+    .then(res => res.json())
+    .then(data => {
+      alert(JSON.stringify(data))
+    })
   })
 }
 
@@ -1140,13 +1149,39 @@ function FAQPage() {
 
 }
 
-//Страница админа
-function AdminPanelPage() {
+//Админ-панель
+function AdminPanelMainPage(){
   const user = tg.initDataUnsafe.user;
   app.style.backgroundImage = "url('../images/other/background4.png')"
 
   render( `
-    <p class="меню-текст">Админ панель</p>
+    <img src="../images/other/f1_logo.png" class="f1_logo">
+    <p></p>
+    <p></p>
+    <div class="меню">
+      <button data-page="admin_panel_results" class="кнопка-меню">Публикация результатов гонок</button>
+      <button data-page="admin_panel_clans" class="кнопка-меню">Выдача прав создания кланов</button>
+      <button data-page="admin_panel_ban" class="кнопка-меню">Бан игроков</button>
+    </div>
+    <p></p>
+    <button data-page="main" class="кнопка-меню">Назад</button>
+  `);
+
+  const menuButtons = document.querySelectorAll('.кнопка-меню');
+  menuButtons.forEach((btn, index) => {
+    setTimeout(()=>{
+        btn.classList.add('activate-menuButtons-animation')
+    }, index * 70)
+  })
+}
+
+//Страница публикации результатов
+function AdminPanelResultsPage() {
+  const user = tg.initDataUnsafe.user;
+  app.style.backgroundImage = "url('../images/other/background4.png')"
+
+  render( `
+    <p class="меню-текст">Админ панель: Сохранение результатов</p>
     <div class="меню" id="container_admin_panel1"> 
       <div class="div-head-menu"> 
         <button class="кнопки-перелистывание"> < </button> 
@@ -1157,71 +1192,258 @@ function AdminPanelPage() {
         <select class="inputs" id="admin_select_1"></select>
         <img src="../images/other/downArrow.png" id="downArrow">
         <select class="inputs" id="admin_select_2"></select>
+        <button class="кнопка-меню" id="save_admin_choice">Сохранить пункт</button>
+      </div>
+      <div class="меню" id="second_admin_menu">
+        <p class="баланс" id="second_admin_menu_text">Ваши изменения</p>
+        <div class="разделитель"></div>
+        <div class="div-createTeam" id="div_changes_texts">
+          <p class="баланс" id="admin_panel_changes">Вы ещё не внесли изменений</p>
+        </div>
       </div>
     </div>
     <p></p>
-    <button data-page="main" class="кнопка-меню">Назад</button>
+    <button class="кнопка-меню" id="save_all_editions">Сохранить Изменения</button>
+    <p></p>
+    <button data-page="admin_panel" class="кнопка-меню">Назад</button>
   `);
+
   document.getElementById('container_admin_panel1').style.width = '380px'
+  document.getElementById('second_admin_menu').style.width = '350px'
+  document.getElementById('admin_panel_changes').style.fontSize = '14px'
+  document.getElementById('div_changes_texts').style.width = '350px'
+  document.getElementById('div_changes_texts').style.alignItems = 'center'
+  document.getElementById('div_changes_texts').style.maxHeight = '100px'
+  document.querySelectorAll('.inputs').forEach(element => {
+    element.style.width = '300px';
+  });
+
   const menuTexts = ['Пилоты', 'Двигатели', 'Пит-стопы', 'Мостики'];
+  const fetches = ['drivers', 'engines', 'pit_stops', 'bridges']
 
   let currentIndex = 0;
-
+  let editions = {
+    drivers : [],
+    engines : [],
+    pit_stops : [],
+    bridges : []
+  }
   const textEl = document.getElementById('menu_choise_text');
   const prevBtn = document.querySelector('.кнопки-перелистывание:first-child');
   const nextBtn = document.querySelector('.кнопки-перелистывание:last-child');
   document.getElementById('downArrow').style.width = '60px'
-  document.getElementById('downArrow').style.height = '60px'
+  document.getElementById('downArrow').style.height = '40px'
 
   textEl.innerText = menuTexts[currentIndex];
+  sendFetch(fetches[currentIndex])
 
   prevBtn.addEventListener('click', () => {
     currentIndex--;
     if (currentIndex < 0) {
-      currentIndex = menuTexts.length - 1; // зацикливание
+      currentIndex = menuTexts.length - 1;
     }
     textEl.innerText = menuTexts[currentIndex];
-    sendFetch(menuTexts[currentIndex])
+    document.getElementById('admin_select_1').innerHTML = ''
+    document.getElementById('admin_select_2').innerHTML = ''
+    sendFetch(fetches[currentIndex])
   });
 
   nextBtn.addEventListener('click', () => {
     currentIndex++;
     if (currentIndex >= menuTexts.length) {
-      currentIndex = 0; // зацикливание
+      currentIndex = 0;
     }
     textEl.innerText = menuTexts[currentIndex];
-    sendFetch(menuTexts[currentIndex])
+    document.getElementById('admin_select_1').innerHTML = ''
+    document.getElementById('admin_select_2').innerHTML = ''
+    sendFetch(fetches[currentIndex])
   });
 
-  function sendFetch(choice){
-    fetch(service + '/getDBforAP', {
+  document.getElementById('save_all_editions').addEventListener('click', () => {
+    if(!confirm('Вы уверены, что хотите сохранить изменения?')){
+      return;
+    }
+    alert(JSON.stringify(editions))
+    /*
+    fetch(service + '/saveRaceResult', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(choice)
+      body: JSON.stringify({editions : editions})
     })
     .then(res => res.json())
     .then(data => {
-      //Для первого селекта
+
+    })*/
+  }) 
+
+  //Механика для сохранения результатов
+  function sendFetch(choice) {
+    fetch(service + '/getDBCoefsForAP', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ choice })
+    })
+    .then(res => res.json())
+    .then(data => {
       const select1 = document.getElementById('admin_select_1');
+      const select2 = document.getElementById('admin_select_2');
+
+      const saveBtn = document.getElementById('save_admin_choice');
+
+      //очистка селектов
       select1.innerHTML = '';
+      select2.innerHTML = '';
+
+      //первый селект
       data.database.forEach(variant => {
         const option = document.createElement('option');
         option.value = variant;
         option.textContent = variant;
+        option.style.color = 'black';
         select1.appendChild(option);
       });
 
-      //Для второго селекта
-      const select2 = document.getElementById('admin_select_1');
-      select2.innerHTML = '';
+      //второй селект
       data.adminTools.forEach(variant => {
         const option = document.createElement('option');
         option.value = variant;
         option.textContent = variant;
+        option.style.color = 'black';
         select2.appendChild(option);
       });
+
+      saveBtn.onclick = () => {
+        const select1_val = select1.value;
+        const select2_val = select2.value;
+
+        const key = fetches[currentIndex];
+
+        const existingEdit = editions[key].find(
+          e => e.name === select1_val && e.event === select2_val
+        );
+
+        if (existingEdit) {
+          existingEdit.number += 1;
+        } else {
+          editions[key].push({
+            name: select1_val,
+            event: select2_val,
+            number: 1
+          });
+        }
+
+        const changesEl = document.getElementById('admin_panel_changes');
+        const titleEl = document.getElementById('second_admin_menu_text');
+
+        const lines = Object.entries(editions)
+          .flatMap(([key, arr]) => {
+            const index = fetches.indexOf(key);
+            const category = menuTexts[index];
+
+            return arr.map(
+              e => `${e.name} (${category}) - ${e.event} (x${e.number})`
+            );
+          });
+
+        titleEl.textContent = 'Ваши изменения (Не сохранено!)';
+        changesEl.innerHTML = lines.length
+          ? lines.join('<br>')
+          : 'Вы ещё не внесли изменений';
+      };
     })
   }
+}
+
+//Страница выдачи/отнятия прав на создание клана
+function AdminPanelCCPage() {
+  const user = tg.initDataUnsafe.user;
+  app.style.backgroundImage = "url('../images/other/background4.png')"
+
+  render( `
+    <p class="меню-текст">Админ панель: Создание кланов</p>
+    <div class="меню" id="admin_panel_CC_div">
+      <p class="баланс">Введите ник игрока, которому хотите выдать права на создание клана</p>
+      <input class="inputs" placeholder="Вводите ник, указанный в тг через @" id="username_forCC">
+      <button class="кнопка-меню" id="giveRightBtn">Выдать права</button>
+      <button class="кнопка-меню" id="cancelRightBtn">Забрать права</button>
+    </div>
+    <p></p>
+    <button data-page="admin_panel" class="кнопка-меню">Назад</button>
+  `);
+  document.getElementById('admin_panel_CC_div').style.textAlign = 'center'
+  fetch(service + '/getUsersCCDB', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ user : user })
+  })
+  .then(res => res.json())
+  .then(data => {
+    const inputEl = document.getElementById('username_forCC');
+    const giveRightBtn = document.getElementById('giveRightBtn');
+    const cancelRightBtn = document.getElementById('cancelRightBtn');
+
+    giveRightBtn.addEventListener('click', () => {
+      const username = inputEl.value.trim();
+
+      if (!username) {
+        showToast('Введите ник', false);
+        return;
+      }
+
+      const index = data.username.findIndex(item => item === username)
+      if(index != -1){
+        const rights = data.clanCreating[index]
+        if(rights){
+          showToast('У игрока уже есть такие права!')
+        } else {
+          actionRights(username, true);
+        }
+      } else { 
+        showToast('Такого игрока не существует!')
+      }
+    });
+
+    cancelRightBtn.addEventListener('click', () => {
+      const username = inputEl.value.trim();
+
+      if (!username) {
+        showToast('Введите ник', false);
+        return;
+      }
+      
+      const index = data.username.findIndex(item => item === username)
+      if(index != -1){
+        const rights = data.clanCreating[index]
+        if(!rights){
+          showToast('У игрока и так нет таких прав!')
+        } else {
+          if(confirm('Вы уверены что хотите отнять права на созданик клана у игрока ' + username + '? Если у него есть клан, он будет удалён!')){
+            actionRights(username, false);
+          }
+        }
+      } else { 
+        showToast('Такого игрока не существует!')
+      }
+    });
+
+    function actionRights(user, choise) {
+      const data = {
+        username: user,
+        choise: choise
+      };
+
+      fetch(service + '/giveCCRights', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      })
+      .then(res => {
+        if (res.status === 200) {
+          showToast('Успешно!', true);
+        }
+      });
+    }
+  });
 
 }
 
@@ -1245,7 +1467,10 @@ function go(page, params = {}) {
   if (page === 'rating') UserRatingPage();
   if (page === 'createTeam') CreateTeamPage(params.select);
   if (page === 'FAQ') FAQPage();
-  if (page === 'admin_panel') AdminPanelPage()
+  if (page === 'admin_panel') AdminPanelMainPage();
+  if (page === 'admin_panel_results') AdminPanelResultsPage();
+  if (page === 'admin_panel_clans') AdminPanelCCPage();
+  if (page === 'admin_panel_ban') showToast('В разработке...');
 }
 
 //Привязка событий к кнопкам
