@@ -1161,11 +1161,49 @@ function AdminPanelMainPage(){
     <div class="меню">
       <button data-page="admin_panel_results" class="кнопка-меню">Публикация результатов гонок</button>
       <button data-page="admin_panel_clans" class="кнопка-меню">Выдача прав создания кланов</button>
+      <button class="кнопка-меню" id="changing_predictions">Запретить менять команду</button>
       <button data-page="admin_panel_ban" class="кнопка-меню">Бан игроков</button>
     </div>
     <p></p>
     <button data-page="main" class="кнопка-меню">Назад</button>
   `);
+
+  fetch(service + '/checkPredictsAccepting', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({user : user})
+  })
+  .then(res => {
+    if(res.status == 200){
+      document.getElementById('changing_predictions').textContent = 'Запретить менять команду'
+      document.getElementById('changing_predictions').addEventListener('click', () => {
+        fetch(service + '/checkPredictsAccepting', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({choise : false})
+        })
+        .then(res => {
+          if(res.status == 200){
+            showToast('Успешно', true)
+          }
+        })
+      })
+    } else {
+      document.getElementById('changing_predictions').textContent = 'Разрешить менять команду'
+      document.getElementById('changing_predictions').addEventListener('click', () => {
+        fetch(service + '/checkPredictsAccepting', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({choise : true})
+        })
+        .then(res => {
+          if(res.status == 200){
+            showToast('Успешно', true)
+          }
+        })
+      })
+    }
+  })
 
   const menuButtons = document.querySelectorAll('.кнопка-меню');
   menuButtons.forEach((btn, index) => {
@@ -1453,7 +1491,7 @@ let currentRoute = {
   params: {}
 };
 
-//Маршрут для форм
+//Маршруты для форм
 function go(page, params = {}) {
   currentRoute.page = page;
   currentRoute.params = params;
