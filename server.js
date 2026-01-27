@@ -1081,8 +1081,17 @@ app.post('/giveCCRights', (req, res) =>{
     database.users.find(item => item.username === username).creatingClan = true;
     console.log('Пользователю ' + username + ' выданы права на создание клана')
   } else {
-    database.users.find(item => item.username === username).creatingClan = false;
-    console.log('У пользователя ' + username + ' отняты права на создание клана')
+    const user = database.users.find(item => item.username === username)
+    user.creatingClan = false;
+    const clanIndex = database.clans.findIndex(item => item.members[0] === user.id)
+
+    if(clanIndex != -1){
+      database.clans[clanIndex].members.forEach(member => {
+        database.users.find(item => item.id === member).clan = null;
+      })
+      database.clans.splice(clanIndex, 1);
+    }
+    console.log('У пользователя ' + username + ' отняты права на создание клана. Если у пользователя был клан, то он был удалён')
   }
 
   fs.writeFileSync('database.json', JSON.stringify(database, null, 2));
