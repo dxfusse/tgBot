@@ -1161,6 +1161,7 @@ function AdminPanelMainPage(){
     <div class="меню">
       <button data-page="admin_panel_results" class="кнопка-меню">Публикация результатов гонок</button>
       <button data-page="admin_panel_clans" class="кнопка-меню">Выдача прав создания кланов</button>
+      <button data-page="admin_panel_GAR" class="кнопка-меню">Выдача прав администратора</button>
       <button class="кнопка-меню" id="changing_predictions">Загрузка...</button>
     </div>
     <p></p>
@@ -1509,6 +1510,7 @@ function go(page, params = {}) {
   if (page === 'admin_panel') AdminPanelMainPage();
   if (page === 'admin_panel_results') AdminPanelResultsPage();
   if (page === 'admin_panel_clans') AdminPanelCCPage();
+  if (page === 'admin_panel_GAR') showToast('В разработке...')
 }
 
 //Привязка событий к кнопкам
