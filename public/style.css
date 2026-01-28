@@ -499,7 +499,12 @@ body {
   border-color: rgba(255, 255, 255, 0.2);
   padding: 10px 10px;
 }
-
+.разделитель {
+  height: 1px;
+  width: 350px;
+  background: rgba(255, 255, 255, 0.3);
+  margin: 0 14px;
+}
 @font-face {
     font-family: 'dop';
     src: url('dopText.otf') format('truetype');
