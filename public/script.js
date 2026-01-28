@@ -1161,8 +1161,7 @@ function AdminPanelMainPage(){
     <div class="меню">
       <button data-page="admin_panel_results" class="кнопка-меню">Публикация результатов гонок</button>
       <button data-page="admin_panel_clans" class="кнопка-меню">Выдача прав создания кланов</button>
-      <button class="кнопка-меню" id="changing_predictions">Запретить менять команду</button>
-      <button data-page="admin_panel_ban" class="кнопка-меню">Бан игроков</button>
+      <button class="кнопка-меню" id="changing_predictions">Загрузка...</button>
     </div>
     <p></p>
     <button data-page="main" class="кнопка-меню">Назад</button>
@@ -1177,7 +1176,7 @@ function AdminPanelMainPage(){
     if(res.status == 200){
       document.getElementById('changing_predictions').textContent = 'Запретить менять команду'
       document.getElementById('changing_predictions').addEventListener('click', () => {
-        fetch(service + '/checkPredictsAccepting', {
+        fetch(service + '/changeTeamChanging', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({choise : false})
@@ -1191,7 +1190,7 @@ function AdminPanelMainPage(){
     } else {
       document.getElementById('changing_predictions').textContent = 'Разрешить менять команду'
       document.getElementById('changing_predictions').addEventListener('click', () => {
-        fetch(service + '/checkPredictsAccepting', {
+        fetch(service + '/changeTeamChanging', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({choise : true})
@@ -1301,17 +1300,19 @@ function AdminPanelResultsPage() {
     if(!confirm('Вы уверены, что хотите сохранить изменения?')){
       return;
     }
-    alert(JSON.stringify(editions))
-    /*
+    //alert(JSON.stringify(editions))
     fetch(service + '/saveRaceResult', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({editions : editions})
     })
-    .then(res => res.json())
-    .then(data => {
-
-    })*/
+    .then(res => {
+      if(res.status == 200){
+        showToast('Вы сохранили результаты гонок!', true)
+      } else {
+        showToast('Результаты гонок уже сохранены!')
+      }
+    })
   }) 
 
   //Механика для сохранения результатов
@@ -1508,7 +1509,6 @@ function go(page, params = {}) {
   if (page === 'admin_panel') AdminPanelMainPage();
   if (page === 'admin_panel_results') AdminPanelResultsPage();
   if (page === 'admin_panel_clans') AdminPanelCCPage();
-  if (page === 'admin_panel_ban') showToast('В разработке...');
 }
 
 //Привязка событий к кнопкам
