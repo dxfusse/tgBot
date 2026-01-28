@@ -1052,10 +1052,77 @@ app.post('/getDBCoefsForAP', (req, res) =>{
 })
 
 //Сохранить результаты гонок
-app.post('/saveRaceResult', (req, res) =>{
+app.post('/saveRaceResult', (req, res) => {
   const editions = req.body.editions;
-  database.race_results = editions;
-})
+  const coefficients = database.coefficients;
+
+  if(Object.keys(database.race_results).length != 0){
+    res.sendStatus(201);
+    return;
+  }
+
+  //Подсчёт итогов гонки
+  const result = {
+    drivers: [],
+    engines: [],
+    pit_stops: [],
+    bridges: []
+  };
+
+  Object.keys(editions).forEach(category => {
+    editions[category].forEach(entry => {
+      const { name, event, number } = entry;
+
+      const coef = coefficients[category].find(c => c.event === event);
+      if (!coef) return;
+      const points = coef.points * number;
+
+      const existing = result[category].find(item => item.name === name);
+      if (existing) {
+        existing.score += points;
+      } else {
+        result[category].push({
+          name,
+          score: points
+        });
+      }
+    });
+  });
+
+  //Функция получения очков по id
+  function getScore(category, id) {
+    if (!id) return 0;
+    const found = result[category].find(e => e.name === id);
+    return found ? found.score : 0;
+  }
+
+  //Начисление очков игрокам и их клану
+  database.users.forEach(user => {
+    if (!user.team) return;
+
+    let total = 0;
+
+    total += getScore('drivers', user.team.racer1);
+    total += getScore('drivers', user.team.racer2);
+    total += getScore('engines', user.team.engine);
+    total += getScore('pit_stops', user.team.pit_stop);
+    total += getScore('bridges', user.team.bridge);
+
+    user.score += total;
+
+    if (user.clan != null) {
+      const clan = database.clans.find(c => c.id === user.clan);
+      if (clan) {
+        clan.score += total;
+      }
+    }
+  });
+
+  database.race_results = result;
+  fs.writeFileSync('database.json', JSON.stringify(database, null, 2));
+  console.log('\nСохранены результаты гонок')
+  res.sendStatus(200);
+});
 
 //Получить БД игроков для выдачи прав на создание клана
 app.post('/getUsersCCDB', (req, res) =>{
@@ -1126,5 +1193,4 @@ app.listen(PORT, () => {
   console.log(`Сервер запущен на порту: ${PORT}`);
 });
 
-//Добавить систему подсчёта баллов
 //Добавить систему банов игроков
