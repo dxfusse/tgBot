@@ -1056,12 +1056,13 @@ app.post('/saveRaceResult', (req, res) => {
   const editions = req.body.editions;
   const coefficients = database.coefficients;
 
-  if(Object.keys(database.race_results).length != 0){
+  //Защита от повторного сохранения
+  if (database.race_results && Object.keys(database.race_results).length !== 0) {
     res.sendStatus(201);
     return;
   }
 
-  //Подсчёт итогов гонки
+  //Итоговые результаты гонки (по ID)
   const result = {
     drivers: [],
     engines: [],
@@ -1069,34 +1070,36 @@ app.post('/saveRaceResult', (req, res) => {
     bridges: []
   };
 
+  //Подсчёт очков по каждому пункту
   Object.keys(editions).forEach(category => {
     editions[category].forEach(entry => {
-      const { name, event, number } = entry;
+      const { name: id, event, number } = entry;
 
       const coef = coefficients[category].find(c => c.event === event);
       if (!coef) return;
+
       const points = coef.points * number;
 
-      const existing = result[category].find(item => item.name === name);
+      const existing = result[category].find(item => item.id === id);
       if (existing) {
         existing.score += points;
       } else {
         result[category].push({
-          name,
+          id,
           score: points
         });
       }
     });
   });
 
-  //Функция получения очков по id
+  //Получение очков по категории и ID
   function getScore(category, id) {
     if (!id) return 0;
-    const found = result[category].find(e => e.name === id);
+    const found = result[category].find(e => e.id === id);
     return found ? found.score : 0;
   }
 
-  //Начисление очков игрокам и их клану
+  //Начисление очков игрокам и их кланам
   database.users.forEach(user => {
     if (!user.team) return;
 
@@ -1108,19 +1111,24 @@ app.post('/saveRaceResult', (req, res) => {
     total += getScore('pit_stops', user.team.pit_stop);
     total += getScore('bridges', user.team.bridge);
 
-    user.score += total;
-
+    if (total === 0) return;
+    user.score = (user.score || 0) + total;
     if (user.clan != null) {
       const clan = database.clans.find(c => c.id === user.clan);
       if (clan) {
-        clan.score += total;
+        clan.score = (clan.score || 0) + total;
       }
     }
+
+    console.log(`Игрок ${user.id} получил ${total} очков`);
   });
 
+  // Сохраняем результаты гонки
   database.race_results = result;
+
   fs.writeFileSync('database.json', JSON.stringify(database, null, 2));
-  console.log('\nСохранены результаты гонок')
+
+  console.log('\nСохранены результаты гонок');
   res.sendStatus(200);
 });
 
@@ -1162,7 +1170,7 @@ app.post('/giveCCRights', (req, res) =>{
   res.sendStatus(200);
 })
 
-//проверка на разрешение менять команду
+//Проверка на разрешение менять команду
 app.post('/checkPredictsAccepting', (req, res) =>{
   if(database.predict_accepting){
     res.sendStatus(200)
@@ -1183,6 +1191,7 @@ app.post('/changeTeamChanging', (req, res) =>{
   res.sendStatus(200)
 })
 
+//Запрос всей БД
 app.post('/getDB', (req, res) =>{
   res.json(database);
 })
@@ -1193,4 +1202,11 @@ app.listen(PORT, () => {
   console.log(`Сервер запущен на порту: ${PORT}`);
 });
 
-//Добавить систему банов игроков
+//Добавить выдачу админки 1
+//Добавить систему кика если зашёл не через тг 1
+//Добавить в админ панель редактирование цен 1
+//Переделать БД двигателей 0
+//Переделать кнопку смены команды на некст гонку 0
+//Не сохраняются очки при публикации результатов 0
+//Добавить, что игроки могут менять команду только после трёх гонок 1
+//Переделать фотки с локальных, на ссылки
