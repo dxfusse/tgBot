@@ -1055,9 +1055,11 @@ app.post('/getDBCoefsForAP', (req, res) =>{
 app.post('/saveRaceResult', (req, res) => {
   const editions = req.body.editions;
   const coefficients = database.coefficients;
+  console.log('\nПопытка сохранить результаты гонок')
 
   //Защита от повторного сохранения
   if (database.race_results && Object.keys(database.race_results).length !== 0) {
+    console.log('Ошибка: Результаты уже сохранены в БД')
     res.sendStatus(201);
     return;
   }
@@ -1099,6 +1101,7 @@ app.post('/saveRaceResult', (req, res) => {
     return found ? found.score : 0;
   }
 
+  console.log('Начинаем начисление очков игрокам и их кланам')
   //Начисление очков игрокам и их кланам
   database.users.forEach(user => {
     if (!user.team) return;
@@ -1111,16 +1114,18 @@ app.post('/saveRaceResult', (req, res) => {
     total += getScore('pit_stops', user.team.pit_stop);
     total += getScore('bridges', user.team.bridge);
 
-    if (total === 0) return;
+    console.log(
+      `Подсчёт для игрока ${user.id}: ${total} очков`
+    );
+
     user.score = (user.score || 0) + total;
+
     if (user.clan != null) {
       const clan = database.clans.find(c => c.id === user.clan);
       if (clan) {
         clan.score = (clan.score || 0) + total;
       }
     }
-
-    console.log(`Игрок ${user.id} получил ${total} очков`);
   });
 
   // Сохраняем результаты гонки
@@ -1128,7 +1133,7 @@ app.post('/saveRaceResult', (req, res) => {
 
   fs.writeFileSync('database.json', JSON.stringify(database, null, 2));
 
-  console.log('\nСохранены результаты гонок');
+  console.log('Сохранены результаты гонок');
   res.sendStatus(200);
 });
 
