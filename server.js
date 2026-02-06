@@ -1058,14 +1058,19 @@ app.post('/saveRaceResult', (req, res) => {
 
   console.log('\nПопытка сохранить результаты гонок');
 
-  // Защита от повторного сохранения
   if (database.race_results && Object.keys(database.race_results).length !== 0) {
-    console.log('Ошибка: Результаты уже сохранены');
-    res.sendStatus(201);
-    return;
+    console.log('Ошибка: результаты уже сохранены');
+    return res.sendStatus(201);
   }
 
-  // Итоговые результаты гонки (по ID)
+  // Маппинг категорий к таблицам БД
+  const entityTables = {
+    drivers: database.drivers,
+    engines: database.engines,
+    pit_stops: database.pit_stops,
+    bridges: database.bridges
+  };
+
   const result = {
     drivers: [],
     engines: [],
@@ -1073,56 +1078,58 @@ app.post('/saveRaceResult', (req, res) => {
     bridges: []
   };
 
-  // Подсчёт очков по каждому пункту
+  // Подсчёт очков по name → id
   Object.keys(editions).forEach(category => {
     editions[category].forEach(entry => {
-      const id = Number(entry.name);
-      const { event, number } = entry;
+      const { name, event, number } = entry;
 
-      const coef = coefficients[category].find(c => c.event === event);
+      const entity = entityTables[category]
+        .find(e => e.name === name);
+
+      if (!entity) {
+        console.log(`⚠️ Не найден объект "${name}" в категории ${category}`);
+        return;
+      }
+
+      const coef = coefficients[category]
+        .find(c => c.event === event);
+
       if (!coef) return;
 
       const points = coef.points * number;
 
-      const existing = result[category].find(item => item.id === id);
+      const existing = result[category]
+        .find(e => e.id === entity.id);
+
       if (existing) {
         existing.score += points;
       } else {
         result[category].push({
-          id,
+          id: entity.id,
           score: points
         });
       }
     });
   });
 
-  console.log(
-    'Результаты гонки:',
-    JSON.stringify(result, null, 2)
-  );
+  console.log('Результаты гонки:', JSON.stringify(result, null, 2));
+  console.log('Начинаем начисление очков');
 
-  // Получение очков по категории и ID
   function getScore(category, id) {
-    if (id == null) return 0;
-    id = Number(id);
-
+    if (!id) return 0;
     const found = result[category].find(e => e.id === id);
     return found ? found.score : 0;
   }
 
-  console.log('Начинаем начисление очков игрокам и их кланам');
-
-  // Начисление очков игрокам и кланам
   database.users.forEach(user => {
     if (!user.team) return;
 
-    let total = 0;
-
-    total += getScore('drivers', user.team.racer1);
-    total += getScore('drivers', user.team.racer2);
-    total += getScore('engines', user.team.engine);
-    total += getScore('pit_stops', user.team.pit_stop);
-    total += getScore('bridges', user.team.bridge);
+    const total =
+      getScore('drivers', user.team.racer1) +
+      getScore('drivers', user.team.racer2) +
+      getScore('engines', user.team.engine) +
+      getScore('pit_stops', user.team.pit_stop) +
+      getScore('bridges', user.team.bridge);
 
     console.log(`Игрок ${user.id} получает ${total} очков`);
 
@@ -1137,7 +1144,6 @@ app.post('/saveRaceResult', (req, res) => {
     }
   });
 
-  // Сохраняем результаты
   database.race_results = result;
   fs.writeFileSync('database.json', JSON.stringify(database, null, 2));
 
