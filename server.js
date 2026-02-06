@@ -1055,16 +1055,17 @@ app.post('/getDBCoefsForAP', (req, res) =>{
 app.post('/saveRaceResult', (req, res) => {
   const editions = req.body.editions;
   const coefficients = database.coefficients;
-  console.log('\nПопытка сохранить результаты гонок')
 
-  //Защита от повторного сохранения
+  console.log('\nПопытка сохранить результаты гонок');
+
+  // Защита от повторного сохранения
   if (database.race_results && Object.keys(database.race_results).length !== 0) {
-    console.log('Ошибка: Результаты уже сохранены в БД')
+    console.log('Ошибка: Результаты уже сохранены');
     res.sendStatus(201);
     return;
   }
 
-  //Итоговые результаты гонки (по ID)
+  // Итоговые результаты гонки (по ID)
   const result = {
     drivers: [],
     engines: [],
@@ -1072,10 +1073,11 @@ app.post('/saveRaceResult', (req, res) => {
     bridges: []
   };
 
-  //Подсчёт очков по каждому пункту
+  // Подсчёт очков по каждому пункту
   Object.keys(editions).forEach(category => {
     editions[category].forEach(entry => {
-      const { name: id, event, number } = entry;
+      const id = Number(entry.name);
+      const { event, number } = entry;
 
       const coef = coefficients[category].find(c => c.event === event);
       if (!coef) return;
@@ -1094,15 +1096,23 @@ app.post('/saveRaceResult', (req, res) => {
     });
   });
 
-  //Получение очков по категории и ID
+  console.log(
+    'Результаты гонки:',
+    JSON.stringify(result, null, 2)
+  );
+
+  // Получение очков по категории и ID
   function getScore(category, id) {
-    if (!id) return 0;
+    if (id == null) return 0;
+    id = Number(id);
+
     const found = result[category].find(e => e.id === id);
     return found ? found.score : 0;
   }
 
-  console.log('Начинаем начисление очков игрокам и их кланам')
-  //Начисление очков игрокам и их кланам
+  console.log('Начинаем начисление очков игрокам и их кланам');
+
+  // Начисление очков игрокам и кланам
   database.users.forEach(user => {
     if (!user.team) return;
 
@@ -1114,9 +1124,7 @@ app.post('/saveRaceResult', (req, res) => {
     total += getScore('pit_stops', user.team.pit_stop);
     total += getScore('bridges', user.team.bridge);
 
-    console.log(
-      `Подсчёт для игрока ${user.id}: ${total} очков`
-    );
+    console.log(`Игрок ${user.id} получает ${total} очков`);
 
     user.score = (user.score || 0) + total;
 
@@ -1124,13 +1132,13 @@ app.post('/saveRaceResult', (req, res) => {
       const clan = database.clans.find(c => c.id === user.clan);
       if (clan) {
         clan.score = (clan.score || 0) + total;
+        console.log(`Клан "${clan.name}" получает ${total} очков`);
       }
     }
   });
 
-  // Сохраняем результаты гонки
+  // Сохраняем результаты
   database.race_results = result;
-
   fs.writeFileSync('database.json', JSON.stringify(database, null, 2));
 
   console.log('Сохранены результаты гонок');
@@ -1214,4 +1222,4 @@ app.listen(PORT, () => {
 //Переделать кнопку смены команды на некст гонку 0
 //Не сохраняются очки при публикации результатов 0
 //Добавить, что игроки могут менять команду только после трёх гонок 1
-//Переделать фотки с локальных, на ссылки
+//Переделать фотки с локальных, на ссылки 1
