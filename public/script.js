@@ -1160,47 +1160,26 @@ function AdminPanelMainPage(){
     <p></p>
     <div class="меню">
       <button data-page="admin_panel_results" class="кнопка-меню">Публикация результатов гонок</button>
+      <button data-page="admin_panel_prices" class="кнопка-меню">Редактирование цен</button>
       <button data-page="admin_panel_clans" class="кнопка-меню">Выдача прав создания кланов</button>
       <button data-page="admin_panel_GAR" class="кнопка-меню">Выдача прав администратора</button>
-      <button class="кнопка-меню" id="changing_predictions">Загрузка...</button>
+      <button class="кнопка-меню" id="next_race_btn">Начать новую гонку</button>
     </div>
     <p></p>
     <button data-page="main" class="кнопка-меню">Назад</button>
   `);
 
-  fetch(service + '/checkPredictsAccepting', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({user : user})
-  })
-  .then(res => {
-    if(res.status == 200){
-      document.getElementById('changing_predictions').textContent = 'Запретить менять команду'
-      document.getElementById('changing_predictions').addEventListener('click', () => {
-        fetch(service + '/changeTeamChanging', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({choise : false})
-        })
-        .then(res => {
-          if(res.status == 200){
-            showToast('Успешно', true)
-          }
-        })
+  document.getElementById('next_race_btn').addEventListener('click', () => {
+    if(confirm('Вы уверены, что хотите начать новую гонку?')){
+       fetch(service + '/editClanPage', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ user: user })
       })
-    } else {
-      document.getElementById('changing_predictions').textContent = 'Разрешить менять команду'
-      document.getElementById('changing_predictions').addEventListener('click', () => {
-        fetch(service + '/changeTeamChanging', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({choise : true})
-        })
-        .then(res => {
-          if(res.status == 200){
-            showToast('Успешно', true)
-          }
-        })
+      .then(res => {
+        if(res.status == 200){
+          showToast('Новая гонка начата!', true)
+        }
       })
     }
   })
@@ -1487,6 +1466,259 @@ function AdminPanelCCPage() {
 
 }
 
+//Страница действий с правами администратора
+function AdminPanelGAR() {
+  const user = tg.initDataUnsafe.user;
+  app.style.backgroundImage = "url('../images/other/background4.png')"
+
+  render( `
+    <p class="меню-текст">Админ панель: Выдача прав админа</p>
+    <div class="меню" id="admin_panel_AR_div">
+      <p class="баланс">Введите ник игрока, которому хотите выдать права администратора</p>
+      <input class="inputs" placeholder="Вводите ник, указанный в тг через @ (без @)" id="username_forAR">
+      <button class="кнопка-меню" id="giveARRightBtn">Выдать права</button>
+      <button class="кнопка-меню" id="cancelARRightBtn">Забрать права</button>
+    </div>
+    <p></p>
+    <button data-page="admin_panel" class="кнопка-меню">Назад</button>
+  `);
+  document.getElementById('admin_panel_AR_div').style.textAlign = 'center'
+  fetch(service + '/getUsersCCDB', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ user : user })
+  })
+  .then(res => res.json())
+  .then(data => {
+    const inputEl = document.getElementById('username_forAR');
+    const giveRightBtn = document.getElementById('giveARRightBtn');
+    const cancelRightBtn = document.getElementById('cancelARRightBtn');
+
+    giveRightBtn.addEventListener('click', () => {
+      const username = inputEl.value.trim();
+
+      if (!username) {
+        showToast('Введите ник', false);
+        return;
+      }
+
+      const index = data.username.findIndex(item => item === username)
+      if(index != -1){
+        showToast('У пользователя уже есть права админа или его не существует')
+      } else {
+        actionRights(username, true)
+      }
+    });
+
+    cancelRightBtn.addEventListener('click', () => {
+      const username = inputEl.value.trim();
+
+      if (!username) {
+        showToast('Введите ник', false);
+        return;
+      }
+      
+      const index = data.username.findIndex(item => item === username)
+      if(index != -1){
+        actionRights(username, false)
+      } else {
+        showToast('У пользователя и так нет прав админа или его не существует')
+      }
+    });
+
+    function actionRights(user, choise) {
+      const data = {
+        username: user,
+        choise: choise
+      };
+
+      fetch(service + '/giveAdminRights', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      })
+      .then(res => {
+        if (res.status === 200) {
+          showToast('Успешно!', true);
+        }
+      });
+    }
+  });
+}
+
+//Страница редактирования цен
+function AdminPanelPrices() {
+  const user = tg.initDataUnsafe.user;
+  app.style.backgroundImage = "url('../images/other/background4.png')"
+
+  render( `
+    <p class="меню-текст">Админ панель: Редактирование цен</p>
+    <div class="меню" id="container_admin_panel1"> 
+      <div class="div-head-menu"> 
+        <button class="кнопки-перелистывание"> < </button> 
+        <p id="menu_choise_text" class="текст-меню-админ-панель"></p> 
+        <button class="кнопки-перелистывание"> > </button> 
+      </div>
+      <div class="меню">
+        <select class="inputs" id="admin_select_1"></select>
+        <img src="../images/other/downArrow.png" id="downArrow">
+        <input class="inputs" id="admin_select_2" type="number">
+        <button class="кнопка-меню" id="save_admin_choice">Сохранить пункт</button>
+      </div>
+      <div class="меню" id="second_admin_menu">
+        <p class="баланс" id="second_admin_menu_text">Ваши изменения</p>
+        <div class="разделитель"></div>
+        <div class="div-createTeam" id="div_changes_texts">
+          <p class="баланс" id="admin_panel_changes">Вы ещё не внесли изменений</p>
+        </div>
+      </div>
+    </div>
+    <p></p>
+    <button class="кнопка-меню" id="save_all_editions">Сохранить Изменения</button>
+    <p></p>
+    <button data-page="admin_panel" class="кнопка-меню">Назад</button>
+  `);
+
+  document.getElementById('container_admin_panel1').style.width = '380px'
+  document.getElementById('second_admin_menu').style.width = '350px'
+  document.getElementById('admin_panel_changes').style.fontSize = '14px'
+  document.getElementById('div_changes_texts').style.width = '350px'
+  document.getElementById('div_changes_texts').style.alignItems = 'center'
+  document.getElementById('div_changes_texts').style.maxHeight = '100px'
+  document.querySelectorAll('.inputs').forEach(element => {
+    element.style.width = '300px';
+  });
+
+  const menuTexts = ['Пилоты', 'Двигатели', 'Пит-стопы', 'Мостики'];
+  const fetches = ['drivers', 'engines', 'pit_stops', 'bridges']
+
+  let currentIndex = 0;
+  let editions = {
+    drivers : [],
+    engines : [],
+    pit_stops : [],
+    bridges : []
+  }
+  const textEl = document.getElementById('menu_choise_text');
+  const prevBtn = document.querySelector('.кнопки-перелистывание:first-child');
+  const nextBtn = document.querySelector('.кнопки-перелистывание:last-child');
+  document.getElementById('downArrow').style.width = '60px'
+  document.getElementById('downArrow').style.height = '40px'
+
+  textEl.innerText = menuTexts[currentIndex];
+  sendFetch(fetches[currentIndex])
+
+  prevBtn.addEventListener('click', () => {
+    currentIndex--;
+    if (currentIndex < 0) {
+      currentIndex = menuTexts.length - 1;
+    }
+    textEl.innerText = menuTexts[currentIndex];
+    document.getElementById('admin_select_1').innerHTML = ''
+    sendFetch(fetches[currentIndex])
+  });
+
+  nextBtn.addEventListener('click', () => {
+    currentIndex++;
+    if (currentIndex >= menuTexts.length) {
+      currentIndex = 0;
+    }
+    textEl.innerText = menuTexts[currentIndex];
+    document.getElementById('admin_select_1').innerHTML = ''
+    sendFetch(fetches[currentIndex])
+  });
+
+  document.getElementById('save_all_editions').addEventListener('click', () => {
+    if(!confirm('Вы уверены, что хотите сохранить изменения?')){
+      return;
+    }
+    fetch(service + '/saveNewPrices', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({editions : editions})
+    })
+    .then(res => {
+      if(res.status == 200){
+        showToast('Вы сохранили новые цены!', true)
+      } else {
+        showToast('Ошибка!', false)
+      }
+    })
+  }) 
+
+  //Механика для сохранения результатов
+  function sendFetch(choice) {
+    fetch(service + '/getDBPrices', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ choice })
+    })
+    .then(res => res.json())
+    .then(data => {
+      const select1 = document.getElementById('admin_select_1');
+      const priceInput = document.getElementById('admin_select_2');
+      const saveBtn = document.getElementById('save_admin_choice');
+
+      select1.innerHTML = '';
+
+      // Заполняем select
+      data.database.forEach((name, index) => {
+        const option = document.createElement('option');
+        option.value = name;
+        option.textContent = name;
+        option.style.color = 'black';
+        option.dataset.price = data.price[index];
+        select1.appendChild(option);
+      });
+
+      // Цена первого элемента по умолчанию
+      if (select1.options.length > 0) {
+        priceInput.value = select1.options[0].dataset.price;
+      }
+
+      // При смене пункта → меняем цену
+      select1.onchange = () => {
+        const selected = select1.options[select1.selectedIndex];
+        priceInput.value = selected.dataset.price;
+      };
+
+      // Сохранение изменения
+      saveBtn.onclick = () => {
+        const name = select1.value;
+        const cost = Number(priceInput.value);
+        const key = fetches[currentIndex];
+
+        const existing = editions[key].find(e => e.name === name);
+
+        if (existing) {
+          existing.cost = cost;
+        } else {
+          editions[key].push({ name, cost });
+        }
+
+        const changesEl = document.getElementById('admin_panel_changes');
+        const titleEl = document.getElementById('second_admin_menu_text');
+
+        const lines = Object.entries(editions)
+          .flatMap(([key, arr]) => {
+            const index = fetches.indexOf(key);
+            const category = menuTexts[index];
+
+            return arr.map(
+              e => `${e.name} (${category}) — $${e.cost}`
+            );
+          });
+
+        titleEl.textContent = 'Ваши изменения (Не сохранено!)';
+        changesEl.innerHTML = lines.length
+          ? lines.join('<br>')
+          : 'Вы ещё не внесли изменений';
+      };
+    });
+  }
+
+}
+
 //Маршрутизация
 let currentRoute = {
   page: 'main',
@@ -1510,7 +1742,8 @@ function go(page, params = {}) {
   if (page === 'admin_panel') AdminPanelMainPage();
   if (page === 'admin_panel_results') AdminPanelResultsPage();
   if (page === 'admin_panel_clans') AdminPanelCCPage();
-  if (page === 'admin_panel_GAR') showToast('В разработке...')
+  if (page === 'admin_panel_GAR') AdminPanelGAR();
+  if (page === 'admin_panel_prices') AdminPanelPrices();
 }
 
 //Привязка событий к кнопкам
