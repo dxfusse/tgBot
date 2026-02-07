@@ -1110,7 +1110,7 @@ function FAQPage() {
         </div>
         <div class="faq-divider"></div>
         <div class="faq-body">
-          <p>Да, однако изменения в команду можно будет вносить после каждой третьей гонки. Важно! Стоимость любой персоны может изменяться, в зависимости от ее результата. Так, пилот который провалил все три гонки может сильно упасть в цене. Эта система относится и ко всем составляющим команды</p>
+          <p>Да, однако изменения в команду можно будет вносить после каждой третьей гонки. <br>Важно! Стоимость любой персоны может изменяться, в зависимости от ее результата. Так, пилот, который провалил все три гонки, может сильно упасть в цене. Эта система относится ко всем составляющим команды</p>
         </div>
       </div>
 
@@ -1483,7 +1483,7 @@ function AdminPanelGAR() {
     <button data-page="admin_panel" class="кнопка-меню">Назад</button>
   `);
   document.getElementById('admin_panel_AR_div').style.textAlign = 'center'
-  fetch(service + '/getUsersCCDB', {
+  fetch(service + '/getUsersARDB', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ user : user })
