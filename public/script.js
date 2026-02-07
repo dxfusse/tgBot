@@ -8,7 +8,20 @@ const app = document.getElementById('app');
 // Общий рендер страниц
 function render(html) {
   app.innerHTML = html;
-  bindEvents(); // после вставки HTML привязываем события
+  bindEvents();
+}
+
+function isFromTG(user){
+  fetch(service + '/isFromTG', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ user : user })
+  })
+  .then(res => {
+    if (res.status != 200){
+      go('NotFromTG')
+    }
+  })
 }
 
 //Всплывающее уведомление
@@ -33,22 +46,12 @@ function showToast(text, err = false, duration = 4000) {
   }, duration);
 }
 
-
 //Главная страница
 function MainPage() {
   const user = tg.initDataUnsafe.user;
   app.style.backgroundImage = "url('../images/other/background1.jpg')"
 
-  fetch(service + '/isFromTG', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ user : user })
-  })
-  .then(res => {
-    if (res.status != 200){
-      alert('Ты не из тг');
-    }
-  })
+  isFromTG(user);
 
   fetch(service + '/entering', {
     method: 'POST',
@@ -127,6 +130,8 @@ function ProfilePage() {
   const user = tg.initDataUnsafe.user;
   app.style.backgroundImage = "url('../images/other/background2.JPG')"
 
+  isFromTG(user);
+
   render(`
     <p class="меню-текст">Твой профиль</p>
     <img class="pfp" id="pfp" src="../images/drivers/null_choise.jpg">
@@ -198,6 +203,8 @@ function ProfilePage() {
 function TeamPage() {
   const user = tg.initDataUnsafe.user;
   app.style.backgroundImage = "url('../images/other/background3.JPG')"
+
+  isFromTG(user);
   
   render(`
     <p class="меню-текст">Твоя команда</p>
@@ -376,6 +383,8 @@ function CreateTeamPage(select){
   const user = tg.initDataUnsafe.user;
   app.style.backgroundImage = "url('../images/other/background3.JPG')"
 
+  isFromTG(user);
+
   render(`
     <p class="меню-текст" id="mainText"></p>
     <p class="баланс" id="balance_createTeam">Баланс: $0</p>
@@ -510,6 +519,8 @@ function CreateTeamPage(select){
 function ClansPage() {
   const user = tg.initDataUnsafe.user;
   app.style.backgroundImage = "url('../images/other/background4.png')"
+
+  isFromTG(user);
 
   render( `
     <p class="меню-текст">Кланы</p>
@@ -765,6 +776,8 @@ function ClanViewPage(select) {
   const user = tg.initDataUnsafe.user;
   app.style.backgroundImage = "url('../images/other/background4.png')"
 
+  isFromTG(user);
+
   render( `
     <p class="меню-текст" id="pageView-clanName">Загрузка...</p>
     <p></p>
@@ -829,6 +842,8 @@ function ClanViewPage(select) {
 function ClanEditingPage() {
   const user = tg.initDataUnsafe.user;
   app.style.backgroundImage = "url('../images/other/background4.png')"
+
+  isFromTG(user);
 
   render( `
     <p class="меню-текст">Управление кланом</p>
@@ -994,6 +1009,8 @@ function UserRatingPage() {
   const user = tg.initDataUnsafe.user;
   app.style.backgroundImage = "url('../images/other/background5.png')"
 
+  isFromTG(user);
+
   render( `
     <p class="меню-текст">Рейтинг игроков</p>
     <p></p>
@@ -1079,6 +1096,8 @@ function UserRatingPage() {
 //Страница FAQ
 function FAQPage() {
   app.style.backgroundImage = "url('../images/other/background2.JPG')"
+
+  isFromTG(user);
 
   render( `
     <p class="меню-текст">Ответы на вопросы</p>
@@ -1177,6 +1196,8 @@ function AdminPanelMainPage(){
   const user = tg.initDataUnsafe.user;
   app.style.backgroundImage = "url('../images/other/background4.png')"
 
+  isFromTG(user);
+
   render( `
     <img src="../images/other/f1_logo.png" class="f1_logo">
     <p></p>
@@ -1219,6 +1240,8 @@ function AdminPanelMainPage(){
 function AdminPanelResultsPage() {
   const user = tg.initDataUnsafe.user;
   app.style.backgroundImage = "url('../images/other/background4.png')"
+
+  isFromTG(user);
 
   render( `
     <p class="меню-текст">Админ панель: Сохранение результатов</p>
@@ -1401,6 +1424,8 @@ function AdminPanelCCPage() {
   const user = tg.initDataUnsafe.user;
   app.style.backgroundImage = "url('../images/other/background4.png')"
 
+  isFromTG(user);
+
   render( `
     <p class="меню-текст">Админ панель: Создание кланов</p>
     <div class="меню" id="admin_panel_CC_div">
@@ -1494,6 +1519,8 @@ function AdminPanelGAR() {
   const user = tg.initDataUnsafe.user;
   app.style.backgroundImage = "url('../images/other/background4.png')"
 
+  isFromTG(user);
+
   render( `
     <p class="меню-текст">Админ панель: Выдача прав админа</p>
     <div class="меню" id="admin_panel_AR_div">
@@ -1573,6 +1600,8 @@ function AdminPanelGAR() {
 function AdminPanelPrices() {
   const user = tg.initDataUnsafe.user;
   app.style.backgroundImage = "url('../images/other/background4.png')"
+
+  isFromTG(user);
 
   render( `
     <p class="меню-текст">Админ панель: Редактирование цен</p>
@@ -1742,6 +1771,19 @@ function AdminPanelPrices() {
 
 }
 
+//Страница Ошибки
+function NotFromTGPage() {
+  app.style.backgroundImage = 'none'
+  render( `
+    <p class="меню-текст" id="err_main">Ошибка Авторизации</p>
+    <p></p>
+    <p class="баланс" id="err_dop">Судя по всему вы зашли не через приложение Телеграмма.<br>Это приложение Telegram Mini App, чтобы начать им пользоваться, пожалуйста, зайдите в него через ТГ бота @t.me/redcar_F1</p>
+  `);
+
+  document.getElementById('err_main').style.color = 'black'
+  document.getElementById('err_dop').style.color = 'black'
+}
+
 //Маршрутизация
 let currentRoute = {
   page: 'main',
@@ -1767,6 +1809,7 @@ function go(page, params = {}) {
   if (page === 'admin_panel_clans') AdminPanelCCPage();
   if (page === 'admin_panel_GAR') AdminPanelGAR();
   if (page === 'admin_panel_prices') AdminPanelPrices();
+  if (page === 'NotFromTG') NotFromTGPage();
 }
 
 //Привязка событий к кнопкам
