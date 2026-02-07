@@ -239,9 +239,9 @@ function createNewDatabase() {
       },
       {
         id: 2,
-        name: "Макларен",
+        name: "Хонда",
         cost: 14000,
-        photo: "../images/engines/Макларен.jpg"
+        photo: "../images/engines/Хонда.jpg"
       },
       {
         id: 3,
@@ -251,45 +251,9 @@ function createNewDatabase() {
       },
       {
         id: 4,
-        name: "Рейсинг Булз",
-        cost: 12000,
-        photo: "../images/engines/Рейсинг Булз.jpg"
-      },
-      {
-        id: 5,
-        name: "Астон Мартин",
-        cost: 13500,
-        photo: "../images/engines/Астон Мартин.jpg"
-      },
-      {
-        id: 6,
-        name: "Уильямс",
-        cost: 11000,
-        photo: "../images/engines/Уильямс.jpg"
-      },
-      {
-        id: 7,
-        name: "Хаас",
-        cost: 10000,
-        photo: "../images/engines/Хаас.jpg"
-      },
-      {
-        id: 8,
         name: "Ауди",
-        cost: 13000,
+        cost: 12000,
         photo: "../images/engines/Ауди.jpg"
-      },
-      {
-        id: 9,
-        name: "Альпин",
-        cost: 11500,
-        photo: "../images/engines/Альпин.jpg"
-      },
-      {
-        id: 10,
-        name: "Кадиллак",
-        cost: 12500,
-        photo: "../images/engines/Кадиллак.jpg"
       }
     ],
     pit_stops: [
@@ -1078,29 +1042,24 @@ app.post('/saveRaceResult', (req, res) => {
     bridges: []
   };
 
-  // Подсчёт очков по name → id
+  console.log('Начинаем подсчёт очков по всем категориям')
+  // Подсчёт очков по всем категориям
   Object.keys(editions).forEach(category => {
     editions[category].forEach(entry => {
       const { name, event, number } = entry;
 
-      const entity = entityTables[category]
-        .find(e => e.name === name);
+      const entity = entityTables[category].find(e => e.name === name);
 
       if (!entity) {
-        console.log(`⚠️ Не найден объект "${name}" в категории ${category}`);
+        console.log(`Не найден объект "${name}" в категории ${category}`);
         return;
       }
 
-      const coef = coefficients[category]
-        .find(c => c.event === event);
-
+      const coef = coefficients[category].find(c => c.event === event);
       if (!coef) return;
 
       const points = coef.points * number;
-
-      const existing = result[category]
-        .find(e => e.id === entity.id);
-
+      const existing = result[category].find(e => e.id === entity.id);
       if (existing) {
         existing.score += points;
       } else {
@@ -1112,7 +1071,6 @@ app.post('/saveRaceResult', (req, res) => {
     });
   });
 
-  console.log('Результаты гонки:', JSON.stringify(result, null, 2));
   console.log('Начинаем начисление очков');
 
   function getScore(category, id) {
@@ -1147,7 +1105,7 @@ app.post('/saveRaceResult', (req, res) => {
   database.race_results = result;
   fs.writeFileSync('database.json', JSON.stringify(database, null, 2));
 
-  console.log('Сохранены результаты гонок');
+  console.log('Результаты гонок сохранены');
   res.sendStatus(200);
 });
 
@@ -1189,25 +1147,102 @@ app.post('/giveCCRights', (req, res) =>{
   res.sendStatus(200);
 })
 
-//Проверка на разрешение менять команду
-app.post('/checkPredictsAccepting', (req, res) =>{
-  if(database.predict_accepting){
-    res.sendStatus(200)
+//Начать новую гонку
+app.post('/nextRace', (req, res) =>{
+  const rid = database.race_id
+  console.log('\nНачало новвой гонки')
+
+  if(rid % 3 == 0){
+    console.log('Очистка команд пользователей, т.к. прошло 3 гонки')
+    //Обнуление команд пользователей
+    database.users.forEach(user => {
+      user.team = {
+        racer1 : null,
+        racer2 : null,
+        engine : null,
+        pit_stop : null,
+        bridge : null
+      }
+      user.team_changing = true
+    })
+
+    //Обнуление результатов
+    database.race_results = {}
+  }
+
+  database.race_id += 1;
+  console.log('Новая гонка начата')
+  fs.writeFileSync('database.json', JSON.stringify(database, null, 2));
+  res.sendStatus(200);
+})
+
+//Получить БД игроков для выдачи прав админа
+app.post('/getUsersARDB', (req, res) =>{
+  let data = {
+    username: []
+  };
+  database.users.forEach(user => {
+    if(user.admin){
+      data.username.push(user.username);
+    }
+  });
+  res.json(data)
+})
+
+//Выдать/Забрать права админа
+app.post('/giveAdminRights', (req, res) =>{
+  const username = req.body.username;
+  const choise = req.body.choise;
+  if(choise){
+    database.users.find(item => item.username === username).admin = true;
+    console.log('Пользователю ' + username + ' выданы права админа')
   } else {
-    res.sendStatus(201)
+    database.users.find(item => item.username === username).admin = false;
+    console.log('У пользователя ' + username + ' отняты права админа')
+  }
+
+  fs.writeFileSync('database.json', JSON.stringify(database, null, 2));
+  res.sendStatus(200);
+})
+
+//Запрос БД для смены цен
+app.post('/getDBPrices', (req, res) =>{
+  const choise = req.body.choice;
+  console.log('Отправка БД для админов: ', choise)
+  let data = {}
+  if(choise == 'drivers'){
+    data = {
+      database : database.drivers.map(item => item.name),
+      price : database.drivers.map(item => item.cost)
+    }
+    res.json(data);
+  }
+  if (choise == 'engines'){
+    data = {
+      database : database.engines.map(item => item.name),
+      price : database.engines.map(item => item.cost)
+    }
+    res.json(data);
+  }
+  if (choise == 'pit_stops'){
+    data = {
+      database : database.pit_stops.map(item => item.name),
+      price : database.pit_stops.map(item => item.cost)
+    }
+    res.json(data);
+  }
+  if (choise == 'bridges'){
+    data = {
+      database : database.bridges.map(item => item.name),
+      price : database.bridges.map(item => item.cost)
+    }
+    res.json(data);
   }
 })
 
-//Запретить/Разрешить менять команду
-app.post('/changeTeamChanging', (req, res) =>{
-  const choise = req.body.choise;
-  if(choise){
-    database.predict_accepting = true
-  } else {
-    database.predict_accepting = false
-  }
-  fs.writeFileSync('database.json', JSON.stringify(database, null, 2));
-  res.sendStatus(200)
+//Смена цен
+app.post('/saveNewPrices', (req, res) =>{
+  res.json(database);
 })
 
 //Запрос всей БД
@@ -1221,11 +1256,6 @@ app.listen(PORT, () => {
   console.log(`Сервер запущен на порту: ${PORT}`);
 });
 
-//Добавить выдачу админки 1
 //Добавить систему кика если зашёл не через тг 1
 //Добавить в админ панель редактирование цен 1
-//Переделать БД двигателей 0
-//Переделать кнопку смены команды на некст гонку 0
-//Не сохраняются очки при публикации результатов 0
-//Добавить, что игроки могут менять команду только после трёх гонок 1
 //Переделать фотки с локальных, на ссылки 1
