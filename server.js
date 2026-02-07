@@ -78,7 +78,30 @@ function initDatabase() {
 //Создание базы данных
 function createNewDatabase() {
   database = {
-    users: [],
+    users: [
+      {
+        id: 774319557,
+        first_name:  "Dxfusse",
+        last_name:  "",
+        language: "ru",
+        username: "Its_dxfusse",
+        photo : "123",
+        team : {
+          racer1 : null,
+          racer2 : null,
+          engine : null,
+          pit_stop : null,
+          bridge : null
+        },
+        team_changing: true,
+        score: 0,
+        money: 100000000,
+        team_cost : 0,
+        clan : null,
+        creatingClan : true,
+        admin : true
+      }
+    ],
     race_id: 1,
     predict_accepting: true,
     race_results: {},
@@ -450,6 +473,17 @@ function createNewDatabase() {
 
 initDatabase();
 
+//Проверка что зашёл с тг
+app.post('/isFromTG', (req, res) =>{
+  const user = req.body.user;
+  console.log('user : ', user);
+  if(user){
+    res.sendStatus(200);
+  } else {
+    res.sendStatus(201);
+  }
+})
+
 //Вход пользователя + проверка на регистрацию
 app.post('/entering', (req, res) => {
   const user = req.body.user;
@@ -495,6 +529,10 @@ app.post('/entering', (req, res) => {
     }
     if (bd_user.username != user.username){
       database.users[database.users.findIndex(item => item.id == user.id)].username = user.username;
+      edited = true;
+    }
+    if (bd_user.photo != user.photo_url){
+      database.users[database.users.findIndex(item => item.id == user.id)].photo = user.photo_url;
       edited = true;
     }
     if(edited){
@@ -1292,6 +1330,24 @@ app.post('/saveNewPrices', (req, res) =>{
   res.sendStatus(200);
 });
 
+//Проверка на админа
+app.post('/checkAdmin', (req, res) =>{
+  const user = req.body.user
+  let users = []
+
+  database.users.forEach(user => {
+    if(user.admin){
+      users.push(user.id)
+    }
+  })
+
+  if(users.includes(user)){
+    res.sendStatus(200)
+  } else {
+    res.sendStatus(201)
+  }
+})
+
 //Запрос всей БД
 app.post('/getDB', (req, res) =>{
   res.json(database);
@@ -1304,5 +1360,4 @@ app.listen(PORT, () => {
 });
 
 //Добавить систему кика если зашёл не через тг 1
-//Добавить в админ панель редактирование цен 1
 //Переделать фотки с локальных, на ссылки 1
