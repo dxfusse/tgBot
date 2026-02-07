@@ -39,6 +39,17 @@ function MainPage() {
   const user = tg.initDataUnsafe.user;
   app.style.backgroundImage = "url('../images/other/background1.jpg')"
 
+  fetch(service + '/isFromTG', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ user : user })
+  })
+  .then(res => {
+    if (res.status != 200){
+      alert('Ты не из тг');
+    }
+  })
+
   fetch(service + '/entering', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
