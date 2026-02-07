@@ -61,6 +61,18 @@ function MainPage() {
     <button class="dop-button" id="dop-button">123123123</button>
   `);
 
+  document.getElementById('admin_panel').style.opacity = 0;
+  fetch(service + '/checkAdmin', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ user : user.id })
+  })
+  .then(res => {
+    if (res.status == 200){
+      document.getElementById('admin_panel').style.opacity = 1;
+    }
+  })
+
   const menuButtons = document.querySelectorAll('.кнопка-меню');
   menuButtons.forEach((btn, index) => {
     setTimeout(()=>{
