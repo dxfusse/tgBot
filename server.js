@@ -42,6 +42,7 @@ bot.start((ctx) => {
 console.log('Бот запущен');
 
 let database = null;
+const score_to_money = 1000000;
 
 //Инициализация базы данных
 function initDatabase() {
@@ -1129,7 +1130,8 @@ app.post('/saveRaceResult', (req, res) => {
 
     console.log(`Игрок ${user.id} получает ${total} очков`);
 
-    user.score = (user.score || 0) + total;
+    user.score += total;
+    user.money += total * score_to_money;
 
     if (user.clan != null) {
       const clan = database.clans.find(c => c.id === user.clan);
