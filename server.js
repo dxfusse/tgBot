@@ -1242,8 +1242,55 @@ app.post('/getDBPrices', (req, res) =>{
 
 //Смена цен
 app.post('/saveNewPrices', (req, res) =>{
-  res.json(database);
-})
+  const editions = req.body.editions;
+
+  console.log('\nПопытка сохранить новые цены');
+
+  if (!editions || typeof editions !== 'object') {
+    res.sendStatus(400);
+    return;
+  }
+
+  const map = {
+    drivers: 'drivers',
+    engines: 'engines',
+    pit_stops: 'pit_stops',
+    bridges: 'bridges'
+  };
+
+  let updated = 0;
+
+  Object.keys(editions).forEach(category => {
+    const dbKey = map[category];
+    if (!dbKey || !database[dbKey]) return;
+
+    editions[category].forEach(edit => {
+      const { name, cost } = edit;
+      if (!name || typeof cost !== 'number') return;
+
+      const item = database[dbKey].find(i => i.name === name);
+      if (!item) {
+        console.log(`Не найден пункт "${name}" в ${category}`);
+        return;
+      }
+
+      console.log(`Изменение цены: ${category} | ${name}: ${item.cost} → ${cost}`);
+
+      item.cost = cost;
+      updated++;
+    });
+  });
+
+  if (updated === 0) {
+    console.log('Нет изменений для сохранения');
+    res.sendStatus(204);
+    return;
+  }
+
+  fs.writeFileSync('database.json', JSON.stringify(database, null, 2));
+  console.log(`Цены сохранены. Обновлено пунктов: ${updated}`);
+  res.sendStatus(200);
+});
 
 //Запрос всей БД
 app.post('/getDB', (req, res) =>{
