@@ -51,7 +51,7 @@ function MainPage() {
   const user = tg.initDataUnsafe.user;
   app.style.backgroundImage = "url('../images/other/background1.jpg')"
 
-  isFromTG(user);
+  
 
   fetch(service + '/entering', {
     method: 'POST',
@@ -130,7 +130,7 @@ function ProfilePage() {
   const user = tg.initDataUnsafe.user;
   app.style.backgroundImage = "url('../images/other/background2.JPG')"
 
-  isFromTG(user);
+  
 
   render(`
     <p class="меню-текст">Твой профиль</p>
@@ -204,7 +204,7 @@ function TeamPage() {
   const user = tg.initDataUnsafe.user;
   app.style.backgroundImage = "url('../images/other/background3.JPG')"
 
-  isFromTG(user);
+  
   
   render(`
     <p class="меню-текст">Твоя команда</p>
@@ -383,7 +383,7 @@ function CreateTeamPage(select){
   const user = tg.initDataUnsafe.user;
   app.style.backgroundImage = "url('../images/other/background3.JPG')"
 
-  isFromTG(user);
+  
 
   render(`
     <p class="меню-текст" id="mainText"></p>
@@ -520,7 +520,7 @@ function ClansPage() {
   const user = tg.initDataUnsafe.user;
   app.style.backgroundImage = "url('../images/other/background4.png')"
 
-  isFromTG(user);
+  
 
   render( `
     <p class="меню-текст">Кланы</p>
@@ -776,7 +776,7 @@ function ClanViewPage(select) {
   const user = tg.initDataUnsafe.user;
   app.style.backgroundImage = "url('../images/other/background4.png')"
 
-  isFromTG(user);
+  
 
   render( `
     <p class="меню-текст" id="pageView-clanName">Загрузка...</p>
@@ -843,7 +843,7 @@ function ClanEditingPage() {
   const user = tg.initDataUnsafe.user;
   app.style.backgroundImage = "url('../images/other/background4.png')"
 
-  isFromTG(user);
+  
 
   render( `
     <p class="меню-текст">Управление кланом</p>
@@ -1009,7 +1009,7 @@ function UserRatingPage() {
   const user = tg.initDataUnsafe.user;
   app.style.backgroundImage = "url('../images/other/background5.png')"
 
-  isFromTG(user);
+  
 
   render( `
     <p class="меню-текст">Рейтинг игроков</p>
@@ -1097,7 +1097,7 @@ function UserRatingPage() {
 function FAQPage() {
   app.style.backgroundImage = "url('../images/other/background2.JPG')"
 
-  isFromTG(user);
+  
 
   render( `
     <p class="меню-текст">Ответы на вопросы</p>
@@ -1196,7 +1196,7 @@ function AdminPanelMainPage(){
   const user = tg.initDataUnsafe.user;
   app.style.backgroundImage = "url('../images/other/background4.png')"
 
-  isFromTG(user);
+  
 
   render( `
     <img src="../images/other/f1_logo.png" class="f1_logo">
@@ -1241,7 +1241,7 @@ function AdminPanelResultsPage() {
   const user = tg.initDataUnsafe.user;
   app.style.backgroundImage = "url('../images/other/background4.png')"
 
-  isFromTG(user);
+  
 
   render( `
     <p class="меню-текст">Админ панель: Сохранение результатов</p>
@@ -1424,7 +1424,7 @@ function AdminPanelCCPage() {
   const user = tg.initDataUnsafe.user;
   app.style.backgroundImage = "url('../images/other/background4.png')"
 
-  isFromTG(user);
+  
 
   render( `
     <p class="меню-текст">Админ панель: Создание кланов</p>
@@ -1519,7 +1519,7 @@ function AdminPanelGAR() {
   const user = tg.initDataUnsafe.user;
   app.style.backgroundImage = "url('../images/other/background4.png')"
 
-  isFromTG(user);
+  
 
   render( `
     <p class="меню-текст">Админ панель: Выдача прав админа</p>
@@ -1543,6 +1543,7 @@ function AdminPanelGAR() {
     const inputEl = document.getElementById('username_forAR');
     const giveRightBtn = document.getElementById('giveARRightBtn');
     const cancelRightBtn = document.getElementById('cancelARRightBtn');
+    alert(JSON.stringify(data))
 
     giveRightBtn.addEventListener('click', () => {
       const username = inputEl.value.trim();
@@ -1601,7 +1602,7 @@ function AdminPanelPrices() {
   const user = tg.initDataUnsafe.user;
   app.style.backgroundImage = "url('../images/other/background4.png')"
 
-  isFromTG(user);
+  
 
   render( `
     <p class="меню-текст">Админ панель: Редактирование цен</p>
