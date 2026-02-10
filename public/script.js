@@ -1215,7 +1215,7 @@ function AdminPanelMainPage(){
 
   document.getElementById('next_race_btn').addEventListener('click', () => {
     if(confirm('Вы уверены, что хотите начать новую гонку?')){
-       fetch(service + '/editClanPage', {
+      fetch(service + '/nextRace', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ user: user })
