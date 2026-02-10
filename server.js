@@ -1205,10 +1205,10 @@ app.post('/nextRace', (req, res) =>{
       }
       user.team_changing = true
     })
-
-    //Обнуление результатов
-    database.race_results = {}
   }
+  
+  //Обнуление результатов
+  database.race_results = {}
 
   database.race_id += 1;
   console.log('Новая гонка начата')
@@ -1363,3 +1363,4 @@ app.listen(PORT, () => {
 
 //Переделать фотки с локальных, на ссылки
 //починить рейтинг игроков
+//запрет возможности взять одного гонщика на обе позиции
