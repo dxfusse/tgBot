@@ -856,7 +856,7 @@ app.post('/getUsersList', (req, res) =>{
       usernames : user.username,
       scores : user.score
     }))
-    .sort((a, b) => a.score - b.score)
+    .sort((a, b) => b.scores - a.scores)
   };
   res.json(data)
 })
@@ -1388,7 +1388,3 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Сервер запущен на порту: ${PORT}`);
 });
-
-//Переделать фотки с локальных, на ссылки
-//починить рейтинг игроков
-//админ панель доступна всем
