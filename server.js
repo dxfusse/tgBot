@@ -718,7 +718,7 @@ app.post('/selectTeamOpt', (req, res) =>{
   if (choise == 'racer2'){
     console.log('Пользователь: ' + user.usename + ' выбрал себе второго пилота: ' + name);
     const driver = database.drivers.find(item => item.name == name);
-    if(driver.id != database.user.find(item => item.id === user.id).team.racer1){
+    if(driver.id != database.users.find(item => item.id === user.id).team.racer1){
       database.users[database.users.findIndex(item => item.id == user.id)].team.racer2 = driver.id;
       fs.writeFileSync('database.json', JSON.stringify(database, null, 2));
       console.log('Выбор сохранён')
