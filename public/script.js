@@ -75,17 +75,19 @@ function MainPage() {
     <button class="dop-button" id="dop-button">123123123</button>
   `);
 
-  document.getElementById('admin_panel').style.opacity = 0;
+  const adminBtn = document.getElementById('admin_panel');
+  adminBtn.style.display = 'none';
+
   fetch(service + '/checkAdmin', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ user : user.id })
+    body: JSON.stringify({ user: user.id })
   })
   .then(res => {
-    if (res.status == 200){
-      document.getElementById('admin_panel').style.opacity = 1;
+    if (res.status == 200) {
+      adminBtn.style.display = 'block';
     }
-  })
+  });
 
   const menuButtons = document.querySelectorAll('.кнопка-меню');
   menuButtons.forEach((btn, index) => {
@@ -166,7 +168,7 @@ function ProfilePage() {
     document.getElementById('name').innerText = "Имя: " + user.first_name + ' ' + user.last_name;
     document.getElementById('username').innerText = "Ник: @" + user.username;
     document.getElementById('score').innerText = "Ваши баллы: " + data.score;
-    document.getElementById('money').innerText = "Ваш баланс: $" + data.money;
+    document.getElementById('money').innerText = "Ваш баланс: $" + (parseInt(data.money) / 1_000_000).toFixed(1)
     document.getElementById('team_cost').innerText = "Стоимость команды: $" + data.team_cost;
     document.getElementById('pfp').src = data.photo;
     if(data.clan == null){
@@ -361,7 +363,7 @@ function TeamPage() {
     })
   })
   document.getElementById('saveTeam').addEventListener('click', () => {
-    if(confirm("Вы уверены, что хотите сохранить состав команды? Изменить его будет нельзя до следующей гонки")){
+    if(confirm("Вы уверены, что хотите сохранить состав команды? Изменить его будет нельзя до момента заврешения трёх гонок")){
       fetch(service + '/saveTeam', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -508,6 +510,8 @@ function CreateTeamPage(select){
           if (res.status == 200){
             showToast('Выбор сохранён', true);
             go('team');
+          } else if(res.status == 201){
+            showToast('Вы уже выбрали этого пилота как первого!', false);
           }
         })
       }
@@ -1109,7 +1113,7 @@ function FAQPage() {
         </div>
         <div class="faq-divider"></div>
         <div class="faq-body">
-          <p >Фэнтези Ф1 - это симулятор руководителя команды, который позволит вам собрать свой собственный коллектив на ограниченные средства для соревнования с другими пользователями за призы. В рамках игры вы должны выбрать, кто из участников Формулы 1 попадет в вашу команду. Вам предстоит выбрать: пилота №1, пилота №2, командный мостик, двигатель и команду инженеров (пит-стоп). Каждый элемент команды и каждый пилот имеет собственную цену, поэтому нужно выбирать с умом!</p>
+          <p>Фэнтези Ф1 - это симулятор руководителя команды, который позволит вам собрать свой собственный коллектив на ограниченные средства для соревнования с другими пользователями за призы. В рамках игры вы должны выбрать, кто из участников Формулы 1 попадет в вашу команду. Вам предстоит выбрать: пилота №1, пилота №2, командный мостик, двигатель и команду инженеров (пит-стоп). Каждый элемент команды и каждый пилот имеет собственную цену, поэтому нужно выбирать с умом!</p>
         </div>
       </div>
 
@@ -1169,6 +1173,19 @@ function FAQPage() {
 
       <div class="faq-item">
         <div class="faq-header">
+          <span>Как работают клааны?</span>
+          <button class="faq-toggle">▼</button>
+        </div>
+        <div class="faq-divider"></div>
+        <div class="faq-body">
+          <p>Создавать кланы могут только администраторы каналов по Ф1, а сами кланы – это сборные команды ваших каналов.<br>
+Игроки сами выбирают к какому клану им присоединиться, но для этого им необходимо узнать код приглашения в клан, который им сообщает администратор клана.
+Очки каждого участника за Гран-при суммируются, и из этого выходят очки клана, что позволяет бороться с другими сообществами за призы и звание Чемпиона!</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-header">
           <span>У меня остались вопросы</span>
           <button class="faq-toggle">▼</button>
         </div>
@@ -1177,6 +1194,7 @@ function FAQPage() {
           <p>Вы всегда можете написать в личные сообщения канала по всем вопросам и техническим моментам. Будем рады вам помочь!</p>
         </div>
       </div>
+
     </div>
     <p></p>
     <button data-page="main" class="кнопка-меню">Назад</button>
