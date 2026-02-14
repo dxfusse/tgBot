@@ -100,7 +100,7 @@ function createNewDatabase() {
         team_cost : 0,
         clan : null,
         creatingClan : true,
-        admin : false
+        admin : true
       },
       {
         id: 774312457,
