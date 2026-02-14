@@ -100,7 +100,29 @@ function createNewDatabase() {
         team_cost : 0,
         clan : null,
         creatingClan : true,
-        admin : true
+        admin : false
+      },
+      {
+        id: 774312457,
+        first_name:  "test",
+        last_name:  "user",
+        language: "ru",
+        username: "test_user",
+        photo : "https://i.ytimg.com/vi/QjcAF34nQXw/maxresdefault.jpg",
+        team : {
+          racer1 : null,
+          racer2 : null,
+          engine : null,
+          pit_stop : null,
+          bridge : null
+        },
+        team_changing: true,
+        score: 5,
+        money: 100000000,
+        team_cost : 0,
+        clan : null,
+        creatingClan : false,
+        admin : false
       }
     ],
     race_id: 1,
@@ -696,10 +718,15 @@ app.post('/selectTeamOpt', (req, res) =>{
   if (choise == 'racer2'){
     console.log('Пользователь: ' + user.usename + ' выбрал себе второго пилота: ' + name);
     const driver = database.drivers.find(item => item.name == name);
-    database.users[database.users.findIndex(item => item.id == user.id)].team.racer2 = driver.id;
-    fs.writeFileSync('database.json', JSON.stringify(database, null, 2));
-    console.log('Выбор сохранён')
-    res.sendStatus(200);
+    if(driver.id != database.user.find(item => item.id === user.id).team.racer1){
+      database.users[database.users.findIndex(item => item.id == user.id)].team.racer2 = driver.id;
+      fs.writeFileSync('database.json', JSON.stringify(database, null, 2));
+      console.log('Выбор сохранён')
+      res.sendStatus(200);
+    } else {
+      console.log('Ошибка: выбранный пилот уже используется игроком')
+      res.sendStatus(201);
+    }
   }
   if (choise == 'engine'){
     console.log('Пользователь: ' + user.usename + ' выбрал себе двигатель: ' + name);
@@ -1204,13 +1231,14 @@ app.post('/nextRace', (req, res) =>{
         bridge : null
       }
       user.team_changing = true
+      user.teamCost = 0
     })
   }
-  
+
   //Обнуление результатов
   database.race_results = {}
-
   database.race_id += 1;
+
   console.log('Новая гонка начата')
   fs.writeFileSync('database.json', JSON.stringify(database, null, 2));
   res.sendStatus(200);
@@ -1363,4 +1391,4 @@ app.listen(PORT, () => {
 
 //Переделать фотки с локальных, на ссылки
 //починить рейтинг игроков
-//запрет возможности взять одного гонщика на обе позиции
+//админ панель доступна всем
