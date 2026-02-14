@@ -168,7 +168,7 @@ function ProfilePage() {
     document.getElementById('name').innerText = "Имя: " + user.first_name + ' ' + user.last_name;
     document.getElementById('username').innerText = "Ник: @" + user.username;
     document.getElementById('score').innerText = "Ваши баллы: " + data.score;
-    document.getElementById('money').innerText = "Ваш баланс: $" + (parseInt(data.money) / 1_000_000).toFixed(1)
+    document.getElementById('money').innerText = "Ваш баланс: $" + (parseInt(data.money) / 1_000_000).toFixed(1) + " Млн"
     document.getElementById('team_cost').innerText = "Стоимость команды: $" + data.team_cost;
     document.getElementById('pfp').src = data.photo;
     if(data.clan == null){
@@ -1043,11 +1043,11 @@ function UserRatingPage() {
   })
   .then(res => res.json())
   .then(data => {
-    const usernames = data.users.map(item => item.usernames).reverse();
-    const first_names = data.users.map(item => item.first_names).reverse();
-    const last_names = data.users.map(item => item.last_names).reverse();
-    const photos = data.users.map(item => item.photos).reverse();
-    const scores = data.users.map(item => item.scores).reverse();
+    const usernames = data.users.map(item => item.usernames);
+    const first_names = data.users.map(item => item.first_names);
+    const last_names = data.users.map(item => item.last_names);
+    const photos = data.users.map(item => item.photos);
+    const scores = data.users.map(item => item.scores);
 
     const container = document.getElementById('container_users');
     for (let i = 0; i < usernames.length; i++) {
