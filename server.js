@@ -119,7 +119,7 @@ function createNewDatabase() {
         id: 1,
         name: "Шарль Леклер",
         cost: 9000,
-        photo: "https://i.postimg.cc/3RZptg3w/vopros.png"
+        photo: "https://i.postimg.cc/DfrFYxVq/2025ferrarichalec01right-1-(1).png"
       },
       {
         id: 2,
