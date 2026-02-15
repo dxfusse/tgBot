@@ -41,6 +41,7 @@ bot.start((ctx) => {
 
 console.log('Бот запущен');
 
+const null_choise = "https://i.postimg.cc/3RZptg3w/vopros.png"
 let database = null;
 const score_to_money = 1000000;
 
@@ -112,121 +113,121 @@ function createNewDatabase() {
         id: 0,
         name: "Макс Ферстаппен",
         cost: 10000,
-        photo: "https://i.postimg.cc/WzgRRbf7/null_choise.jpg"
+        photo: "https://i.postimg.cc/3RZptg3w/vopros.png"
       },
       {
         id: 1,
         name: "Шарль Леклер",
         cost: 9000,
-        photo: "https://drive.google.com/file/d/1Dptq4vDDRsd2Qxxg4ZD7tSV-ouykgjVD/view?usp=drive_link"
+        photo: "https://i.postimg.cc/3RZptg3w/vopros.png"
       },
       {
         id: 2,
         name: "Льюис Хэмилтон",
         cost: 9500,
-        photo: "https://i.postimg.cc/WzgRRbf7/null_choise.jpg"
+        photo: "https://i.postimg.cc/3RZptg3w/vopros.png"
       },
       {
         id: 3,
         name: "Карлос Сайнс",
         cost: 8500,
-        photo: "https://i.postimg.cc/WzgRRbf7/null_choise.jpg"
+        photo: "https://i.postimg.cc/3RZptg3w/vopros.png"
       },
       {
         id: 4,
         name: "Лиам Лоусон",
         cost: 3000,
-        photo: "https://i.postimg.cc/WzgRRbf7/null_choise.jpg"
+        photo: "https://i.postimg.cc/3RZptg3w/vopros.png"
       },
       {
         id: 5,
         name: "Ландо Норрис",
         cost: 8800,
-        photo: "https://i.postimg.cc/WzgRRbf7/null_choise.jpg"
+        photo: "https://i.postimg.cc/3RZptg3w/vopros.png"
       },
       {
         id: 6,
         name: "Фернандо Алонсо",
         cost: 8200,
-        photo: "https://i.postimg.cc/WzgRRbf7/null_choise.jpg"
+        photo: "https://i.postimg.cc/3RZptg3w/vopros.png"
       },
       {
         id: 7,
         name: "Оскар Пиастри",
         cost: 7500,
-        photo: "https://i.postimg.cc/WzgRRbf7/null_choise.jpg"
+        photo: "https://i.postimg.cc/3RZptg3w/vopros.png"
       },
       {
         id: 8,
         name: "Джордж Расселл",
         cost: 8000,
-        photo: "https://i.postimg.cc/WzgRRbf7/null_choise.jpg"
+        photo: "https://i.postimg.cc/3RZptg3w/vopros.png"
       },
       {
         id: 9,
         name: "Юки Цунода",
         cost: 4500,
-        photo: "https://i.postimg.cc/WzgRRbf7/null_choise.jpg"
+        photo: "https://i.postimg.cc/3RZptg3w/vopros.png"
       },
       {
         id: 10,
         name: "Габриэль Бортолето",
         cost: 2000,
-        photo: "https://i.postimg.cc/WzgRRbf7/null_choise.jpg"
+        photo: "https://i.postimg.cc/3RZptg3w/vopros.png"
       },
       {
         id: 11,
         name: "Алекс Албон",
         cost: 5500,
-        photo: "https://i.postimg.cc/WzgRRbf7/null_choise.jpg"
+        photo: "https://i.postimg.cc/3RZptg3w/vopros.png"
       },
       {
         id: 12,
         name: "Франко Колапинто",
         cost: 1800,
-        photo: "https://i.postimg.cc/WzgRRbf7/null_choise.jpg"
+        photo: "https://i.postimg.cc/3RZptg3w/vopros.png"
       },
       {
         id: 13,
         name: "Оливер Берман",
         cost: 2500,
-        photo: "https://i.postimg.cc/WzgRRbf7/null_choise.jpg"
+        photo: "https://i.postimg.cc/3RZptg3w/vopros.png"
       },
       {
         id: 14,
         name: "Нико Хюлькенберг",
         cost: 4000,
-        photo: "https://i.postimg.cc/WzgRRbf7/null_choise.jpg"
+        photo: "https://i.postimg.cc/3RZptg3w/vopros.png"
       },
       {
         id: 15,
         name: "Кими Антонелли",
         cost: 2200,
-        photo: "https://i.postimg.cc/WzgRRbf7/null_choise.jpg"
+        photo: "https://i.postimg.cc/3RZptg3w/vopros.png"
       },
       {
         id: 16,
         name: "Изак Хаджар",
         cost: 1500,
-        photo: "https://i.postimg.cc/WzgRRbf7/null_choise.jpg"
+        photo: "https://i.postimg.cc/3RZptg3w/vopros.png"
       },
       {
         id: 17,
         name: "Эстебан Окон",
         cost: 5000,
-        photo: "https://i.postimg.cc/WzgRRbf7/null_choise.jpg"
+        photo: "https://i.postimg.cc/3RZptg3w/vopros.png"
       },
       {
         id: 18,
         name: "Пьер Гасли",
         cost: 4800,
-        photo: "https://i.postimg.cc/WzgRRbf7/null_choise.jpg"
+        photo: "https://i.postimg.cc/3RZptg3w/vopros.png"
       },
       {
         id: 19,
         name: "Лэнс Стролл",
         cost: 4200,
-        photo: "https://i.postimg.cc/WzgRRbf7/null_choise.jpg"
+        photo: "https://i.postimg.cc/3RZptg3w/vopros.png"
       }
     ],
     engines: [
@@ -234,13 +235,13 @@ function createNewDatabase() {
         id: 0,
         name: "Феррари",
         cost: 15000,
-        photo: "https://i.postimg.cc/WzgRRbf7/null_choise.jpg"
+        photo: "https://i.postimg.cc/3RZptg3w/vopros.png"
       },
       {
         id: 1,
         name: "Мерседес",
         cost: 14500,
-        photo: "https://i.postimg.cc/WzgRRbf7/null_choise.jpg"
+        photo: "https://i.postimg.cc/3RZptg3w/vopros.png"
       },
       {
         id: 2,
@@ -252,13 +253,13 @@ function createNewDatabase() {
         id: 3,
         name: "Ред Булл",
         cost: 15500,
-        photo: "https://i.postimg.cc/WzgRRbf7/null_choise.jpg"
+        photo: "https://i.postimg.cc/3RZptg3w/vopros.png"
       },
       {
         id: 4,
         name: "Ауди",
         cost: 12000,
-        photo: "https://i.postimg.cc/WzgRRbf7/null_choise.jpg"
+        photo: "https://i.postimg.cc/3RZptg3w/vopros.png"
       }
     ],
     pit_stops: [
@@ -272,61 +273,61 @@ function createNewDatabase() {
         id: 1,
         name: "Мерседес",
         cost: 14500,
-        photo: "https://i.postimg.cc/WzgRRbf7/null_choise.jpg"
+        photo: "https://i.postimg.cc/3RZptg3w/vopros.png"
       },
       {
         id: 2,
         name: "Макларен",
         cost: 14000,
-        photo: "https://i.postimg.cc/WzgRRbf7/null_choise.jpg"
+        photo: "https://i.postimg.cc/3RZptg3w/vopros.png"
       },
       {
         id: 3,
         name: "Ред Булл",
         cost: 15500,
-        photo: "https://i.postimg.cc/WzgRRbf7/null_choise.jpg"
+        photo: "https://i.postimg.cc/3RZptg3w/vopros.png"
       },
       {
         id: 4,
         name: "Рейсинг Булз",
         cost: 12000,
-        photo: "https://i.postimg.cc/WzgRRbf7/null_choise.jpg"
+        photo: "https://i.postimg.cc/3RZptg3w/vopros.png"
       },
       {
         id: 5,
         name: "Астон Мартин",
         cost: 13500,
-        photo: "https://i.postimg.cc/WzgRRbf7/null_choise.jpg"
+        photo: "https://i.postimg.cc/3RZptg3w/vopros.png"
       },
       {
         id: 6,
         name: "Уильямс",
         cost: 11000,
-        photo: "https://i.postimg.cc/WzgRRbf7/null_choise.jpg"
+        photo: "https://i.postimg.cc/3RZptg3w/vopros.png"
       },
       {
         id: 7,
         name: "Хаас",
         cost: 10000,
-        photo: "https://i.postimg.cc/WzgRRbf7/null_choise.jpg"
+        photo: "https://i.postimg.cc/3RZptg3w/vopros.png"
       },
       {
         id: 8,
         name: "Ауди",
         cost: 13000,
-        photo: "https://i.postimg.cc/WzgRRbf7/null_choise.jpg"
+        photo: "https://i.postimg.cc/3RZptg3w/vopros.png"
       },
       {
         id: 9,
         name: "Альпин",
         cost: 11500,
-        photo: "https://i.postimg.cc/WzgRRbf7/null_choise.jpg"
+        photo: "https://i.postimg.cc/3RZptg3w/vopros.png"
       },
       {
         id: 10,
         name: "Кадиллак",
         cost: 12500,
-        photo: "https://i.postimg.cc/WzgRRbf7/null_choise.jpg"
+        photo: "https://i.postimg.cc/3RZptg3w/vopros.png"
       }
     ],
     bridges: [
@@ -334,7 +335,7 @@ function createNewDatabase() {
         id: 0,
         name: "Феррари",
         cost: 8000,
-        photo: "https://i.postimg.cc/WzgRRbf7/null_choise.jpg"
+        photo: "https://i.postimg.cc/3RZptg3w/vopros.png"
       },
       {
         id: 1,
@@ -346,55 +347,55 @@ function createNewDatabase() {
         id: 2,
         name: "Макларен",
         cost: 7500,
-        photo: "https://i.postimg.cc/WzgRRbf7/null_choise.jpg"
+        photo: "https://i.postimg.cc/3RZptg3w/vopros.png"
       },
       {
         id: 3,
         name: "Ред Булл",
         cost: 8200,
-        photo: "https://i.postimg.cc/WzgRRbf7/null_choise.jpg"
+        photo: "https://i.postimg.cc/3RZptg3w/vopros.png"
       },
       {
         id: 4,
         name: "Рейсинг Булз",
         cost: 7000,
-        photo: "https://i.postimg.cc/WzgRRbf7/null_choise.jpg"
+        photo: "https://i.postimg.cc/3RZptg3w/vopros.png"
       },
       {
         id: 5,
         name: "Астон Мартин",
         cost: 7700,
-        photo: "https://i.postimg.cc/WzgRRbf7/null_choise.jpg"
+        photo: "https://i.postimg.cc/3RZptg3w/vopros.png"
       },
       {
         id: 6,
         name: "Уильямс",
         cost: 6800,
-        photo: "https://i.postimg.cc/WzgRRbf7/null_choise.jpg"
+        photo: "https://i.postimg.cc/3RZptg3w/vopros.png"
       },
       {
         id: 7,
         name: "Хаас",
         cost: 6500,
-        photo: "https://i.postimg.cc/WzgRRbf7/null_choise.jpg"
+        photo: "https://i.postimg.cc/3RZptg3w/vopros.png"
       },
       {
         id: 8,
         name: "Ауди",
         cost: 7600,
-        photo: "https://i.postimg.cc/WzgRRbf7/null_choise.jpg"
+        photo: "https://i.postimg.cc/3RZptg3w/vopros.png"
       },
       {
         id: 9,
         name: "Альпин",
         cost: 7200,
-        photo: "https://i.postimg.cc/WzgRRbf7/null_choise.jpg"
+        photo: "https://i.postimg.cc/3RZptg3w/vopros.png"
       },
       {
         id: 10,
         name: "Кадиллак",
         cost: 7400,
-        photo: "https://i.postimg.cc/WzgRRbf7/null_choise.jpg"
+        photo: "https://i.postimg.cc/3RZptg3w/vopros.png"
       }
     ],
     coefficients : {
@@ -564,7 +565,7 @@ app.post('/getTeamInfo', (req, res) =>{
     data.racer1 = {
       name: "Не выбран",
       cost : 0,
-      photo: "https://i.postimg.cc/WzgRRbf7/null_choise.jpg"
+      photo: null_choise
     }
   }
   if (userTeam.racer2 != null){
@@ -573,7 +574,7 @@ app.post('/getTeamInfo', (req, res) =>{
     data.racer2 = {
       name: "Не выбран",
       cost : 0,
-      photo: "https://i.postimg.cc/WzgRRbf7/null_choise.jpg"
+      photo: null_choise
     }
   }
   if (userTeam.engine != null){
@@ -582,7 +583,7 @@ app.post('/getTeamInfo', (req, res) =>{
     data.engine = {
       name: "Не выбран",
       cost : 0,
-      photo: "https://i.postimg.cc/WzgRRbf7/null_choise.jpg"
+      photo: null_choise
     }
   }
   if (userTeam.pit_stop != null){
@@ -591,7 +592,7 @@ app.post('/getTeamInfo', (req, res) =>{
     data.pit_stop = {
       name: "Не выбран",
       cost : 0,
-      photo: "https://i.postimg.cc/WzgRRbf7/null_choise.jpg"
+      photo: null_choise
     }
   }
   if (userTeam.bridge != null){
@@ -600,7 +601,7 @@ app.post('/getTeamInfo', (req, res) =>{
     data.bridge = {
       name: "Не выбран",
       cost : 0,
-      photo: "https://i.postimg.cc/WzgRRbf7/null_choise.jpg"
+      photo: null_choise
     }
   }
   console.log('Отправка пользователю ' + user.username + ' данных о его команде')
