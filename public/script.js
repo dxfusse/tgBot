@@ -169,7 +169,7 @@ function ProfilePage() {
     document.getElementById('username').innerText = "Ник: @" + user.username;
     document.getElementById('score').innerText = "Ваши баллы: " + data.score;
     document.getElementById('money').innerText = "Ваш баланс: $" + (parseInt(data.money) / 1_000_000).toFixed(1) + " Млн"
-    document.getElementById('team_cost').innerText = "Стоимость команды: $" + data.team_cost;
+    document.getElementById('team_cost').innerText = "Стоимость команды: $"  + (parseInt(data.team_cost) / 1_000_000).toFixed(1) + " Млн"
     document.getElementById('pfp').src = data.photo;
     if(data.clan == null){
       document.getElementById('clan').innerText = "Клан: отсутствует"
