@@ -780,7 +780,7 @@ app.post('/createClan', (req, res) =>{
     } else {
       let id = 0;
       let ids = database.clans.map(item => item.id);
-      if (ids.lenght != 0){
+      if (ids.length != 0){
         ids.sort((a, b) => b - a);
         id = ids[0];
       }
@@ -1123,7 +1123,7 @@ app.post('/saveRaceResult', (req, res) => {
     if (user.clan != null) {
       const clan = database.clans.find(c => c.id === user.clan);
       if (clan) {
-        clan.score = (clan.score || 0) + total;
+        clan.score = clan.score + total;
         console.log(`Клан "${clan.name}" получает ${total} очков`);
       }
     }
@@ -1348,3 +1348,6 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Сервер запущен на порту: ${PORT}`);
 });
+
+//не зачисляются очки нескольких акков в клан
+//нет зачисления в клан
