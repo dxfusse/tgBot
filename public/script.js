@@ -49,7 +49,7 @@ function showToast(text, err = false, duration = 4000) {
 //Главная страница
 function MainPage() {
   const user = tg.initDataUnsafe.user;
-  app.style.backgroundImage = "url('../images/other/background1.jpg')"
+  app.style.backgroundImage = "url('https://i.postimg.cc/156VmfCV/background1.jpg')"
 
   
 
@@ -60,7 +60,7 @@ function MainPage() {
   });
 
   render( `
-    <img src="../images/other/f1_logo.png" class="f1_logo">
+    <img src="https://i.postimg.cc/SN0jvmS6/f1_logo.png" class="f1_logo">
     <p></p>
     <p></p>
     <div class="меню">
@@ -130,13 +130,13 @@ function MainPage() {
 //Страница профиля
 function ProfilePage() {
   const user = tg.initDataUnsafe.user;
-  app.style.backgroundImage = "url('../images/other/background2.JPG')"
+  app.style.backgroundImage = "url('https://i.postimg.cc/zBV39BHh/background2.jpg')"
 
   
 
   render(`
     <p class="меню-текст">Твой профиль</p>
-    <img class="pfp" id="pfp" src="../images/drivers/null_choise.jpg">
+    <img class="pfp" id="pfp" src="https://i.postimg.cc/3RZptg3w/вопрос.png">
     <p></p>
     <div class="меню">
       <p class="текст-меню" id="username">Загрузка...</p>
@@ -204,7 +204,7 @@ function ProfilePage() {
 //Страница команды
 function TeamPage() {
   const user = tg.initDataUnsafe.user;
-  app.style.backgroundImage = "url('../images/other/background3.JPG')"
+  app.style.backgroundImage = "url('https://i.postimg.cc/RFyq9BwP/background3.jpg')"
 
   
   
@@ -383,7 +383,7 @@ function TeamPage() {
 //Страница создания команды
 function CreateTeamPage(select){
   const user = tg.initDataUnsafe.user;
-  app.style.backgroundImage = "url('../images/other/background3.JPG')"
+  app.style.backgroundImage = "url('https://i.postimg.cc/RFyq9BwP/background3.jpg')"
 
   
 
@@ -522,7 +522,7 @@ function CreateTeamPage(select){
 //Страница Кланов
 function ClansPage() {
   const user = tg.initDataUnsafe.user;
-  app.style.backgroundImage = "url('../images/other/background4.png')"
+  app.style.backgroundImage = "url('https://i.postimg.cc/rm3zckSp/background4.png')"
 
   
 
@@ -778,7 +778,7 @@ function ClansPage() {
 //Страница обзора клана
 function ClanViewPage(select) {
   const user = tg.initDataUnsafe.user;
-  app.style.backgroundImage = "url('../images/other/background4.png')"
+  app.style.backgroundImage = "url('https://i.postimg.cc/rm3zckSp/background4.png')"
 
   
 
@@ -845,7 +845,7 @@ function ClanViewPage(select) {
 //Страница управления кланом
 function ClanEditingPage() {
   const user = tg.initDataUnsafe.user;
-  app.style.backgroundImage = "url('../images/other/background4.png')"
+  app.style.backgroundImage = "url('https://i.postimg.cc/rm3zckSp/background4.png')"
 
   
 
@@ -1012,7 +1012,7 @@ function ClanEditingPage() {
 //Страница рейтинга игроков
 function UserRatingPage() {
   const user = tg.initDataUnsafe.user;
-  app.style.backgroundImage = "url('../images/other/background5.png')"
+  app.style.backgroundImage = "url('https://i.postimg.cc/mZ1tjPG6/background5.png')"
 
   
 
@@ -1100,7 +1100,7 @@ function UserRatingPage() {
 
 //Страница FAQ
 function FAQPage() {
-  app.style.backgroundImage = "url('../images/other/background2.JPG')"
+  app.style.backgroundImage = "url('https://i.postimg.cc/zBV39BHh/background2.jpg')"
 
   
 
@@ -1213,12 +1213,12 @@ function FAQPage() {
 //Админ-панель
 function AdminPanelMainPage(){
   const user = tg.initDataUnsafe.user;
-  app.style.backgroundImage = "url('../images/other/background4.png')"
+  app.style.backgroundImage = "url('https://i.postimg.cc/rm3zckSp/background4.png')"
 
   
 
   render( `
-    <img src="../images/other/f1_logo.png" class="f1_logo">
+    <img src="https://i.postimg.cc/SN0jvmS6/f1_logo.png" class="f1_logo">
     <p></p>
     <p></p>
     <div class="меню">
@@ -1258,7 +1258,7 @@ function AdminPanelMainPage(){
 //Страница публикации результатов
 function AdminPanelResultsPage() {
   const user = tg.initDataUnsafe.user;
-  app.style.backgroundImage = "url('../images/other/background4.png')"
+  app.style.backgroundImage = "url('https://i.postimg.cc/rm3zckSp/background4.png')"
 
   
 
@@ -1272,7 +1272,7 @@ function AdminPanelResultsPage() {
       </div>
       <div class="меню">
         <select class="inputs" id="admin_select_1"></select>
-        <img src="../images/other/downArrow.png" id="downArrow">
+        <img src="https://i.postimg.cc/CLydQwh1/down_Arrow.png" id="downArrow">
         <select class="inputs" id="admin_select_2"></select>
         <button class="кнопка-меню" id="save_admin_choice">Сохранить пункт</button>
       </div>
@@ -1441,7 +1441,7 @@ function AdminPanelResultsPage() {
 //Страница выдачи/отнятия прав на создание клана
 function AdminPanelCCPage() {
   const user = tg.initDataUnsafe.user;
-  app.style.backgroundImage = "url('../images/other/background4.png')"
+  app.style.backgroundImage = "url('https://i.postimg.cc/rm3zckSp/background4.png')"
 
   
 
@@ -1453,7 +1453,7 @@ function AdminPanelCCPage() {
       <button class="кнопка-меню" id="giveRightBtn">Выдать права</button>
       <button class="кнопка-меню" id="cancelRightBtn">Забрать права</button>
     </div>
-    <p></p>
+    <p></p>1
     <button data-page="admin_panel" class="кнопка-меню">Назад</button>
   `);
   document.getElementById('admin_panel_CC_div').style.textAlign = 'center'
@@ -1536,7 +1536,7 @@ function AdminPanelCCPage() {
 //Страница действий с правами администратора
 function AdminPanelGAR() {
   const user = tg.initDataUnsafe.user;
-  app.style.backgroundImage = "url('../images/other/background4.png')"
+  app.style.backgroundImage = "url('https://i.postimg.cc/rm3zckSp/background4.png')"
 
   
 
@@ -1619,7 +1619,7 @@ function AdminPanelGAR() {
 //Страница редактирования цен
 function AdminPanelPrices() {
   const user = tg.initDataUnsafe.user;
-  app.style.backgroundImage = "url('../images/other/background4.png')"
+  app.style.backgroundImage = "url('https://i.postimg.cc/rm3zckSp/background4.png')"
 
   
 
@@ -1633,7 +1633,7 @@ function AdminPanelPrices() {
       </div>
       <div class="меню">
         <select class="inputs" id="admin_select_1"></select>
-        <img src="../images/other/downArrow.png" id="downArrow">
+        <img src="https://i.postimg.cc/CLydQwh1/down_Arrow.png" id="downArrow">
         <input class="inputs" id="admin_select_2" type="number">
         <button class="кнопка-меню" id="save_admin_choice">Сохранить пункт</button>
       </div>
