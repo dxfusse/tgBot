@@ -903,6 +903,7 @@ function ClanEditingPage() {
       const option = document.createElement('option');
       option.value = member.id;
       option.textContent = `${member.first_name} ${member.last_name} | @${member.username}`;
+      option.style.color = 'black';
       selectEl.appendChild(option);
     });
 
