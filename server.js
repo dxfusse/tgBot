@@ -81,12 +81,12 @@ function createNewDatabase() {
   database = {
     users: [
       {
-        id: 774319557,
-        first_name:  "Dxfusse",
+        id: 1024089952,
+        first_name:  "",
         last_name:  "",
         language: "ru",
-        username: "Its_dxfusse",
-        photo : "123",
+        username: "",
+        photo : "",
         team : {
           racer1 : null,
           racer2 : null,
@@ -101,77 +101,36 @@ function createNewDatabase() {
         clan : null,
         creatingClan : true,
         admin : true
-      },
-      {
-        id: 774312457,
-        first_name:  "test",
-        last_name:  "user",
-        language: "ru",
-        username: "test_user",
-        photo : "https://i.ytimg.com/vi/QjcAF34nQXw/maxresdefault.jpg",
-        team : {
-          racer1 : null,
-          racer2 : null,
-          engine : null,
-          pit_stop : null,
-          bridge : null
-        },
-        team_changing: true,
-        score: 5,
-        money: 100000000,
-        team_cost : 0,
-        clan : null,
-        creatingClan : false,
-        admin : false
       }
     ],
     race_id: 1,
     predict_accepting: true,
     race_results: {},
-    clans : [
-      {
-        id : 0,
-        name : "F1 test clan",
-        members : [774365557],
-        photo : "https://i.pinimg.com/originals/74/29/43/7429430a85e8d3b2ddd19994149bcad4.jpg",
-        score : 100,
-        invite_code : 12345678,
-        black_list : [774319557]
-      },
-      {
-        id : 1,
-        name : "F1 Fantazy chanel",
-        members : [564589557, 6372939, 372354],
-        photo : "https://i.pinimg.com/736x/7c/29/96/7c2996770695ac8e001cef5b76ae0371.jpg",
-        score : 400,
-        invite_code : 87654321,
-        black_list : []
-      }
-    ],
+    clans : [],
     drivers: [
       {
         id: 0,
         name: "Макс Ферстаппен",
         cost: 10000,
-        photo: "../images/drivers/mv.jpg"
+        photo: "https://drive.google.com/file/d/16YOJ_Kmx_kqQUIiug9PpNU1KV9R-amr-/view?usp=drive_link"
       },
       {
         id: 1,
         name: "Шарль Леклер",
         cost: 9000,
-        photo: "../images/drivers/cl.jpg"
+        photo: "https://drive.google.com/file/d/1Dptq4vDDRsd2Qxxg4ZD7tSV-ouykgjVD/view?usp=drive_link"
       },
       {
         id: 2,
         name: "Льюис Хэмилтон",
         cost: 9500,
-        photo: "../images/drivers/lh.jpg"
+        photo: "https://drive.google.com/file/d/16YOJ_Kmx_kqQUIiug9PpNU1KV9R-amr-/view?usp=drive_link"
       },
       {
         id: 3,
         name: "Карлос Сайнс",
         cost: 8500,
-        photo: "../images/drivers/cs.jpg"
+        photo: "https://drive.google.com/file/d/16YOJ_Kmx_kqQUIiug9PpNU1KV9R-amr-/view?usp=drive_link"
       },
       {
         id: 4,
@@ -183,91 +142,91 @@ function createNewDatabase() {
         id: 5,
         name: "Ландо Норрис",
         cost: 8800,
-        photo: "../images/drivers/ln.jpg"
+        photo: "https://drive.google.com/file/d/16YOJ_Kmx_kqQUIiug9PpNU1KV9R-amr-/view?usp=drive_link"
       },
       {
         id: 6,
         name: "Фернандо Алонсо",
         cost: 8200,
-        photo: "../images/drivers/fa.jpg"
+        photo: "https://drive.google.com/file/d/16YOJ_Kmx_kqQUIiug9PpNU1KV9R-amr-/view?usp=drive_link"
       },
       {
         id: 7,
         name: "Оскар Пиастри",
         cost: 7500,
-        photo: "../images/drivers/op.jpg"
+        photo: "https://drive.google.com/file/d/16YOJ_Kmx_kqQUIiug9PpNU1KV9R-amr-/view?usp=drive_link"
       },
       {
         id: 8,
         name: "Джордж Расселл",
         cost: 8000,
-        photo: "../images/drivers/gr.jpg"
+        photo: "https://drive.google.com/file/d/16YOJ_Kmx_kqQUIiug9PpNU1KV9R-amr-/view?usp=drive_link"
       },
       {
         id: 9,
         name: "Юки Цунода",
         cost: 4500,
-        photo: "../images/drivers/yt.jpg"
+        photo: "https://drive.google.com/file/d/16YOJ_Kmx_kqQUIiug9PpNU1KV9R-amr-/view?usp=drive_link"
       },
       {
         id: 10,
         name: "Габриэль Бортолето",
         cost: 2000,
-        photo: "../images/drivers/gb.jpg"
+        photo: "https://drive.google.com/file/d/16YOJ_Kmx_kqQUIiug9PpNU1KV9R-amr-/view?usp=drive_link"
       },
       {
         id: 11,
         name: "Алекс Албон",
         cost: 5500,
-        photo: "../images/drivers/aa.jpg"
+        photo: "https://drive.google.com/file/d/16YOJ_Kmx_kqQUIiug9PpNU1KV9R-amr-/view?usp=drive_link"
       },
       {
         id: 12,
         name: "Франко Колапинто",
         cost: 1800,
-        photo: "../images/drivers/fc.jpg"
+        photo: "https://drive.google.com/file/d/16YOJ_Kmx_kqQUIiug9PpNU1KV9R-amr-/view?usp=drive_link"
       },
       {
         id: 13,
         name: "Оливер Берман",
         cost: 2500,
-        photo: "../images/drivers/ob.jpg"
+        photo: "https://drive.google.com/file/d/16YOJ_Kmx_kqQUIiug9PpNU1KV9R-amr-/view?usp=drive_link"
       },
       {
         id: 14,
         name: "Нико Хюлькенберг",
         cost: 4000,
-        photo: "../images/drivers/nh.jpg"
+        photo: "https://drive.google.com/file/d/16YOJ_Kmx_kqQUIiug9PpNU1KV9R-amr-/view?usp=drive_link"
       },
       {
         id: 15,
         name: "Кими Антонелли",
         cost: 2200,
-        photo: "../images/drivers/ka.jpg"
+        photo: "https://drive.google.com/file/d/16YOJ_Kmx_kqQUIiug9PpNU1KV9R-amr-/view?usp=drive_link"
       },
       {
         id: 16,
         name: "Изак Хаджар",
         cost: 1500,
-        photo: "../images/drivers/ih.jpg"
+        photo: "https://drive.google.com/file/d/16YOJ_Kmx_kqQUIiug9PpNU1KV9R-amr-/view?usp=drive_link"
       },
       {
         id: 17,
         name: "Эстебан Окон",
         cost: 5000,
-        photo: "../images/drivers/eo.jpg"
+        photo: "https://drive.google.com/file/d/16YOJ_Kmx_kqQUIiug9PpNU1KV9R-amr-/view?usp=drive_link"
       },
       {
         id: 18,
         name: "Пьер Гасли",
         cost: 4800,
-        photo: "../images/drivers/pg.jpg"
+        photo: "https://drive.google.com/file/d/16YOJ_Kmx_kqQUIiug9PpNU1KV9R-amr-/view?usp=drive_link"
       },
       {
         id: 19,
         name: "Лэнс Стролл",
         cost: 4200,
-        photo: "../images/drivers/ls.jpg"
+        photo: "https://drive.google.com/file/d/16YOJ_Kmx_kqQUIiug9PpNU1KV9R-amr-/view?usp=drive_link"
       }
     ],
     engines: [
@@ -275,31 +234,31 @@ function createNewDatabase() {
         id: 0,
         name: "Феррари",
         cost: 15000,
-        photo: "../images/engines/Феррари.jpg"
+        photo: "https://drive.google.com/file/d/16YOJ_Kmx_kqQUIiug9PpNU1KV9R-amr-/view?usp=drive_link"
       },
       {
         id: 1,
         name: "Мерседес",
         cost: 14500,
-        photo: "../images/engines/Мерседес.jpg"
+        photo: "https://drive.google.com/file/d/16YOJ_Kmx_kqQUIiug9PpNU1KV9R-amr-/view?usp=drive_link"
       },
       {
         id: 2,
         name: "Хонда",
         cost: 14000,
-        photo: "../images/engines/Хонда.jpg"
+        photo: "https://drive.google.com/file/d/1HUctNLvZ-DG1tOgvNx4xTg_vwAZLrkny/view?usp=drive_link"
       },
       {
         id: 3,
         name: "Ред Булл",
         cost: 15500,
-        photo: "../images/engines/Ред Булл.jpg"
+        photo: "https://drive.google.com/file/d/16YOJ_Kmx_kqQUIiug9PpNU1KV9R-amr-/view?usp=drive_link"
       },
       {
         id: 4,
         name: "Ауди",
         cost: 12000,
-        photo: "../images/engines/Ауди.jpg"
+        photo: "https://drive.google.com/file/d/16YOJ_Kmx_kqQUIiug9PpNU1KV9R-amr-/view?usp=drive_link"
       }
     ],
     pit_stops: [
@@ -307,67 +266,67 @@ function createNewDatabase() {
         id: 0,
         name: "Феррари",
         cost: 15000,
-        photo: "../images/pit_stops/Феррари.jpg"
+        photo: "https://drive.google.com/file/d/1DLlGIBZHhJ8OJVDawPXSXrtEfo-ymafL/view?usp=drive_link"
       },
       {
         id: 1,
         name: "Мерседес",
         cost: 14500,
-        photo: "../images/pit_stops/Мерседес.jpg"
+        photo: "https://drive.google.com/file/d/16YOJ_Kmx_kqQUIiug9PpNU1KV9R-amr-/view?usp=drive_link"
       },
       {
         id: 2,
         name: "Макларен",
         cost: 14000,
-        photo: "../images/pit_stops/Макларен.jpg"
+        photo: "https://drive.google.com/file/d/16YOJ_Kmx_kqQUIiug9PpNU1KV9R-amr-/view?usp=drive_link"
       },
       {
         id: 3,
         name: "Ред Булл",
         cost: 15500,
-        photo: "../images/pit_stops/Ред Булл.jpg"
+        photo: "https://drive.google.com/file/d/16YOJ_Kmx_kqQUIiug9PpNU1KV9R-amr-/view?usp=drive_link"
       },
       {
         id: 4,
         name: "Рейсинг Булз",
         cost: 12000,
-        photo: "../images/pit_stops/Рейсинг Булз.jpg"
+        photo: "https://drive.google.com/file/d/16YOJ_Kmx_kqQUIiug9PpNU1KV9R-amr-/view?usp=drive_link"
       },
       {
         id: 5,
         name: "Астон Мартин",
         cost: 13500,
-        photo: "../images/pit_stops/Астон Мартин.jpg"
+        photo: "https://drive.google.com/file/d/16YOJ_Kmx_kqQUIiug9PpNU1KV9R-amr-/view?usp=drive_link"
       },
       {
         id: 6,
         name: "Уильямс",
         cost: 11000,
-        photo: "../images/pit_stops/Уильямс.jpg"
+        photo: "https://drive.google.com/file/d/16YOJ_Kmx_kqQUIiug9PpNU1KV9R-amr-/view?usp=drive_link"
       },
       {
         id: 7,
         name: "Хаас",
         cost: 10000,
-        photo: "../images/pit_stops/Хаас.jpg"
+        photo: "https://drive.google.com/file/d/16YOJ_Kmx_kqQUIiug9PpNU1KV9R-amr-/view?usp=drive_link"
       },
       {
         id: 8,
         name: "Ауди",
         cost: 13000,
-        photo: "../images/pit_stops/Ауди.jpg"
+        photo: "https://drive.google.com/file/d/16YOJ_Kmx_kqQUIiug9PpNU1KV9R-amr-/view?usp=drive_link"
       },
       {
         id: 9,
         name: "Альпин",
         cost: 11500,
-        photo: "../images/pit_stops/Альпин.jpg"
+        photo: "https://drive.google.com/file/d/16YOJ_Kmx_kqQUIiug9PpNU1KV9R-amr-/view?usp=drive_link"
       },
       {
         id: 10,
         name: "Кадиллак",
         cost: 12500,
-        photo: "../images/pit_stops/Кадиллак.jpg"
+        photo: "https://drive.google.com/file/d/16YOJ_Kmx_kqQUIiug9PpNU1KV9R-amr-/view?usp=drive_link"
       }
     ],
     bridges: [
@@ -375,67 +334,67 @@ function createNewDatabase() {
         id: 0,
         name: "Феррари",
         cost: 8000,
-        photo: "../images/bridges/Феррари.jpg"
+        photo: "https://drive.google.com/file/d/16YOJ_Kmx_kqQUIiug9PpNU1KV9R-amr-/view?usp=drive_link"
       },
       {
         id: 1,
         name: "Мерседес",
         cost: 7800,
-        photo: "../images/bridges/Мерседес.jpg"
+        photo: "https://drive.google.com/file/d/1_egSV2uHVG4ws9MK5jrjxyX1hbVkDQU3/view?usp=drive_link"
       },
       {
         id: 2,
         name: "Макларен",
         cost: 7500,
-        photo: "../images/bridges/Макларен.jpg"
+        photo: "https://drive.google.com/file/d/16YOJ_Kmx_kqQUIiug9PpNU1KV9R-amr-/view?usp=drive_link"
       },
       {
         id: 3,
         name: "Ред Булл",
         cost: 8200,
-        photo: "../images/bridges/Ред Булл.jpg"
+        photo: "https://drive.google.com/file/d/16YOJ_Kmx_kqQUIiug9PpNU1KV9R-amr-/view?usp=drive_link"
       },
       {
         id: 4,
         name: "Рейсинг Булз",
         cost: 7000,
-        photo: "../images/bridges/Рейсинг Булз.jpg"
+        photo: "https://drive.google.com/file/d/16YOJ_Kmx_kqQUIiug9PpNU1KV9R-amr-/view?usp=drive_link"
       },
       {
         id: 5,
         name: "Астон Мартин",
         cost: 7700,
-        photo: "../images/bridges/Астон Мартин.jpg"
+        photo: "https://drive.google.com/file/d/16YOJ_Kmx_kqQUIiug9PpNU1KV9R-amr-/view?usp=drive_link"
       },
       {
         id: 6,
         name: "Уильямс",
         cost: 6800,
-        photo: "../images/bridges/Уильямс.jpg"
+        photo: "https://drive.google.com/file/d/16YOJ_Kmx_kqQUIiug9PpNU1KV9R-amr-/view?usp=drive_link"
       },
       {
         id: 7,
         name: "Хаас",
         cost: 6500,
-        photo: "../images/bridges/Хаас.jpg"
+        photo: "https://drive.google.com/file/d/16YOJ_Kmx_kqQUIiug9PpNU1KV9R-amr-/view?usp=drive_link"
       },
       {
         id: 8,
         name: "Ауди",
         cost: 7600,
-        photo: "../images/bridges/Ауди.jpg"
+        photo: "https://drive.google.com/file/d/16YOJ_Kmx_kqQUIiug9PpNU1KV9R-amr-/view?usp=drive_link"
       },
       {
         id: 9,
         name: "Альпин",
         cost: 7200,
-        photo: "../images/bridges/Альпин.jpg"
+        photo: "https://drive.google.com/file/d/16YOJ_Kmx_kqQUIiug9PpNU1KV9R-amr-/view?usp=drive_link"
       },
       {
         id: 10,
         name: "Кадиллак",
         cost: 7400,
-        photo: "../images/bridges/Кадиллак.jpg"
+        photo: "https://drive.google.com/file/d/16YOJ_Kmx_kqQUIiug9PpNU1KV9R-amr-/view?usp=drive_link"
       }
     ],
     coefficients : {
@@ -605,7 +564,7 @@ app.post('/getTeamInfo', (req, res) =>{
     data.racer1 = {
       name: "Не выбран",
       cost : 0,
-      photo: "../images/drivers/null_choise.jpg"
+      photo: "https://drive.google.com/file/d/16YOJ_Kmx_kqQUIiug9PpNU1KV9R-amr-/view?usp=drive_link"
     }
   }
   if (userTeam.racer2 != null){
@@ -614,7 +573,7 @@ app.post('/getTeamInfo', (req, res) =>{
     data.racer2 = {
       name: "Не выбран",
       cost : 0,
-      photo: "../images/drivers/null_choise.jpg"
+      photo: "https://drive.google.com/file/d/16YOJ_Kmx_kqQUIiug9PpNU1KV9R-amr-/view?usp=drive_link"
     }
   }
   if (userTeam.engine != null){
@@ -623,7 +582,7 @@ app.post('/getTeamInfo', (req, res) =>{
     data.engine = {
       name: "Не выбран",
       cost : 0,
-      photo: "../images/engines/null_choise.jpg"
+      photo: "https://drive.google.com/file/d/16YOJ_Kmx_kqQUIiug9PpNU1KV9R-amr-/view?usp=drive_link"
     }
   }
   if (userTeam.pit_stop != null){
@@ -632,7 +591,7 @@ app.post('/getTeamInfo', (req, res) =>{
     data.pit_stop = {
       name: "Не выбран",
       cost : 0,
-      photo: "../images/pit_stops/null_choise.jpg"
+      photo: "https://drive.google.com/file/d/16YOJ_Kmx_kqQUIiug9PpNU1KV9R-amr-/view?usp=drive_link"
     }
   }
   if (userTeam.bridge != null){
@@ -641,7 +600,7 @@ app.post('/getTeamInfo', (req, res) =>{
     data.bridge = {
       name: "Не выбран",
       cost : 0,
-      photo: "../images/bridges/null_choise.jpg"
+      photo: "https://drive.google.com/file/d/16YOJ_Kmx_kqQUIiug9PpNU1KV9R-amr-/view?usp=drive_link"
     }
   }
   console.log('Отправка пользователю ' + user.username + ' данных о его команде')
